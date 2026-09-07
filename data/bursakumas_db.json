@@ -1,0 +1,4077 @@
+{
+  "admin_roles": [
+    {
+      "id": "role-super",
+      "name": "Süper Yönetici",
+      "description": "Tüm yetkilere sahip üst yönetici",
+      "permissions": [
+        "all",
+        "products",
+        "orders",
+        "reports",
+        "settings",
+        "discounts",
+        "blog",
+        "users"
+      ],
+      "created_at": "2026-09-03T02:32:50.407Z"
+    },
+    {
+      "id": "role-orders",
+      "name": "Sipariş & Kesim Yetkilisi",
+      "description": "Sipariş durumları, kargo ve çıktı yönetimi",
+      "permissions": [
+        "orders",
+        "reports"
+      ],
+      "created_at": "2026-09-03T02:32:50.410Z"
+    },
+    {
+      "id": "role-products",
+      "name": "Ürün & Stok Yetkilisi",
+      "description": "Ürün, kategori, varyasyon ve stok yönetimi",
+      "permissions": [
+        "products",
+        "reports"
+      ],
+      "created_at": "2026-09-03T02:32:50.410Z"
+    },
+    {
+      "id": "role-accounting",
+      "name": "Muhasebe",
+      "description": "Faturalandırma ve satış raporları",
+      "permissions": [
+        "reports",
+        "orders"
+      ],
+      "created_at": "2026-09-03T02:32:50.410Z"
+    }
+  ],
+  "admin_users": [
+    {
+      "id": "admin-1",
+      "role_id": "role-super",
+      "full_name": "Bursa Kumaş Dünyası Yönetici",
+      "email": "admin@bursakumasdunyasi.com",
+      "password_hash": "admin123",
+      "is_active": 1,
+      "last_login_at": "2026-09-03T02:32:50.410Z",
+      "created_at": "2026-09-03T02:32:50.410Z"
+    },
+    {
+      "id": "admin-2",
+      "role_id": "role-orders",
+      "full_name": "Murat Kesim & Sevkiyat",
+      "email": "siparis@bursakumasdunyasi.com",
+      "password_hash": "siparis123",
+      "is_active": 1,
+      "last_login_at": "2026-09-03T02:32:50.410Z",
+      "created_at": "2026-09-03T02:32:50.410Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "user-1",
+      "full_name": "Ahmet Yılmaz",
+      "email": "ahmet.yilmaz@example.com",
+      "phone": "0532 111 22 33",
+      "password_hash": "user123",
+      "is_email_verified": 1,
+      "role": "customer",
+      "created_at": "2026-09-03T02:32:50.410Z",
+      "updated_at": "2026-09-03T02:32:50.410Z"
+    },
+    {
+      "id": "user-2",
+      "full_name": "Zeynep Kaya",
+      "email": "zeynep.kaya@example.com",
+      "phone": "0544 222 33 44",
+      "password_hash": "user123",
+      "is_email_verified": 1,
+      "role": "customer",
+      "created_at": "2026-09-03T02:32:50.410Z",
+      "updated_at": "2026-09-03T02:32:50.410Z"
+    },
+    {
+      "id": "usr-1788576118328-b46r",
+      "first_name": "Silinmiş",
+      "last_name": "Kullanıcı",
+      "full_name": "Silinmiş Kullanıcı",
+      "email": "deleted_1788576131059@bursakumasdunyasi.anonymized",
+      "phone": "",
+      "password_hash": "84825bfd95f38231eef2eb6d513b81994c111751f176411bbfc7e46cdd84e67bf4ccf785e3a07da43350de170f16f544739980e93d48ee5820eb5fea7a875aea",
+      "email_verified": 1,
+      "phone_verified": 0,
+      "account_status": "deleted",
+      "marketing_consent": 0,
+      "kvkk_consent": 1,
+      "two_factor_enabled": 0,
+      "verification_token_hash": null,
+      "verification_token_expires_at": null,
+      "created_at": "2026-09-05T02:41:58.329Z",
+      "updated_at": "2026-09-05T02:42:11.059Z",
+      "last_login_at": "2026-09-05T02:42:00.718Z"
+    },
+    {
+      "id": "usr-1788576145105-rikz",
+      "first_name": "Silinmiş",
+      "last_name": "Kullanıcı",
+      "full_name": "Silinmiş Kullanıcı",
+      "email": "deleted_1788576147226@bursakumasdunyasi.anonymized",
+      "phone": "",
+      "password_hash": "84825bfd95f38231eef2eb6d513b81994c111751f176411bbfc7e46cdd84e67bf4ccf785e3a07da43350de170f16f544739980e93d48ee5820eb5fea7a875aea",
+      "email_verified": 1,
+      "phone_verified": 0,
+      "account_status": "deleted",
+      "marketing_consent": 0,
+      "kvkk_consent": 1,
+      "two_factor_enabled": 0,
+      "verification_token_hash": null,
+      "verification_token_expires_at": null,
+      "created_at": "2026-09-05T02:42:25.105Z",
+      "updated_at": "2026-09-05T02:42:27.226Z",
+      "last_login_at": "2026-09-05T02:42:25.760Z"
+    },
+    {
+      "id": "usr-1788619401421-1xau",
+      "first_name": "Silinmiş",
+      "last_name": "Kullanıcı",
+      "full_name": "Silinmiş Kullanıcı",
+      "email": "deleted_1788619407588@bursakumasdunyasi.anonymized",
+      "phone": "",
+      "password_hash": "84825bfd95f38231eef2eb6d513b81994c111751f176411bbfc7e46cdd84e67bf4ccf785e3a07da43350de170f16f544739980e93d48ee5820eb5fea7a875aea",
+      "email_verified": 1,
+      "phone_verified": 0,
+      "account_status": "deleted",
+      "marketing_consent": 0,
+      "kvkk_consent": 1,
+      "two_factor_enabled": 0,
+      "verification_token_hash": null,
+      "verification_token_expires_at": null,
+      "created_at": "2026-09-05T14:43:21.421Z",
+      "updated_at": "2026-09-05T14:43:27.588Z",
+      "last_login_at": "2026-09-05T14:43:22.421Z"
+    },
+    {
+      "id": "usr-1788620330287-2tly",
+      "first_name": "Ahmet Güncel",
+      "last_name": "Müşteri",
+      "full_name": "Ahmet Güncel Müşteri",
+      "email": "test.musteri.1788620328629@bursakumasdunyasi.com",
+      "phone": "05559998877",
+      "password_hash": "84825bfd95f38231eef2eb6d513b81994c111751f176411bbfc7e46cdd84e67bf4ccf785e3a07da43350de170f16f544739980e93d48ee5820eb5fea7a875aea",
+      "email_verified": 1,
+      "phone_verified": 0,
+      "account_status": "suspended",
+      "marketing_consent": 0,
+      "kvkk_consent": 1,
+      "two_factor_enabled": 0,
+      "verification_token_hash": null,
+      "verification_token_expires_at": null,
+      "created_at": "2026-09-05T14:58:50.287Z",
+      "updated_at": "2026-09-05T14:59:08.546Z",
+      "last_login_at": "2026-09-05T14:58:51.740Z"
+    },
+    {
+      "id": "usr-1788620370040-cfpc",
+      "first_name": "Silinmiş",
+      "last_name": "Kullanıcı",
+      "full_name": "Silinmiş Kullanıcı",
+      "email": "deleted_1788620372614@bursakumasdunyasi.anonymized",
+      "phone": "",
+      "password_hash": "84825bfd95f38231eef2eb6d513b81994c111751f176411bbfc7e46cdd84e67bf4ccf785e3a07da43350de170f16f544739980e93d48ee5820eb5fea7a875aea",
+      "email_verified": 1,
+      "phone_verified": 0,
+      "account_status": "deleted",
+      "marketing_consent": 0,
+      "kvkk_consent": 1,
+      "two_factor_enabled": 0,
+      "verification_token_hash": null,
+      "verification_token_expires_at": null,
+      "created_at": "2026-09-05T14:59:30.040Z",
+      "updated_at": "2026-09-05T14:59:32.614Z",
+      "last_login_at": "2026-09-05T14:59:30.314Z"
+    }
+  ],
+  "user_addresses": [
+    {
+      "id": "addr-1",
+      "user_id": "user-1",
+      "title": "Evim",
+      "full_name": "Ahmet Yılmaz",
+      "phone": "0532 111 22 33",
+      "city": "Bursa",
+      "district": "Nilüfer",
+      "neighborhood": "İhsaniye Mah.",
+      "address_line": "Barbaros Cad. No:14 Daire:6",
+      "postal_code": "16130",
+      "is_corporate": 0,
+      "is_default_shipping": 1,
+      "is_default_billing": 1,
+      "created_at": "2026-09-03T02:32:50.410Z"
+    },
+    {
+      "id": "addr-2",
+      "user_id": "user-2",
+      "title": "Atölye / Tasarım Ofisi",
+      "full_name": "Zeynep Kaya",
+      "phone": "0544 222 33 44",
+      "city": "İstanbul",
+      "district": "Kadıköy",
+      "neighborhood": "Moda",
+      "address_line": "Caferağa Mah. Şair Nefi Sok. No:8",
+      "postal_code": "34710",
+      "is_corporate": 0,
+      "is_default_shipping": 1,
+      "is_default_billing": 1,
+      "created_at": "2026-09-03T02:32:50.410Z"
+    },
+    {
+      "id": "addr-1788576122442-zc6s",
+      "user_id": "usr-1788576118328-b46r",
+      "title": "Ev Adresim",
+      "first_name": "Ahmet",
+      "last_name": "Müşteri",
+      "phone": "05559998877",
+      "city": "Bursa",
+      "district": "Osmangazi",
+      "neighborhood": "",
+      "full_address": "Demirtaşpaşa Mah. İnönü Cad. No:10",
+      "postal_code": "",
+      "is_default_shipping": 0,
+      "is_default_billing": 1,
+      "created_at": "2026-09-05T02:42:02.442Z",
+      "updated_at": "2026-09-05T02:42:02.442Z"
+    },
+    {
+      "id": "addr-1788576122532-pyg9",
+      "user_id": "usr-1788576118328-b46r",
+      "title": "İş Yeri / Atölye",
+      "first_name": "Ahmet",
+      "last_name": "Müşteri",
+      "phone": "05559998877",
+      "city": "Bursa",
+      "district": "Nilüfer",
+      "neighborhood": "",
+      "full_address": "Fethiye Mah. Sanayi Cad. No:5",
+      "postal_code": "",
+      "is_default_shipping": 1,
+      "is_default_billing": 0,
+      "created_at": "2026-09-05T02:42:02.532Z",
+      "updated_at": "2026-09-05T02:42:02.532Z"
+    },
+    {
+      "id": "addr-1788576146028-8bo7",
+      "user_id": "usr-1788576145105-rikz",
+      "title": "Ev Adresim",
+      "first_name": "Ahmet",
+      "last_name": "Müşteri",
+      "phone": "05559998877",
+      "city": "Bursa",
+      "district": "Osmangazi",
+      "neighborhood": "",
+      "full_address": "Demirtaşpaşa Mah. İnönü Cad. No:10",
+      "postal_code": "",
+      "is_default_shipping": 0,
+      "is_default_billing": 1,
+      "created_at": "2026-09-05T02:42:26.028Z",
+      "updated_at": "2026-09-05T02:42:26.028Z"
+    },
+    {
+      "id": "addr-1788576146115-tj5g",
+      "user_id": "usr-1788576145105-rikz",
+      "title": "İş Yeri / Atölye",
+      "first_name": "Ahmet",
+      "last_name": "Müşteri",
+      "phone": "05559998877",
+      "city": "Bursa",
+      "district": "Nilüfer",
+      "neighborhood": "",
+      "full_address": "Fethiye Mah. Sanayi Cad. No:5",
+      "postal_code": "",
+      "is_default_shipping": 1,
+      "is_default_billing": 0,
+      "created_at": "2026-09-05T02:42:26.115Z",
+      "updated_at": "2026-09-05T02:42:26.115Z"
+    },
+    {
+      "id": "addr-1788619403481-jjvv",
+      "user_id": "usr-1788619401421-1xau",
+      "title": "Ev Adresim",
+      "first_name": "Ahmet",
+      "last_name": "Müşteri",
+      "phone": "05559998877",
+      "city": "Bursa",
+      "district": "Osmangazi",
+      "neighborhood": "",
+      "full_address": "Demirtaşpaşa Mah. İnönü Cad. No:10",
+      "postal_code": "",
+      "is_default_shipping": 0,
+      "is_default_billing": 1,
+      "created_at": "2026-09-05T14:43:23.481Z",
+      "updated_at": "2026-09-05T14:43:23.481Z"
+    },
+    {
+      "id": "addr-1788619403544-nt1o",
+      "user_id": "usr-1788619401421-1xau",
+      "title": "İş Yeri / Atölye",
+      "first_name": "Ahmet",
+      "last_name": "Müşteri",
+      "phone": "05559998877",
+      "city": "Bursa",
+      "district": "Nilüfer",
+      "neighborhood": "",
+      "full_address": "Fethiye Mah. Sanayi Cad. No:5",
+      "postal_code": "",
+      "is_default_shipping": 1,
+      "is_default_billing": 0,
+      "created_at": "2026-09-05T14:43:23.544Z",
+      "updated_at": "2026-09-05T14:43:23.544Z"
+    },
+    {
+      "id": "addr-1788620333878-q6et",
+      "user_id": "usr-1788620330287-2tly",
+      "title": "Ev Adresim",
+      "first_name": "Ahmet",
+      "last_name": "Müşteri",
+      "phone": "05559998877",
+      "city": "Bursa",
+      "district": "Osmangazi",
+      "neighborhood": "",
+      "full_address": "Demirtaşpaşa Mah. İnönü Cad. No:10",
+      "postal_code": "",
+      "is_default_shipping": 0,
+      "is_default_billing": 1,
+      "created_at": "2026-09-05T14:58:53.879Z",
+      "updated_at": "2026-09-05T14:58:53.879Z"
+    },
+    {
+      "id": "addr-1788620333995-zrdo",
+      "user_id": "usr-1788620330287-2tly",
+      "title": "İş Yeri / Atölye",
+      "first_name": "Ahmet",
+      "last_name": "Müşteri",
+      "phone": "05559998877",
+      "city": "Bursa",
+      "district": "Nilüfer",
+      "neighborhood": "",
+      "full_address": "Fethiye Mah. Sanayi Cad. No:5",
+      "postal_code": "",
+      "is_default_shipping": 1,
+      "is_default_billing": 0,
+      "created_at": "2026-09-05T14:58:53.995Z",
+      "updated_at": "2026-09-05T14:58:53.995Z"
+    },
+    {
+      "id": "addr-1788620370577-8hwx",
+      "user_id": "usr-1788620370040-cfpc",
+      "title": "Ev Adresim",
+      "first_name": "Ahmet",
+      "last_name": "Müşteri",
+      "phone": "05559998877",
+      "city": "Bursa",
+      "district": "Osmangazi",
+      "neighborhood": "",
+      "full_address": "Demirtaşpaşa Mah. İnönü Cad. No:10",
+      "postal_code": "",
+      "is_default_shipping": 0,
+      "is_default_billing": 1,
+      "created_at": "2026-09-05T14:59:30.577Z",
+      "updated_at": "2026-09-05T14:59:30.577Z"
+    },
+    {
+      "id": "addr-1788620370618-zycn",
+      "user_id": "usr-1788620370040-cfpc",
+      "title": "İş Yeri / Atölye",
+      "first_name": "Ahmet",
+      "last_name": "Müşteri",
+      "phone": "05559998877",
+      "city": "Bursa",
+      "district": "Nilüfer",
+      "neighborhood": "",
+      "full_address": "Fethiye Mah. Sanayi Cad. No:5",
+      "postal_code": "",
+      "is_default_shipping": 1,
+      "is_default_billing": 0,
+      "created_at": "2026-09-05T14:59:30.618Z",
+      "updated_at": "2026-09-05T14:59:30.618Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": "cat-viskon",
+      "parent_id": null,
+      "name": "Viskon Kumaşlar",
+      "slug": "viskon-kumaslar",
+      "description": "Nefes alan, yumuşak ve dökümlü viskon kumaş koleksiyonu.",
+      "image_url": "/uploads/kumas-1788645300519-ithalviskonarmoni.webp",
+      "display_order": 1,
+      "is_active": 1,
+      "is_featured_home": 1,
+      "show_in_menu": 1,
+      "meta_title": "Viskon Kumaş Modelleri ve Metre Fiyatları - Bursa Kumaş Dünyası",
+      "meta_description": "Düz ve desenli dökümlü viskon kumaşlar en uygun fabrika fiyatlarıyla kapınızda.",
+      "created_at": "2026-09-06T20:00:00.000Z"
+    },
+    {
+      "id": "cat-viskon-duz",
+      "parent_id": "cat-viskon",
+      "name": "Düz Renk Viskon Kumaşlar",
+      "slug": "duz-renk-viskon-kumaslar",
+      "description": "Zengin renk kartelasına sahip dökümlü düz viskon kumaşlar.",
+      "image_url": "/uploads/kumas-1788645300519-ithalviskonarmoni.webp",
+      "display_order": 1,
+      "is_active": 1,
+      "is_featured_home": 0,
+      "show_in_menu": 1,
+      "created_at": "2026-09-06T20:00:00.000Z"
+    },
+    {
+      "id": "cat-viskon-desenli",
+      "parent_id": "cat-viskon",
+      "name": "Desenli & Çiçekli Viskon",
+      "slug": "desenli-cicekli-viskon",
+      "description": "Elbise ve tunikler için şık desenli viskon kumaşlar.",
+      "image_url": "/uploads/kumas-1788645300519-ithalviskonarmoni.webp",
+      "display_order": 2,
+      "is_active": 1,
+      "is_featured_home": 0,
+      "show_in_menu": 1,
+      "created_at": "2026-09-06T20:00:00.000Z"
+    },
+    {
+      "id": "cat-ayrobin",
+      "parent_id": null,
+      "name": "Ayrobin Kumaşlar",
+      "slug": "ayrobin-kumaslar",
+      "description": "Ütü istemeyen, dökümlü ve kırışmaz ayrobin kumaş çeşitleri.",
+      "image_url": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=600&q=80",
+      "display_order": 2,
+      "is_active": 1,
+      "is_featured_home": 1,
+      "show_in_menu": 1,
+      "meta_title": "Ayrobin Kumaşlar - Bursa Kumaş Dünyası",
+      "meta_description": "Yerli ve ithal birinci kalite ayrobin kumaşlar.",
+      "created_at": "2026-09-06T20:00:00.000Z"
+    },
+    {
+      "id": "cat-ayrobin-yerli",
+      "parent_id": "cat-ayrobin",
+      "name": "Yerli Ayrobin Kumaşlar",
+      "slug": "yerli-ayrobin-kumaslar",
+      "description": "Bursa dokuması yerli üretim kaliteli ayrobin kumaşlar.",
+      "image_url": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=600&q=80",
+      "display_order": 1,
+      "is_active": 1,
+      "is_featured_home": 0,
+      "show_in_menu": 1,
+      "created_at": "2026-09-06T20:00:00.000Z"
+    },
+    {
+      "id": "cat-ayrobin-ithal",
+      "parent_id": "cat-ayrobin",
+      "name": "İthal Lüks Ayrobin",
+      "slug": "ithal-luks-ayrobin",
+      "description": "Ekstra dökümlü ve yumuşak tuşeli ithal ayrobin kumaşlar.",
+      "image_url": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=600&q=80",
+      "display_order": 2,
+      "is_active": 1,
+      "is_featured_home": 0,
+      "show_in_menu": 1,
+      "created_at": "2026-09-06T20:00:00.000Z"
+    },
+    {
+      "id": "cat-krep",
+      "parent_id": null,
+      "name": "Krep Kumaşlar",
+      "slug": "krep-kumaslar",
+      "description": "Medine ipeği krep, kumlu krep ve dökümlü krep kumaşlar.",
+      "image_url": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=600&q=80",
+      "display_order": 3,
+      "is_active": 1,
+      "is_featured_home": 1,
+      "show_in_menu": 1,
+      "meta_title": "Krep Kumaş Modelleri - Bursa Kumaş Dünyası",
+      "created_at": "2026-09-06T20:00:00.000Z"
+    },
+    {
+      "id": "cat-krep-medine",
+      "parent_id": "cat-krep",
+      "name": "Medine İpeği Krep",
+      "slug": "medine-ipegi-krep",
+      "description": "İç göstermeyen, dökümlü ve nefes alan Medine ipeği krep.",
+      "image_url": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=600&q=80",
+      "display_order": 1,
+      "is_active": 1,
+      "is_featured_home": 0,
+      "show_in_menu": 1,
+      "created_at": "2026-09-06T20:00:00.000Z"
+    },
+    {
+      "id": "cat-krep-kumlu",
+      "parent_id": "cat-krep",
+      "name": "Kumlu Krep Kumaşlar",
+      "slug": "kumlu-krep-kumaslar",
+      "description": "Özel kumlu dokusu ile şık ve dökümlü elbiselik krep.",
+      "image_url": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=600&q=80",
+      "display_order": 2,
+      "is_active": 1,
+      "is_featured_home": 0,
+      "show_in_menu": 1,
+      "created_at": "2026-09-06T20:00:00.000Z"
+    },
+    {
+      "id": "cat-oduncu",
+      "parent_id": null,
+      "name": "Oduncu Kumaşlar",
+      "slug": "oduncu-kumaslar",
+      "description": "Gömlek ve ceketlik şardonlu, sıcak tutan tok oduncu kumaşlar.",
+      "image_url": "/uploads/kumas-1788730575928-oduncubursa.webp",
+      "display_order": 4,
+      "is_active": 1,
+      "is_featured_home": 1,
+      "show_in_menu": 1,
+      "meta_title": "Oduncu Kumaşlar - Bursa Kumaş Dünyası",
+      "created_at": "2026-09-06T20:00:00.000Z"
+    },
+    {
+      "id": "cat-oduncu-ekose",
+      "parent_id": "cat-oduncu",
+      "name": "Ekose Oduncu Kumaşlar",
+      "slug": "ekose-oduncu-kumaslar",
+      "description": "Trend ekose desenli kışlık gömleklik oduncu kumaşlar.",
+      "image_url": "/uploads/kumas-1788730575928-oduncubursa.webp",
+      "display_order": 1,
+      "is_active": 1,
+      "is_featured_home": 0,
+      "show_in_menu": 1,
+      "created_at": "2026-09-06T20:00:00.000Z"
+    },
+    {
+      "id": "cat-keten",
+      "parent_id": null,
+      "name": "Keten Kumaşlar",
+      "slug": "keten-kumaslar",
+      "description": "Doğal, ferah ve kaliteli saf keten & viskon keten kumaşlar.",
+      "image_url": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=600&q=80",
+      "display_order": 5,
+      "is_active": 1,
+      "is_featured_home": 1,
+      "show_in_menu": 1,
+      "meta_title": "Keten Kumaşlar - Bursa Kumaş Dünyası",
+      "created_at": "2026-09-06T20:00:00.000Z"
+    },
+    {
+      "id": "cat-muslin",
+      "parent_id": null,
+      "name": "Müslin Kumaşlar",
+      "slug": "muslin-kumaslar",
+      "description": "%100 Pamuk çift katlı yumuşak bebek ve giyimlik müslin kumaşlar.",
+      "image_url": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=600&q=80",
+      "display_order": 7,
+      "is_active": 1,
+      "is_featured_home": 1,
+      "show_in_menu": 1,
+      "meta_title": "Müslin Kumaşlar - Bursa Kumaş Dünyası",
+      "created_at": "2026-09-06T20:00:00.000Z"
+    },
+    {
+      "id": "cat-firsat",
+      "parent_id": null,
+      "name": "Fırsat Ürünleri",
+      "slug": "firsat-urunleri",
+      "description": "İndirimli parça ve seri sonu fırsat kumaşları.",
+      "image_url": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=600&q=80",
+      "display_order": 8,
+      "is_active": 1,
+      "is_featured_home": 1,
+      "show_in_menu": 1,
+      "meta_title": "Fırsat ve İndirimli Kumaşlar - Bursa Kumaş Dünyası",
+      "created_at": "2026-09-06T20:00:00.000Z"
+    }
+  ],
+  "attributes": [
+    {
+      "id": "attr-color",
+      "name": "Renk",
+      "type": "color"
+    },
+    {
+      "id": "attr-pattern",
+      "name": "Desen",
+      "type": "badge"
+    },
+    {
+      "id": "attr-width",
+      "name": "Kumaş Eni",
+      "type": "select"
+    }
+  ],
+  "attribute_values": [
+    {
+      "id": "val-col-antrasit",
+      "attribute_id": "attr-color",
+      "name": "Antrasit",
+      "color_code": "#2D3748",
+      "display_order": 1
+    },
+    {
+      "id": "val-col-lacivert",
+      "attribute_id": "attr-color",
+      "name": "Gece Mavisi / Lacivert",
+      "color_code": "#1E3A8A",
+      "display_order": 2
+    },
+    {
+      "id": "val-col-zumrut",
+      "attribute_id": "attr-color",
+      "name": "Zümrüt Yeşili",
+      "color_code": "#065F46",
+      "display_order": 3
+    },
+    {
+      "id": "val-col-bordo",
+      "attribute_id": "attr-color",
+      "name": "Bordo / Şarap",
+      "color_code": "#991B1B",
+      "display_order": 4
+    },
+    {
+      "id": "val-col-vizon",
+      "attribute_id": "attr-color",
+      "name": "Vizon / Toprak",
+      "color_code": "#8C7D70",
+      "display_order": 5
+    },
+    {
+      "id": "val-col-bej",
+      "attribute_id": "attr-color",
+      "name": "Krem / Bej",
+      "color_code": "#F5F5DC",
+      "display_order": 6
+    },
+    {
+      "id": "val-col-pudra",
+      "attribute_id": "attr-color",
+      "name": "Pudra Pembe",
+      "color_code": "#FBCFE8",
+      "display_order": 7
+    }
+  ],
+  "products": [
+    {
+      "id": "prod-1788736941003",
+      "category_id": "cat-krep",
+      "category_ids": [
+        "cat-krep",
+        "cat-firsat"
+      ],
+      "sku": "BKD1213",
+      "barcode": "",
+      "name": "İthal Cosmos Krep",
+      "slug": "i-thal-cosmos-krep",
+      "short_description": "Şık duruşu ve dökümlü yapısıyla hazır giyimde harika seçenek 🌸 Gömlek, pantolon, elbise, etek, şalvar ve takımlarda kullanıma uygundur.  📏 En: 150 cm  🛒 Online sipariş: bursakumasdunyasi.com 📲 WhatsApp Sipariş Hattı: 0542 393 98 16  🚚 Türkiye’nin her yerine kargo 📦 Stoklarla sınırlıdır.",
+      "description": "Şık duruşu ve dökümlü yapısıyla hazır giyimde harika seçenek 🌸\nGömlek, pantolon, elbise, etek, şalvar ve takımlarda kullanıma uygundur.\n\n📏 En: 150 cm\n💰 Metresi: 100₺\n\n🛒 Online sipariş: bursakumasdunyasi.com\n📲 WhatsApp Sipariş Hattı: 0542 393 98 16\n\n🚚 Türkiye’nin her yerine kargo\n📦 Stoklarla sınırlıdır.",
+      "technical_specs": {},
+      "attributes": {
+        "Renk": [
+          "1) CAMEL",
+          "2) SOĞAN KABUĞU",
+          "3) HARDAL",
+          "4) SİYAH",
+          "5) KİREMİT",
+          "6) BORDO"
+        ]
+      },
+      "base_price": 93.5,
+      "discount_price": 77,
+      "tax_rate": 20,
+      "is_meter_sale": 1,
+      "min_order_meter": 1,
+      "meter_step": 0.5,
+      "max_order_meter": 50,
+      "stock_meter": 100,
+      "has_variants": 1,
+      "main_image_url": "/uploads/kumas-1788736931691-2CAD21A3-6F97-49FB-AED3-C379C03BA022-1.webp",
+      "images": [
+        "/uploads/kumas-1788736931691-2CAD21A3-6F97-49FB-AED3-C379C03BA022-1.webp"
+      ],
+      "badge_ids": [],
+      "is_active": 1,
+      "is_archived": 0,
+      "is_featured": 1,
+      "is_bestseller": 0,
+      "is_new": 0,
+      "vitrin_order": 0,
+      "meta_title": "İthal Cosmos Krep - Metre Fiyatı | Bursa Kumaş Dünyası",
+      "meta_description": "Şık duruşu ve dökümlü yapısıyla hazır giyimde harika seçenek 🌸 Gömlek, pantolon, elbise, etek, şalvar ve takımlarda kullanıma uygundur.  📏 En: 150 cm  🛒 Online sipariş: bursakumasdunyasi.com 📲 WhatsApp Sipariş Hattı: 0542 393 98 16  🚚 Türkiye’nin her yerine kargo 📦 Stoklarla sınırlıdır.",
+      "canonical_url": "/urun/i-thal-cosmos-krep",
+      "created_at": "2026-09-06T23:22:21.004Z",
+      "updated_at": "2026-09-07T01:51:14.992Z"
+    },
+    {
+      "id": "prod-1788733673308",
+      "name": "%100 Pamuk Ekose Oduncu Kumaş Bursa",
+      "slug": "100-pamuk-oduncu-bursa",
+      "category_id": "cat-oduncu",
+      "category_ids": [
+        "cat-oduncu",
+        "cat-oduncu-ekose",
+        "cat-firsat"
+      ],
+      "sku": "ODC-001",
+      "base_price": 274.89,
+      "discount_price": 219.89,
+      "unit": "Metre",
+      "min_order_meter": 1,
+      "step_meter": 0.5,
+      "stock_meters": 150,
+      "main_image_url": "/uploads/kumas-1788733641180-oduncubursa.webp",
+      "is_active": 1,
+      "is_featured": 1,
+      "description": "%100 Pamuk dokumasıyla sıcak tutan, yumuşak tuşeli şardonlu kışlık gömleklik oduncu kumaş.",
+      "vitrin_order": 1,
+      "updated_at": "2026-09-07T01:51:14.992Z",
+      "barcode": "",
+      "short_description": "",
+      "attributes": {},
+      "meter_step": 0.5,
+      "max_order_meter": 50,
+      "track_stock": 1,
+      "stock_meter": 0,
+      "has_variants": 0,
+      "images": [
+        "/uploads/kumas-1788733641180-oduncubursa.webp"
+      ],
+      "badge_ids": [],
+      "is_bestseller": 0,
+      "is_new": 0
+    },
+    {
+      "id": "prod-1788647431978",
+      "name": "Doğal Keten Viskon Elbiselik Kumaş",
+      "slug": "dogal-keten-viskon-kumas",
+      "category_id": "cat-keten",
+      "category_ids": [
+        "cat-keten",
+        "cat-viskon"
+      ],
+      "sku": "KTN-002",
+      "base_price": 307.89,
+      "discount_price": 252.89,
+      "unit": "Metre",
+      "min_order_meter": 1,
+      "step_meter": 0.5,
+      "stock_meters": 220,
+      "main_image_url": "/uploads/kumas-1788647351979-ithalviskonarmoni.webp",
+      "is_active": 1,
+      "is_featured": 1,
+      "description": "Nefes alan doğal keten ve dökümlü viskon karışımı ile yazlık elbiseler ve pantolonlar için ideal.",
+      "vitrin_order": 2,
+      "updated_at": "2026-09-07T01:51:14.993Z"
+    },
+    {
+      "id": "prod-1788641774597",
+      "name": "Yerli Ayrobin Kumaş Taş Renk",
+      "slug": "yerli-ayrobin-kumas-tas-renk",
+      "category_id": "cat-ayrobin",
+      "category_ids": [
+        "cat-ayrobin",
+        "cat-ayrobin-yerli"
+      ],
+      "sku": "AYR-003",
+      "base_price": 208.89,
+      "discount_price": 175.89,
+      "unit": "Metre",
+      "min_order_meter": 1,
+      "step_meter": 0.5,
+      "stock_meters": 300,
+      "main_image_url": "/uploads/kumas-1788641830038-ketenkumsa.webp",
+      "is_active": 1,
+      "is_featured": 1,
+      "description": "Bursa dokuması kırışmaz ve ütü istemeyen birinci kalite yerli ayrobin kumaş.",
+      "vitrin_order": 3,
+      "updated_at": "2026-09-07T01:51:14.993Z"
+    },
+    {
+      "id": "prod-1788640963805",
+      "name": "İthal Dökümlü Viskon Kumaş",
+      "slug": "ithal-dokumlu-viskon-kumas",
+      "category_id": "cat-viskon",
+      "category_ids": [
+        "cat-viskon",
+        "cat-viskon-duz"
+      ],
+      "sku": "VSK-004",
+      "base_price": 241.89,
+      "discount_price": 197.89,
+      "unit": "Metre",
+      "min_order_meter": 1,
+      "step_meter": 0.5,
+      "stock_meters": 250,
+      "main_image_url": "/uploads/kumas-1788640949765-viskonayrobin.webp",
+      "is_active": 1,
+      "is_featured": 1,
+      "description": "Dökümlü ve yumuşak tuşeli, iç göstermeyen ithal viskon kumaş.",
+      "vitrin_order": 4,
+      "updated_at": "2026-09-07T01:51:14.993Z"
+    },
+    {
+      "id": "prod-1788573566255",
+      "name": "Çift Katlı Desenli Pamuk Müslin Kumaş",
+      "slug": "cift-katli-desenli-pamuk-muslin",
+      "category_id": "cat-muslin",
+      "category_ids": [
+        "cat-muslin"
+      ],
+      "sku": "MSL-005",
+      "base_price": 186.89,
+      "discount_price": 153.89,
+      "unit": "Metre",
+      "min_order_meter": 1,
+      "step_meter": 0.5,
+      "stock_meters": 180,
+      "main_image_url": "/uploads/kumas-1788573549611-muslinhayal.webp",
+      "is_active": 1,
+      "is_featured": 1,
+      "description": "%100 Pamuk çift katlı nefes alan bebek ve yazlık giyimlik müslin kumaş.",
+      "vitrin_order": 5,
+      "updated_at": "2026-09-07T01:51:14.993Z"
+    },
+    {
+      "id": "prod-1",
+      "name": "Medine İpeği Krep Kumaş Dökümlü",
+      "slug": "medine-ipegi-krep-kumas-dokumlu",
+      "category_id": "cat-krep",
+      "category_ids": [
+        "cat-krep",
+        "cat-krep-medine"
+      ],
+      "sku": "KRP-006",
+      "base_price": 263.89,
+      "discount_price": 219.89,
+      "unit": "Metre",
+      "min_order_meter": 1,
+      "step_meter": 0.5,
+      "stock_meters": 200,
+      "main_image_url": "/uploads/kumas-1788645300519-ithalviskonarmoni.webp",
+      "is_active": 1,
+      "is_featured": 1,
+      "description": "İç göstermeyen, dökümlü ve nefes alan Medine ipeği elbiselik krep kumaş.",
+      "vitrin_order": 6,
+      "updated_at": "2026-09-07T01:51:14.993Z"
+    },
+    {
+      "id": "prod-2",
+      "name": "Yumuşak Tuşeli İpeksi Tensel Kumaş",
+      "slug": "yumusak-tuseli-ipeksi-tensel-kumas",
+      "category_id": "cat-tensel-modal",
+      "category_ids": [
+        "cat-tensel-modal"
+      ],
+      "sku": "TNS-007",
+      "base_price": 318.89,
+      "discount_price": 274.89,
+      "unit": "Metre",
+      "min_order_meter": 1,
+      "step_meter": 0.5,
+      "stock_meters": 160,
+      "main_image_url": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=800&q=80",
+      "is_active": 1,
+      "is_featured": 0,
+      "description": "İpeksi yumuşaklıkta, dökümlü ve tene dost doğal tensel kumaş.",
+      "updated_at": "2026-09-07T01:51:14.993Z"
+    },
+    {
+      "id": "prod-1788571179157",
+      "category_id": "cat-kadife",
+      "sku": "BKD-JAK-007",
+      "name": "İtalyan Jakarlı Kadife Döşemelik Kumaş",
+      "slug": "i-talyan-jakarl-kadife-d-emelik-kuma",
+      "short_description": "60.000 Martindale aşınma dayanımlı, su itici jakar desenli lüks koltuk kadifesi.",
+      "description": "Bursa Kumaş Dünyası tescilli jakarlı kadife serisi, özel dokuma tezgahlarında yüksek mukavemetli mikrofiber ipliklerle üretilmiştir.\n\nÖzellikler:\n- Su ve leke itici apre\n- Pet-friendly (tırnak takılmaz)\n- 0.5m adımlarla dilediğiniz ölçüde sipariş edilebilir.",
+      "technical_specs": {},
+      "base_price": 418,
+      "discount_price": 368.5,
+      "tax_rate": 20,
+      "is_meter_sale": 1,
+      "min_order_meter": 1,
+      "meter_step": 0.5,
+      "max_order_meter": 50,
+      "stock_meter": 131,
+      "has_variants": 1,
+      "main_image_url": "/uploads/kumas-1788571171363-sandykumas.webp",
+      "is_active": 1,
+      "is_featured": 1,
+      "is_bestseller": 0,
+      "is_new": 0,
+      "vitrin_order": 7,
+      "badge_ids": [
+        "badge-su-itici"
+      ],
+      "meta_title": "İtalyan Jakarlı Kadife Döşemelik Kumaş Metre Fiyatı - Bursa Kumaş Dünyası",
+      "meta_description": "Su itici ve leke tutmaz jakarlı kadife koltuk kumaşı en uygun metre fiyatıyla Bursa Kumaş Dünyası güvencesinde.",
+      "canonical_url": "/urun/i-talyan-jakarl-kadife-d-emelik-kuma",
+      "created_at": "2026-09-05T01:19:39.157Z",
+      "updated_at": "2026-09-07T01:51:14.993Z",
+      "barcode": "",
+      "attributes": {
+        "Renk": [
+          "Krem",
+          "Beyaz",
+          "Turuncu",
+          "Mavi",
+          "Yeşil",
+          "Kahve"
+        ]
+      },
+      "images": [
+        "/uploads/kumas-1788571171363-sandykumas.webp"
+      ],
+      "category_ids": [
+        "cat-kadife"
+      ]
+    },
+    {
+      "id": "prod-1788571078960",
+      "category_id": "cat-kadife",
+      "sku": "BKD01",
+      "name": "Sandy Kumaş",
+      "slug": "sandy-kuma",
+      "short_description": "60.000 Martindale aşınma dayanımlı, su itici jakar desenli lüks koltuk kadifesi.",
+      "description": "Bursa Kumaş Dünyası tescilli jakarlı kadife serisi, özel dokuma tezgahlarında yüksek mukavemetli mikrofiber ipliklerle üretilmiştir.\n\nÖzellikler:\n- Su ve leke itici apre\n- Pet-friendly (tırnak takılmaz)\n- 0.5m adımlarla dilediğiniz ölçüde sipariş edilebilir.",
+      "technical_specs": {},
+      "base_price": 418,
+      "discount_price": 368.5,
+      "tax_rate": 20,
+      "is_meter_sale": 1,
+      "min_order_meter": 1,
+      "meter_step": 0.5,
+      "max_order_meter": 50,
+      "stock_meter": 150,
+      "has_variants": 0,
+      "main_image_url": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=800&q=80",
+      "is_active": 1,
+      "is_featured": 1,
+      "is_bestseller": 0,
+      "is_new": 1,
+      "vitrin_order": 10,
+      "badge_ids": [],
+      "meta_title": "İtalyan Jakarlı Kadife Döşemelik Kumaş Metre Fiyatı - Bursa Kumaş Dünyası",
+      "meta_description": "Su itici ve leke tutmaz jakarlı kadife koltuk kumaşı en uygun metre fiyatıyla Bursa Kumaş Dünyası güvencesinde.",
+      "canonical_url": "/urun/sandy-kuma",
+      "created_at": "2026-09-05T01:17:58.960Z",
+      "updated_at": "2026-09-07T01:51:14.993Z",
+      "category_ids": [
+        "cat-kadife"
+      ]
+    },
+    {
+      "id": "prod-4",
+      "category_id": "cat-blackout",
+      "sku": "BKD-BLK-004",
+      "name": "3 Katmanlı Termal %100 Karartma Blackout Perde Kumaşı",
+      "slug": "3-katmanli-termal-karartma-blackout-perde-kumasi",
+      "short_description": "Otel standardında tam karanlık sağlayan, ses ve ısı izolasyonlu blackout kumaş.",
+      "description": "Yatak odaları, bebek odaları, projeksiyon/sinema odaları ve oteller için özel olarak üretilen 3 katmanlı blackout kumaşımız, gün ortasında dahi içeriye sıfır ışık sızdırır. Kışın soğuğu, yazın sıcağı keserek enerji tasarrufu sağlar.",
+      "technical_specs": {
+        "Kumaş Eni": "280 cm",
+        "Gramaj": "360 gr/m²",
+        "İçerik": "%100 Karartma Polyester Dokuma",
+        "Karartma Oranı": "%100 Işık Geçirmez",
+        "Termal İzolasyon": "Evet (Sıcak/Soğuk Bariyeri)"
+      },
+      "base_price": 506,
+      "discount_price": 429,
+      "tax_rate": 20,
+      "is_meter_sale": 1,
+      "min_order_meter": 1,
+      "meter_step": 0.5,
+      "max_order_meter": 50,
+      "stock_meter": 110,
+      "has_variants": 1,
+      "main_image_url": "https://images.unsplash.com/photo-1540518614846-7ede433c4b13?auto=format&fit=crop&w=800&q=80",
+      "is_active": 1,
+      "is_featured": 0,
+      "is_bestseller": 0,
+      "is_new": 1,
+      "vitrin_order": 4,
+      "meta_title": "%100 Karartma Blackout Perde Kumaşı - Bursa Kumaş Dünyası",
+      "meta_description": "Termal ısı ve ışık yalıtımlı 280 cm blackout kumaş metre fiyatı.",
+      "canonical_url": "/urun/3-katmanli-termal-karartma-blackout-perde-kumasi",
+      "created_at": "2026-09-03T02:32:50.410Z",
+      "updated_at": "2026-09-07T01:51:14.993Z",
+      "category_ids": [
+        "cat-blackout"
+      ]
+    },
+    {
+      "id": "prod-5",
+      "category_id": "cat-masa",
+      "sku": "BKD-DCK-005",
+      "name": "Leke Tutmaz Su İtici Desenli Duck Keten Masa Örtüsü Kumaşı",
+      "slug": "leke-tutmaz-su-itici-desenli-duck-keten-kumas",
+      "short_description": "Masa örtüsü, runner, minder, fon perde ve bez çanta yapımına uygun leke tutmaz duck kumaş.",
+      "description": "Bursa dokuma tezgahlarının en sevilen dertsiz kumaşı. Su, yağ ve çay dökülmelerinde sıvıyı içine çekmez, peçeteyle tek harekette temizlenir. Ev, kafe ve restoran masa örtüleri ile bahçe mobilyası minderleri için mükemmel seçim.",
+      "technical_specs": {
+        "Kumaş Eni": "180 cm (Geniş En)",
+        "Gramaj": "220 gr/m²",
+        "İçerik": "%65 Pamuk, %35 Polyester",
+        "Apre": "Leke Tutmaz & Su İtici Nano Apre",
+        "Kullanım": "Masa Örtüsü, Runner, Sandalye Minderi, Mutfak Önlüğü"
+      },
+      "base_price": 264,
+      "discount_price": 214.5,
+      "tax_rate": 20,
+      "is_meter_sale": 1,
+      "min_order_meter": 1,
+      "meter_step": 0.5,
+      "max_order_meter": 100,
+      "stock_meter": 250,
+      "has_variants": 1,
+      "main_image_url": "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=800&q=80",
+      "is_active": 1,
+      "is_featured": 0,
+      "is_bestseller": 1,
+      "is_new": 0,
+      "vitrin_order": 5,
+      "meta_title": "Dertsiz Leke Tutmaz Duck Keten Kumaş Fiyatları",
+      "meta_description": "Su itici 180 cm duck keten masa örtüsü ve minder kumaşları.",
+      "canonical_url": "/urun/leke-tutmaz-su-itici-desenli-duck-keten-kumas",
+      "created_at": "2026-09-03T02:32:50.410Z",
+      "updated_at": "2026-09-07T01:51:14.993Z",
+      "category_ids": [
+        "cat-masa"
+      ]
+    },
+    {
+      "id": "prod-6",
+      "category_id": "cat-giyimlik",
+      "sku": "BKD-POP-006",
+      "name": "%100 Organik Pamuk Poplin Gömleklik ve Elbiselik Kumaş",
+      "slug": "100-organik-pamuk-poplin-gomleklik-elbiselik-kumas",
+      "short_description": "Yumuşacık tuşeli, terletmeyen, OEKO-TEX sertifikalı birinci sınıf saf pamuk poplin kumaş.",
+      "description": "Yazlık elbiseler, gömlekler, tunikler, pijama takımları ve bebek tekstili için en sağlıklı seçim. %100 saf Ege pamuğundan üretilmiş olup cildi tahriş etmez, terletmez ve hava geçirgenliği maksimum seviyededir.",
+      "technical_specs": {
+        "Kumaş Eni": "150 cm",
+        "Gramaj": "130 gr/m²",
+        "İçerik": "%100 Taranmış Pamuk",
+        "Sertifika": "OEKO-TEX Standard 100",
+        "Kullanım": "Gömlek, Elbise, Pijama, Bebek Kıyafetleri"
+      },
+      "base_price": 231,
+      "discount_price": 192.5,
+      "tax_rate": 20,
+      "is_meter_sale": 1,
+      "min_order_meter": 1,
+      "meter_step": 0.5,
+      "max_order_meter": 50,
+      "stock_meter": 190,
+      "has_variants": 1,
+      "main_image_url": "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=800&q=80",
+      "is_active": 1,
+      "is_featured": 0,
+      "is_bestseller": 0,
+      "is_new": 1,
+      "vitrin_order": 6,
+      "meta_title": "%100 Saf Pamuk Poplin Elbiselik Kumaş Metre Fiyatı",
+      "meta_description": "Doğal nefes alan pamuk poplin kumaşlar toptan ve perakende metre satışı.",
+      "canonical_url": "/urun/100-organik-pamuk-poplin-gomleklik-elbiselik-kumas",
+      "created_at": "2026-09-03T02:32:50.410Z",
+      "updated_at": "2026-09-07T01:51:14.993Z",
+      "category_ids": [
+        "cat-giyimlik"
+      ]
+    }
+  ],
+  "product_variants": [
+    {
+      "id": "var-1-antrasit",
+      "product_id": "prod-1",
+      "sku": "BKD-KAD-001-ANT",
+      "title": "Antrasit Gri",
+      "price": 324.5,
+      "discount_price": 324.5,
+      "stock_meter": 65,
+      "image_url": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=800&q=80",
+      "color_code": "#2D3748",
+      "is_active": 1
+    },
+    {
+      "id": "var-1-lacivert",
+      "product_id": "prod-1",
+      "sku": "BKD-KAD-001-LAC",
+      "title": "Gece Mavisi / Lacivert",
+      "price": 324.5,
+      "discount_price": 324.5,
+      "stock_meter": 45,
+      "image_url": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
+      "color_code": "#1E3A8A",
+      "is_active": 1
+    },
+    {
+      "id": "var-1-zumrut",
+      "product_id": "prod-1",
+      "sku": "BKD-KAD-001-ZUM",
+      "title": "Zümrüt Yeşili",
+      "price": 324.5,
+      "discount_price": 324.5,
+      "stock_meter": 35,
+      "image_url": "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80",
+      "color_code": "#065F46",
+      "is_active": 1
+    },
+    {
+      "id": "var-1-bordo",
+      "product_id": "prod-1",
+      "sku": "BKD-KAD-001-BOR",
+      "title": "Asil Bordo",
+      "price": 324.5,
+      "discount_price": 324.5,
+      "stock_meter": 35,
+      "image_url": "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=800&q=80",
+      "color_code": "#991B1B",
+      "is_active": 1
+    },
+    {
+      "id": "var-2-bej",
+      "product_id": "prod-2",
+      "sku": "BKD-BUK-002-BEJ",
+      "title": "Doğal Krem / Bej",
+      "price": 401.5,
+      "discount_price": 401.5,
+      "stock_meter": 50,
+      "image_url": "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=800&q=80",
+      "color_code": "#F5F5DC",
+      "is_active": 1
+    },
+    {
+      "id": "var-2-vizon",
+      "product_id": "prod-2",
+      "sku": "BKD-BUK-002-VIZ",
+      "title": "Toprak Vizon",
+      "price": 401.5,
+      "discount_price": 401.5,
+      "stock_meter": 40,
+      "image_url": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=800&q=80",
+      "color_code": "#8C7D70",
+      "is_active": 1
+    },
+    {
+      "id": "var-2-ant",
+      "product_id": "prod-2",
+      "sku": "BKD-BUK-002-ANT",
+      "title": "Duman Antrasit",
+      "price": 401.5,
+      "discount_price": 401.5,
+      "stock_meter": 30,
+      "image_url": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
+      "color_code": "#2D3748",
+      "is_active": 1
+    },
+    {
+      "id": "var-4-lacivert",
+      "product_id": "prod-4",
+      "sku": "BKD-BLK-004-LAC",
+      "title": "Blackout Lacivert",
+      "price": 429,
+      "discount_price": 429,
+      "stock_meter": 40,
+      "image_url": "https://images.unsplash.com/photo-1540518614846-7ede433c4b13?auto=format&fit=crop&w=800&q=80",
+      "color_code": "#1E3A8A",
+      "is_active": 1
+    },
+    {
+      "id": "var-4-antrasit",
+      "product_id": "prod-4",
+      "sku": "BKD-BLK-004-ANT",
+      "title": "Blackout Antrasit",
+      "price": 429,
+      "discount_price": 429,
+      "stock_meter": 40,
+      "image_url": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
+      "color_code": "#2D3748",
+      "is_active": 1
+    },
+    {
+      "id": "var-5-cizgi",
+      "product_id": "prod-5",
+      "sku": "BKD-DCK-005-CIZ",
+      "title": "Marin Çizgili Lacivert",
+      "price": 214.5,
+      "discount_price": 214.5,
+      "stock_meter": 90,
+      "image_url": "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=800&q=80",
+      "color_code": "#1E3A8A",
+      "is_active": 1
+    },
+    {
+      "id": "var-5-duz",
+      "product_id": "prod-5",
+      "sku": "BKD-DCK-005-DUZ",
+      "title": "Doğal Keten Bej Düz",
+      "price": 214.5,
+      "discount_price": 214.5,
+      "stock_meter": 80,
+      "image_url": "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=800&q=80",
+      "color_code": "#F5F5DC",
+      "is_active": 1
+    },
+    {
+      "id": "var-6-beyaz",
+      "product_id": "prod-6",
+      "sku": "BKD-POP-006-BEY",
+      "title": "Optik Kar Beyazı",
+      "price": 192.5,
+      "discount_price": 192.5,
+      "stock_meter": 70,
+      "image_url": "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=800&q=80",
+      "color_code": "#FFFFFF",
+      "is_active": 1
+    },
+    {
+      "id": "var-6-lacivert",
+      "product_id": "prod-6",
+      "sku": "BKD-POP-006-LAC",
+      "title": "Klasik Lacivert",
+      "price": 192.5,
+      "discount_price": 192.5,
+      "stock_meter": 60,
+      "image_url": "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=800&q=80",
+      "color_code": "#1E3A8A",
+      "is_active": 1
+    },
+    {
+      "id": "var-1788572603399-1",
+      "product_id": "prod-1788571179157",
+      "sku": "BKD-JAK-007-KRE",
+      "barcode": "",
+      "title": "Krem",
+      "color_name": "",
+      "pattern_name": "",
+      "attributes": {
+        "Renk": "Krem"
+      },
+      "price": 418,
+      "discount_price": 374,
+      "stock_meter": 146,
+      "image_url": "/uploads/kumas-1788571171363-sandykumas.webp",
+      "color_code": "#000000",
+      "is_active": 1,
+      "updated_at": "2026-09-05T01:43:36.921Z"
+    },
+    {
+      "id": "var-1788572603399-2",
+      "product_id": "prod-1788571179157",
+      "sku": "BKD-JAK-007-BEY",
+      "barcode": "",
+      "title": "Beyaz",
+      "color_name": "",
+      "pattern_name": "",
+      "attributes": {
+        "Renk": "Beyaz"
+      },
+      "price": 418,
+      "discount_price": 368.5,
+      "stock_meter": 150,
+      "image_url": "/uploads/kumas-1788571171363-sandykumas.webp",
+      "color_code": "#000000",
+      "is_active": 1,
+      "updated_at": "2026-09-05T01:43:36.921Z"
+    },
+    {
+      "id": "var-1788572603399-3",
+      "product_id": "prod-1788571179157",
+      "sku": "BKD-JAK-007-TUR",
+      "barcode": "",
+      "title": "Turuncu",
+      "color_name": "",
+      "pattern_name": "",
+      "attributes": {
+        "Renk": "Turuncu"
+      },
+      "price": 418,
+      "discount_price": 368.5,
+      "stock_meter": 135,
+      "image_url": "/uploads/kumas-1788571171363-sandykumas.webp",
+      "color_code": "#000000",
+      "is_active": 1,
+      "updated_at": "2026-09-05T01:43:36.921Z"
+    },
+    {
+      "id": "var-1788572603399-4",
+      "product_id": "prod-1788571179157",
+      "sku": "BKD-JAK-007-MAV",
+      "barcode": "",
+      "title": "Mavi",
+      "color_name": "",
+      "pattern_name": "",
+      "attributes": {
+        "Renk": "Mavi"
+      },
+      "price": 418,
+      "discount_price": 368.5,
+      "stock_meter": 150,
+      "image_url": "/uploads/kumas-1788571171363-sandykumas.webp",
+      "color_code": "#000000",
+      "is_active": 1,
+      "updated_at": "2026-09-05T01:43:36.921Z"
+    },
+    {
+      "id": "var-1788572603399-5",
+      "product_id": "prod-1788571179157",
+      "sku": "BKD-JAK-007-YEŞ",
+      "barcode": "",
+      "title": "Yeşil",
+      "color_name": "",
+      "pattern_name": "",
+      "attributes": {
+        "Renk": "Yeşil"
+      },
+      "price": 418,
+      "discount_price": 368.5,
+      "stock_meter": 150,
+      "image_url": "/uploads/kumas-1788571171363-sandykumas.webp",
+      "color_code": "#000000",
+      "is_active": 1,
+      "updated_at": "2026-09-05T01:43:36.921Z"
+    },
+    {
+      "id": "var-1788572603399-6",
+      "product_id": "prod-1788571179157",
+      "sku": "BKD-JAK-007-KAH",
+      "barcode": "",
+      "title": "Kahve",
+      "color_name": "",
+      "pattern_name": "",
+      "attributes": {
+        "Renk": "Kahve"
+      },
+      "price": 418,
+      "discount_price": 368.5,
+      "stock_meter": 150,
+      "image_url": "/uploads/kumas-1788571171363-sandykumas.webp",
+      "color_code": "#000000",
+      "is_active": 1,
+      "updated_at": "2026-09-05T01:43:36.921Z"
+    },
+    {
+      "id": "var-1788573695354-1",
+      "product_id": "prod-1788573566255",
+      "sku": "BKD02-BEY",
+      "barcode": "",
+      "title": "Beyaz",
+      "color_name": "",
+      "pattern_name": "",
+      "attributes": {
+        "Renk": "Beyaz"
+      },
+      "price": 110,
+      "discount_price": 110,
+      "stock_meter": 66,
+      "image_url": "/uploads/kumas-1788573549611-muslinhayal.webp",
+      "color_code": "#000000",
+      "is_active": 1,
+      "updated_at": "2026-09-05T02:01:36.709Z"
+    },
+    {
+      "id": "var-1788573695354-2",
+      "product_id": "prod-1788573566255",
+      "sku": "BKD02-KRE",
+      "barcode": "",
+      "title": "Krem",
+      "color_name": "",
+      "pattern_name": "",
+      "attributes": {
+        "Renk": "Krem"
+      },
+      "price": 110,
+      "discount_price": 110,
+      "stock_meter": 100,
+      "image_url": "/uploads/kumas-1788573549611-muslinhayal.webp",
+      "color_code": "#000000",
+      "is_active": 1,
+      "updated_at": "2026-09-05T02:01:36.709Z"
+    },
+    {
+      "id": "var-1788573695354-3",
+      "product_id": "prod-1788573566255",
+      "sku": "BKD02-SIY",
+      "barcode": "",
+      "title": "Siyah",
+      "color_name": "",
+      "pattern_name": "",
+      "attributes": {
+        "Renk": "Siyah"
+      },
+      "price": 110,
+      "discount_price": 110,
+      "stock_meter": 100,
+      "image_url": "/uploads/kumas-1788573549611-muslinhayal.webp",
+      "color_code": "#000000",
+      "is_active": 1,
+      "updated_at": "2026-09-05T02:01:36.709Z"
+    },
+    {
+      "id": "var-temp-1",
+      "product_id": "prod-1788736941003",
+      "sku": "BKD1213-1)",
+      "barcode": "",
+      "title": "1) CAMEL",
+      "color_name": "",
+      "pattern_name": "",
+      "attributes": {
+        "Renk": "1) CAMEL"
+      },
+      "price": 93.5,
+      "discount_price": 77,
+      "stock_meter": 100,
+      "image_url": "/uploads/kumas-1788736931691-2CAD21A3-6F97-49FB-AED3-C379C03BA022-1.webp",
+      "color_code": "#000000",
+      "is_active": 1,
+      "created_at": "2026-09-06T23:22:21.004Z"
+    },
+    {
+      "id": "var-temp-2",
+      "product_id": "prod-1788736941003",
+      "sku": "BKD1213-2)",
+      "barcode": "",
+      "title": "2) SOĞAN KABUĞU",
+      "color_name": "",
+      "pattern_name": "",
+      "attributes": {
+        "Renk": "2) SOĞAN KABUĞU"
+      },
+      "price": 93.5,
+      "discount_price": 77,
+      "stock_meter": 100,
+      "image_url": "/uploads/kumas-1788736931691-2CAD21A3-6F97-49FB-AED3-C379C03BA022-1.webp",
+      "color_code": "#000000",
+      "is_active": 1,
+      "created_at": "2026-09-06T23:22:21.004Z"
+    },
+    {
+      "id": "var-temp-3",
+      "product_id": "prod-1788736941003",
+      "sku": "BKD1213-3)",
+      "barcode": "",
+      "title": "3) HARDAL",
+      "color_name": "",
+      "pattern_name": "",
+      "attributes": {
+        "Renk": "3) HARDAL"
+      },
+      "price": 93.5,
+      "discount_price": 77,
+      "stock_meter": 100,
+      "image_url": "/uploads/kumas-1788736931691-2CAD21A3-6F97-49FB-AED3-C379C03BA022-1.webp",
+      "color_code": "#000000",
+      "is_active": 1,
+      "created_at": "2026-09-06T23:22:21.004Z"
+    },
+    {
+      "id": "var-temp-4",
+      "product_id": "prod-1788736941003",
+      "sku": "BKD1213-4)",
+      "barcode": "",
+      "title": "4) SİYAH",
+      "color_name": "",
+      "pattern_name": "",
+      "attributes": {
+        "Renk": "4) SİYAH"
+      },
+      "price": 93.5,
+      "discount_price": 77,
+      "stock_meter": 100,
+      "image_url": "/uploads/kumas-1788736931691-2CAD21A3-6F97-49FB-AED3-C379C03BA022-1.webp",
+      "color_code": "#000000",
+      "is_active": 1,
+      "created_at": "2026-09-06T23:22:21.004Z"
+    },
+    {
+      "id": "var-temp-5",
+      "product_id": "prod-1788736941003",
+      "sku": "BKD1213-5)",
+      "barcode": "",
+      "title": "5) KİREMİT",
+      "color_name": "",
+      "pattern_name": "",
+      "attributes": {
+        "Renk": "5) KİREMİT"
+      },
+      "price": 93.5,
+      "discount_price": 77,
+      "stock_meter": 100,
+      "image_url": "/uploads/kumas-1788736931691-2CAD21A3-6F97-49FB-AED3-C379C03BA022-1.webp",
+      "color_code": "#000000",
+      "is_active": 1,
+      "created_at": "2026-09-06T23:22:21.004Z"
+    },
+    {
+      "id": "var-temp-6",
+      "product_id": "prod-1788736941003",
+      "sku": "BKD1213-6)",
+      "barcode": "",
+      "title": "6) BORDO",
+      "color_name": "",
+      "pattern_name": "",
+      "attributes": {
+        "Renk": "6) BORDO"
+      },
+      "price": 93.5,
+      "discount_price": 77,
+      "stock_meter": 100,
+      "image_url": "/uploads/kumas-1788736931691-2CAD21A3-6F97-49FB-AED3-C379C03BA022-1.webp",
+      "color_code": "#000000",
+      "is_active": 1,
+      "created_at": "2026-09-06T23:22:21.004Z"
+    }
+  ],
+  "product_images": [
+    {
+      "id": "img-1-1",
+      "product_id": "prod-1",
+      "image_url": "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80",
+      "is_main": 1,
+      "display_order": 1
+    },
+    {
+      "id": "img-1-2",
+      "product_id": "prod-1",
+      "image_url": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=800&q=80",
+      "is_main": 0,
+      "display_order": 2
+    },
+    {
+      "id": "img-1-3",
+      "product_id": "prod-1",
+      "image_url": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80",
+      "is_main": 0,
+      "display_order": 3
+    },
+    {
+      "id": "img-2-1",
+      "product_id": "prod-2",
+      "image_url": "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=800&q=80",
+      "is_main": 1,
+      "display_order": 1
+    },
+    {
+      "id": "img-4-1",
+      "product_id": "prod-4",
+      "image_url": "https://images.unsplash.com/photo-1540518614846-7ede433c4b13?auto=format&fit=crop&w=800&q=80",
+      "is_main": 1,
+      "display_order": 1
+    },
+    {
+      "id": "img-5-1",
+      "product_id": "prod-5",
+      "image_url": "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=800&q=80",
+      "is_main": 1,
+      "display_order": 1
+    },
+    {
+      "id": "img-6-1",
+      "product_id": "prod-6",
+      "image_url": "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=800&q=80",
+      "is_main": 1,
+      "display_order": 1
+    }
+  ],
+  "carts": [],
+  "cart_items": [],
+  "coupons": [
+    {
+      "id": "coup-1788742286458",
+      "code": "BURSA15",
+      "title": "Özel %15 Kumaş İndirimi",
+      "discount_type": "percent",
+      "discount_value": 15,
+      "min_order_amount": 5000,
+      "max_discount_amount": 1250,
+      "usage_limit": 200,
+      "used_count": 1,
+      "per_user_limit": 1,
+      "start_date": "2026-09-07",
+      "expiry_date": "2026-10-07",
+      "is_active": 1,
+      "created_at": "2026-09-07T00:51:26.458Z"
+    }
+  ],
+  "coupon_usages": [],
+  "cart_discount_rules": [],
+  "orders": [
+    {
+      "id": "ord-1788742393850",
+      "order_number": "BKD-2026-000113",
+      "user_id": null,
+      "is_guest": 1,
+      "customer_name": "Ahmet Yılmaz",
+      "customer_email": "ahmet.yilmaz@example.com",
+      "customer_phone": "0532 111 22 33",
+      "shipping_address": {
+        "fullName": "Ahmet Yılmaz",
+        "phone": "0532 111 22 33",
+        "city": "Bursa",
+        "district": "Nilüfer",
+        "addressLine": "İhsaniye Mah. Barbaros Cad. No:14 D:6",
+        "postalCode": "16130",
+        "isCorporate": true,
+        "companyName": "Esra Bayram Yüzügüllü",
+        "taxNumber": "23423425123512",
+        "taxOffice": "uludağ"
+      },
+      "billing_address": {
+        "fullName": "Ahmet Yılmaz",
+        "phone": "0532 111 22 33",
+        "city": "Bursa",
+        "district": "Nilüfer",
+        "addressLine": "İhsaniye Mah. Barbaros Cad. No:14 D:6",
+        "postalCode": "16130",
+        "isCorporate": true,
+        "companyName": "Esra Bayram Yüzügüllü",
+        "taxNumber": "23423425123512",
+        "taxOffice": "uludağ"
+      },
+      "subtotal": 8223.199999999999,
+      "discount_total": 1233.48,
+      "payment_discount": 0,
+      "payment_fee": 100,
+      "coupon_code": "BURSA15",
+      "shipping_total": 0,
+      "tax_total": 635.43,
+      "grand_total": 7089.72,
+      "status": "Siparis_Alindi",
+      "payment_status": "pending",
+      "payment_method": "cash_on_delivery",
+      "order_notes": "Lütfen kumaşı tek parça halinde kesiniz.",
+      "carrier_name": "DHL Kargo (MNG Kargo)",
+      "tracking_number": "",
+      "tracking_url": "",
+      "invoice_status": "pending",
+      "invoice_number": "",
+      "created_at": "2026-09-07T00:53:13.850Z",
+      "updated_at": "2026-09-07T00:53:13.850Z"
+    },
+    {
+      "id": "ord-1788662049631",
+      "order_number": "BKD-2026-000112",
+      "user_id": null,
+      "is_guest": 1,
+      "customer_name": "Ahmet Yılmaz",
+      "customer_email": "ahmet.yilmaz@example.com",
+      "customer_phone": "0532 111 22 33",
+      "shipping_address": {
+        "fullName": "Ahmet Yılmaz",
+        "phone": "0532 111 22 33",
+        "city": "Bursa",
+        "district": "Nilüfer",
+        "addressLine": "İhsaniye Mah. Barbaros Cad. No:14 D:6",
+        "postalCode": "16130",
+        "isCorporate": false,
+        "companyName": "",
+        "taxNumber": "",
+        "taxOffice": ""
+      },
+      "billing_address": {
+        "fullName": "Ahmet Yılmaz",
+        "phone": "0532 111 22 33",
+        "city": "Bursa",
+        "district": "Nilüfer",
+        "addressLine": "İhsaniye Mah. Barbaros Cad. No:14 D:6",
+        "postalCode": "16130",
+        "isCorporate": false,
+        "companyName": "",
+        "taxNumber": "",
+        "taxOffice": ""
+      },
+      "subtotal": 2000,
+      "discount_total": 0,
+      "payment_discount": 0,
+      "payment_fee": 0,
+      "coupon_code": null,
+      "shipping_total": 130,
+      "tax_total": 181.82,
+      "grand_total": 2130,
+      "status": "Siparis_Alindi",
+      "payment_status": "paid",
+      "payment_method": "paytr",
+      "order_notes": "Lütfen kumaşı tek parça halinde kesiniz.",
+      "carrier_name": "DHL Kargo (MNG Kargo)",
+      "tracking_number": "",
+      "tracking_url": "",
+      "invoice_status": "pending",
+      "invoice_number": "",
+      "created_at": "2026-09-06T02:34:09.632Z",
+      "updated_at": "2026-09-06T02:34:09.632Z"
+    },
+    {
+      "id": "ord-1788660560849",
+      "order_number": "BKD-2026-000111",
+      "user_id": null,
+      "is_guest": 1,
+      "customer_name": "Ahmet Yılmaz",
+      "customer_email": "ahmet.yilmaz@example.com",
+      "customer_phone": "0532 111 22 33",
+      "shipping_address": {
+        "fullName": "Ahmet Yılmaz",
+        "phone": "0532 111 22 33",
+        "city": "Bursa",
+        "district": "Nilüfer",
+        "addressLine": "İhsaniye Mah. Barbaros Cad. No:14 D:6",
+        "postalCode": "16130",
+        "isCorporate": false,
+        "companyName": "",
+        "taxNumber": "",
+        "taxOffice": ""
+      },
+      "billing_address": {
+        "fullName": "Ahmet Yılmaz",
+        "phone": "0532 111 22 33",
+        "city": "Bursa",
+        "district": "Nilüfer",
+        "addressLine": "İhsaniye Mah. Barbaros Cad. No:14 D:6",
+        "postalCode": "16130",
+        "isCorporate": false,
+        "companyName": "",
+        "taxNumber": "",
+        "taxOffice": ""
+      },
+      "subtotal": 70,
+      "discount_total": 0,
+      "payment_discount": 1.4,
+      "payment_fee": 0,
+      "coupon_code": null,
+      "shipping_total": 130,
+      "tax_total": 6.24,
+      "grand_total": 198.6,
+      "status": "Siparis_Alindi",
+      "payment_status": "pending",
+      "payment_method": "bank_transfer",
+      "order_notes": "deneme deneme",
+      "carrier_name": "DHL Kargo (MNG Kargo)",
+      "tracking_number": "",
+      "tracking_url": "",
+      "invoice_status": "pending",
+      "invoice_number": "",
+      "created_at": "2026-09-06T02:09:20.849Z",
+      "updated_at": "2026-09-06T02:09:20.849Z",
+      "print_status": "Yazdırıldı"
+    },
+    {
+      "id": "ord-1788646922191",
+      "order_number": "BKD-2026-000110",
+      "user_id": null,
+      "is_guest": 1,
+      "customer_name": "Ahmet Yılmaz",
+      "customer_email": "ahmet.yilmaz@example.com",
+      "customer_phone": "0532 111 22 33",
+      "shipping_address": {
+        "fullName": "Ahmet Yılmaz",
+        "phone": "0532 111 22 33",
+        "city": "Bursa",
+        "district": "Nilüfer",
+        "addressLine": "İhsaniye Mah. Barbaros Cad. No:14 D:6",
+        "postalCode": "16130",
+        "isCorporate": false,
+        "companyName": "",
+        "taxNumber": "",
+        "taxOffice": ""
+      },
+      "billing_address": {
+        "fullName": "Ahmet Yılmaz",
+        "phone": "0532 111 22 33",
+        "city": "Bursa",
+        "district": "Nilüfer",
+        "addressLine": "İhsaniye Mah. Barbaros Cad. No:14 D:6",
+        "postalCode": "16130",
+        "isCorporate": false,
+        "companyName": "",
+        "taxNumber": "",
+        "taxOffice": ""
+      },
+      "subtotal": 2760,
+      "discount_total": 276,
+      "payment_discount": 0,
+      "payment_fee": 120,
+      "coupon_code": null,
+      "shipping_total": 0,
+      "tax_total": 225.82,
+      "grand_total": 2604,
+      "status": "Siparis_Alindi",
+      "payment_status": "pending",
+      "payment_method": "card_on_delivery",
+      "order_notes": "Lütfen kumaşı tek parça rulo halinde kesiniz.",
+      "carrier_name": "DHL Kargo (MNG Kargo)",
+      "tracking_number": "",
+      "tracking_url": "",
+      "invoice_status": "pending",
+      "invoice_number": "",
+      "created_at": "2026-09-05T22:22:02.191Z",
+      "updated_at": "2026-09-05T22:22:02.191Z",
+      "print_status": "Yazdırıldı"
+    },
+    {
+      "id": "ord-1788620976612",
+      "order_number": "BKD-2026-000112",
+      "user_id": null,
+      "is_guest": 1,
+      "customer_name": "Kapıda Ödeme Test Müşteri",
+      "customer_email": "kapida@example.com",
+      "customer_phone": "05329998877",
+      "shipping_address": {
+        "fullName": "Kapıda Ödeme Test Müşteri",
+        "phone": "05329998877",
+        "city": "Bursa",
+        "district": "Nilüfer",
+        "addressLine": "FSM Bulvarı No:10",
+        "postalCode": "",
+        "isCorporate": false,
+        "companyName": "",
+        "taxNumber": "",
+        "taxOffice": ""
+      },
+      "billing_address": {
+        "fullName": "Kapıda Ödeme Test Müşteri",
+        "phone": "05329998877",
+        "city": "Bursa",
+        "district": "Nilüfer",
+        "addressLine": "FSM Bulvarı No:10",
+        "postalCode": "",
+        "isCorporate": false,
+        "companyName": "",
+        "taxNumber": "",
+        "taxOffice": ""
+      },
+      "subtotal": 100,
+      "discount_total": 0,
+      "payment_discount": 0,
+      "payment_fee": 100,
+      "coupon_code": null,
+      "shipping_total": 150,
+      "tax_total": 9.09,
+      "grand_total": 350,
+      "status": "Siparis_Alindi",
+      "payment_status": "pending",
+      "payment_method": "cash_on_delivery",
+      "order_notes": "",
+      "carrier_name": "DHL Kargo (MNG Kargo)",
+      "tracking_number": "",
+      "tracking_url": "",
+      "invoice_status": "pending",
+      "invoice_number": "",
+      "created_at": "2026-09-05T15:09:36.612Z",
+      "updated_at": "2026-09-05T15:09:36.612Z"
+    },
+    {
+      "id": "ord-1788620976580",
+      "order_number": "BKD-2026-000111",
+      "user_id": null,
+      "is_guest": 1,
+      "customer_name": "Havale Test Müşteri",
+      "customer_email": "havale@example.com",
+      "customer_phone": "05329998877",
+      "shipping_address": {
+        "fullName": "Havale Test Müşteri",
+        "phone": "05329998877",
+        "city": "Bursa",
+        "district": "Osmangazi",
+        "addressLine": "Heykel Cad. No:1",
+        "postalCode": "",
+        "isCorporate": false,
+        "companyName": "",
+        "taxNumber": "",
+        "taxOffice": ""
+      },
+      "billing_address": {
+        "fullName": "Havale Test Müşteri",
+        "phone": "05329998877",
+        "city": "Bursa",
+        "district": "Osmangazi",
+        "addressLine": "Heykel Cad. No:1",
+        "postalCode": "",
+        "isCorporate": false,
+        "companyName": "",
+        "taxNumber": "",
+        "taxOffice": ""
+      },
+      "subtotal": 200,
+      "discount_total": 0,
+      "payment_discount": 4,
+      "payment_fee": 0,
+      "coupon_code": null,
+      "shipping_total": 150,
+      "tax_total": 17.82,
+      "grand_total": 346,
+      "status": "Siparis_Alindi",
+      "payment_status": "pending",
+      "payment_method": "bank_transfer",
+      "order_notes": "",
+      "carrier_name": "DHL Kargo (MNG Kargo)",
+      "tracking_number": "",
+      "tracking_url": "",
+      "invoice_status": "pending",
+      "invoice_number": "",
+      "created_at": "2026-09-05T15:09:36.592Z",
+      "updated_at": "2026-09-05T15:09:36.592Z"
+    },
+    {
+      "id": "ord-bkd-001",
+      "order_number": "BKD-2026-000101",
+      "user_id": "user-1",
+      "is_guest": 0,
+      "customer_name": "Ahmet Yılmaz",
+      "customer_email": "ahmet.yilmaz@example.com",
+      "customer_phone": "0532 111 22 33",
+      "shipping_address": {
+        "fullName": "Ahmet Yılmaz",
+        "phone": "0532 111 22 33",
+        "city": "Bursa",
+        "district": "Nilüfer",
+        "addressLine": "İhsaniye Mah. Barbaros Cad. No:14 D:6",
+        "postalCode": "16130"
+      },
+      "billing_address": {
+        "fullName": "Ahmet Yılmaz",
+        "phone": "0532 111 22 33",
+        "city": "Bursa",
+        "district": "Nilüfer",
+        "addressLine": "İhsaniye Mah. Barbaros Cad. No:14 D:6"
+      },
+      "subtotal": 2950,
+      "discount_total": 295,
+      "coupon_code": "BURSA10",
+      "shipping_total": 0,
+      "tax_total": 241.36,
+      "grand_total": 2655,
+      "status": "Kargoya_Verildi",
+      "payment_status": "paid",
+      "payment_method": "paytr",
+      "order_notes": "Lütfen kumaşı 2 parça halinde değil tek parça 10 metre kesiniz.",
+      "carrier_name": "DHL Kargo (MNG Kargo)",
+      "tracking_number": "YK-98234710293",
+      "tracking_url": "https://www.mngkargo.com.tr/gonderitakip?takipNo=YK-98234710293",
+      "invoice_status": "created",
+      "invoice_number": "EAF2026000000412",
+      "created_at": "2026-09-01T02:32:50.410Z",
+      "updated_at": "2026-09-04T23:52:36.803Z",
+      "print_status": "Yazdırıldı"
+    },
+    {
+      "id": "ord-bkd-002",
+      "order_number": "BKD-2026-000102",
+      "user_id": "user-2",
+      "is_guest": 0,
+      "customer_name": "Zeynep Kaya",
+      "customer_email": "zeynep.kaya@example.com",
+      "customer_phone": "0544 222 33 44",
+      "shipping_address": {
+        "fullName": "Zeynep Kaya",
+        "phone": "0544 222 33 44",
+        "city": "İstanbul",
+        "district": "Kadıköy",
+        "addressLine": "Caferağa Mah. Şair Nefi Sok. No:8",
+        "postalCode": "34710"
+      },
+      "billing_address": {
+        "fullName": "Zeynep Kaya",
+        "phone": "0544 222 33 44",
+        "city": "İstanbul",
+        "district": "Kadıköy",
+        "addressLine": "Caferağa Mah. Şair Nefi Sok. No:8"
+      },
+      "subtotal": 1825,
+      "discount_total": 182.5,
+      "coupon_code": "BURSA10",
+      "shipping_total": 0,
+      "tax_total": 149.32,
+      "grand_total": 1642.5,
+      "status": "Hazirlaniyor",
+      "payment_status": "paid",
+      "payment_method": "paytr",
+      "order_notes": "Atölye teslimatıdır, hafta içi 09:00 - 18:00 arası teslim ediniz.",
+      "carrier_name": "DHL Kargo (MNG Kargo)",
+      "tracking_number": "",
+      "tracking_url": "",
+      "invoice_status": "pending",
+      "invoice_number": "",
+      "created_at": "2026-09-02T20:32:50.410Z",
+      "updated_at": "2026-09-03T02:32:50.410Z",
+      "print_status": "Yazdırıldı"
+    },
+    {
+      "id": "ord-test-1788576123368",
+      "order_number": "BK-123368",
+      "user_id": "usr-1788576118328-b46r",
+      "customer_name": "Ahmet Müşteri",
+      "customer_email": "test.musteri.1788576116839@bursakumasdunyasi.com",
+      "total_amount": 1450,
+      "final_amount": 1450,
+      "status": "Hazirlaniyor",
+      "tracking_number": "YK9876543210",
+      "carrier": "DHL Kargo (MNG Kargo)",
+      "created_at": "2026-09-05T02:42:03.368Z",
+      "tax_total": 0
+    },
+    {
+      "id": "ord-test-1788576146352",
+      "order_number": "BK-146352",
+      "user_id": "usr-1788576145105-rikz",
+      "customer_name": "Ahmet Müşteri",
+      "customer_email": "test.musteri.1788576144711@bursakumasdunyasi.com",
+      "total_amount": 1450,
+      "final_amount": 1450,
+      "status": "Hazirlaniyor",
+      "tracking_number": "YK9876543210",
+      "carrier": "DHL Kargo (MNG Kargo)",
+      "created_at": "2026-09-05T02:42:26.352Z",
+      "tax_total": 0
+    },
+    {
+      "id": "ord-test-1788619403980",
+      "order_number": "BK-403980",
+      "user_id": "usr-1788619401421-1xau",
+      "customer_name": "Ahmet Müşteri",
+      "customer_email": "test.musteri.1788619398356@bursakumasdunyasi.com",
+      "total_amount": 1450,
+      "final_amount": 1450,
+      "status": "Hazirlaniyor",
+      "tracking_number": "YK9876543210",
+      "carrier": "DHL Kargo (MNG Kargo)",
+      "created_at": "2026-09-05T14:43:23.980Z",
+      "tax_total": 0
+    },
+    {
+      "id": "ord-test-1788620334852",
+      "order_number": "BK-334852",
+      "user_id": "usr-1788620330287-2tly",
+      "customer_name": "Ahmet Müşteri",
+      "customer_email": "test.musteri.1788620328629@bursakumasdunyasi.com",
+      "total_amount": 1450,
+      "final_amount": 1450,
+      "status": "Hazirlaniyor",
+      "tracking_number": "YK9876543210",
+      "carrier": "DHL Kargo (MNG Kargo)",
+      "created_at": "2026-09-05T14:58:54.852Z",
+      "tax_total": 0
+    },
+    {
+      "id": "ord-test-1788620370801",
+      "order_number": "BK-370801",
+      "user_id": "usr-1788620370040-cfpc",
+      "customer_name": "Ahmet Müşteri",
+      "customer_email": "test.musteri.1788620369805@bursakumasdunyasi.com",
+      "total_amount": 1450,
+      "final_amount": 1450,
+      "status": "Hazirlaniyor",
+      "tracking_number": "YK9876543210",
+      "carrier": "DHL Kargo (MNG Kargo)",
+      "created_at": "2026-09-05T14:59:30.801Z",
+      "tax_total": 0
+    }
+  ],
+  "order_items": [
+    {
+      "id": "item-1",
+      "order_id": "ord-bkd-001",
+      "product_id": "prod-1",
+      "variant_id": "var-1-antrasit",
+      "product_name": "Royal Lüks İtalyan Dokuma Kadife Döşemelik Kumaş",
+      "variant_title": "Antrasit Gri",
+      "product_sku": "BKD-KAD-001-ANT",
+      "product_image": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=800&q=80",
+      "meter_quantity": 10,
+      "unit_price": 295,
+      "total_price": 2950
+    },
+    {
+      "id": "item-2",
+      "order_id": "ord-bkd-002",
+      "product_id": "prod-2",
+      "variant_id": "var-2-bej",
+      "product_name": "Tulum Dokulu İskandinav Buklet Döşemelik Kumaş",
+      "variant_title": "Doğal Krem / Bej",
+      "product_sku": "BKD-BUK-002-BEJ",
+      "product_image": "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=800&q=80",
+      "meter_quantity": 5,
+      "unit_price": 365,
+      "total_price": 1825
+    },
+    {
+      "id": "item-1788576123372",
+      "order_id": "ord-test-1788576123368",
+      "product_id": "prod-1788573566255",
+      "product_name": "Müslin Hayal Siyah Desen",
+      "meter_quantity": 3.5,
+      "unit_price": 350
+    },
+    {
+      "id": "item-1788576146355",
+      "order_id": "ord-test-1788576146352",
+      "product_id": "prod-1788573566255",
+      "product_name": "Müslin Hayal Siyah Desen",
+      "meter_quantity": 3.5,
+      "unit_price": 350
+    },
+    {
+      "id": "item-1788619403981",
+      "order_id": "ord-test-1788619403980",
+      "product_id": "prod-1788573566255",
+      "product_name": "Müslin Hayal Siyah Desen",
+      "meter_quantity": 3.5,
+      "unit_price": 350
+    },
+    {
+      "id": "item-1788620334854",
+      "order_id": "ord-test-1788620334852",
+      "product_id": "prod-1788573566255",
+      "product_name": "Müslin Hayal Siyah Desen",
+      "meter_quantity": 3.5,
+      "unit_price": 350
+    },
+    {
+      "id": "item-1788620370802",
+      "order_id": "ord-test-1788620370801",
+      "product_id": "prod-1788573566255",
+      "product_name": "Müslin Hayal Siyah Desen",
+      "meter_quantity": 3.5,
+      "unit_price": 350
+    },
+    {
+      "id": "item-1788620976570-zq10",
+      "product_id": "prod-1788573566255",
+      "variant_id": null,
+      "product_name": "Müslin Hayal Siyah Desen",
+      "variant_title": "",
+      "product_sku": "BKD02",
+      "product_image": "/uploads/kumas-1788573549611-muslinhayal.webp",
+      "meter_quantity": 2,
+      "unit_price": 100,
+      "total_price": 200,
+      "order_id": "ord-1788620976580"
+    },
+    {
+      "id": "item-1788620976603-j49n",
+      "product_id": "prod-1788573566255",
+      "variant_id": null,
+      "product_name": "Müslin Hayal Siyah Desen",
+      "variant_title": "",
+      "product_sku": "BKD02",
+      "product_image": "/uploads/kumas-1788573549611-muslinhayal.webp",
+      "meter_quantity": 1,
+      "unit_price": 100,
+      "total_price": 100,
+      "order_id": "ord-1788620976612"
+    },
+    {
+      "id": "item-1788646922168-tude",
+      "product_id": "prod-1788571179157",
+      "variant_id": "var-1788572603399-1",
+      "product_name": "İtalyan Jakarlı Kadife Döşemelik Kumaş",
+      "variant_title": "Krem",
+      "product_sku": "BKD-JAK-007-KRE",
+      "product_image": "/uploads/kumas-1788571171363-sandykumas.webp",
+      "meter_quantity": 4,
+      "unit_price": 340,
+      "total_price": 1360,
+      "order_id": "ord-1788646922191"
+    },
+    {
+      "id": "item-1788646922168-zmqt",
+      "product_id": "prod-1788573566255",
+      "variant_id": "var-1788573695354-1",
+      "product_name": "Müslin Hayal Siyah Desen",
+      "variant_title": "Beyaz",
+      "product_sku": "BKD02-BEY",
+      "product_image": "/uploads/kumas-1788573549611-muslinhayal.webp",
+      "meter_quantity": 14,
+      "unit_price": 100,
+      "total_price": 1400,
+      "order_id": "ord-1788646922191"
+    },
+    {
+      "id": "item-1788660560838-zj0r",
+      "product_id": "prod-1788640963805",
+      "variant_id": null,
+      "product_name": "Viskon Ayrobin",
+      "variant_title": "",
+      "product_sku": "BKD11",
+      "product_image": "/uploads/kumas-1788640949765-viskonayrobin.webp",
+      "meter_quantity": 1,
+      "unit_price": 70,
+      "total_price": 70,
+      "order_id": "ord-1788660560849"
+    },
+    {
+      "id": "item-1788662049623-27u4",
+      "product_id": "prod-1788573566255",
+      "variant_id": "var-1788573695354-1",
+      "product_name": "Müslin Hayal Siyah Desen",
+      "variant_title": "Beyaz",
+      "product_sku": "BKD02-BEY",
+      "product_image": "/uploads/kumas-1788573549611-muslinhayal.webp",
+      "meter_quantity": 20,
+      "unit_price": 100,
+      "total_price": 2000,
+      "order_id": "ord-1788662049631"
+    },
+    {
+      "id": "item-1788742393833-u5de",
+      "product_id": "prod-1788571179157",
+      "variant_id": "var-1788572603399-3",
+      "product_name": "İtalyan Jakarlı Kadife Döşemelik Kumaş",
+      "variant_title": "Turuncu",
+      "product_sku": "BKD-JAK-007-TUR",
+      "product_image": "/uploads/kumas-1788571171363-sandykumas.webp",
+      "meter_quantity": 15,
+      "unit_price": 335,
+      "total_price": 5025,
+      "order_id": "ord-1788742393850"
+    },
+    {
+      "id": "item-1788742393833-u3qh",
+      "product_id": "prod-1788640963805",
+      "variant_id": null,
+      "product_name": "İthal Dökümlü Viskon Kumaş",
+      "variant_title": "",
+      "product_sku": "VSK-004",
+      "product_image": "/uploads/kumas-1788640949765-viskonayrobin.webp",
+      "meter_quantity": 16,
+      "unit_price": 179.9,
+      "total_price": 2878.4,
+      "order_id": "ord-1788742393850"
+    },
+    {
+      "id": "item-1788742393833-vjyd",
+      "product_id": "prod-1788641774597",
+      "variant_id": null,
+      "product_name": "Yerli Ayrobin Kumaş Taş Renk",
+      "variant_title": "",
+      "product_sku": "AYR-003",
+      "product_image": "/uploads/kumas-1788641830038-ketenkumsa.webp",
+      "meter_quantity": 2,
+      "unit_price": 159.9,
+      "total_price": 319.8,
+      "order_id": "ord-1788742393850"
+    }
+  ],
+  "order_status_history": [
+    {
+      "id": "hist-1788742393859",
+      "order_id": "ord-1788742393850",
+      "old_status": null,
+      "new_status": "Siparis_Alindi",
+      "changed_by": "Sistem (Otomatik)",
+      "notes": "Sipariş oluşturuldu. Toplam: 7089.72 TL",
+      "created_at": "2026-09-07T00:53:13.859Z"
+    },
+    {
+      "id": "hist-1788662049632",
+      "order_id": "ord-1788662049631",
+      "old_status": null,
+      "new_status": "Siparis_Alindi",
+      "changed_by": "Sistem (Otomatik)",
+      "notes": "Sipariş oluşturuldu. Toplam: 2130 TL",
+      "created_at": "2026-09-06T02:34:09.632Z"
+    },
+    {
+      "id": "hist-1788660560849",
+      "order_id": "ord-1788660560849",
+      "old_status": null,
+      "new_status": "Siparis_Alindi",
+      "changed_by": "Sistem (Otomatik)",
+      "notes": "Sipariş oluşturuldu. Toplam: 198.6 TL",
+      "created_at": "2026-09-06T02:09:20.849Z"
+    },
+    {
+      "id": "hist-1788646922203",
+      "order_id": "ord-1788646922191",
+      "old_status": null,
+      "new_status": "Siparis_Alindi",
+      "changed_by": "Sistem (Otomatik)",
+      "notes": "Sipariş oluşturuldu. Toplam: 2604 TL",
+      "created_at": "2026-09-05T22:22:02.203Z"
+    },
+    {
+      "id": "hist-1788620976612",
+      "order_id": "ord-1788620976612",
+      "old_status": null,
+      "new_status": "Siparis_Alindi",
+      "changed_by": "Sistem (Otomatik)",
+      "notes": "Sipariş oluşturuldu. Toplam: 350 TL",
+      "created_at": "2026-09-05T15:09:36.612Z"
+    },
+    {
+      "id": "hist-1788620976592",
+      "order_id": "ord-1788620976580",
+      "old_status": null,
+      "new_status": "Siparis_Alindi",
+      "changed_by": "Sistem (Otomatik)",
+      "notes": "Sipariş oluşturuldu. Toplam: 346 TL",
+      "created_at": "2026-09-05T15:09:36.592Z"
+    },
+    {
+      "id": "hist-1788565956803-lncw",
+      "order_id": "ord-bkd-001",
+      "old_status": "Kargoya_Verildi",
+      "new_status": "Kargoya_Verildi",
+      "changed_by": "Süper Yönetici",
+      "notes": "Sipariş durumu Kargoya_Verildi olarak güncellendi.",
+      "created_at": "2026-09-04T23:52:36.803Z"
+    },
+    {
+      "id": "hist-1788403532448-2oz3",
+      "order_id": "ord-bkd-001",
+      "old_status": "Kargoya_Verildi",
+      "new_status": "Kargoya_Verildi",
+      "changed_by": "Süper Yönetici",
+      "notes": "Sipariş durumu Kargoya_Verildi olarak güncellendi.",
+      "created_at": "2026-09-03T02:45:32.448Z"
+    },
+    {
+      "id": "hist-1",
+      "order_id": "ord-bkd-001",
+      "old_status": null,
+      "new_status": "Siparis_Alindi",
+      "changed_by": "Sistem (PayTR Webhook)",
+      "notes": "Ödeme PayTR üzerinden 2.655,00 TL olarak başarıyla tahsil edildi.",
+      "created_at": "2026-09-01T02:32:50.410Z"
+    },
+    {
+      "id": "hist-2",
+      "order_id": "ord-bkd-001",
+      "old_status": "Siparis_Alindi",
+      "new_status": "Hazirlaniyor",
+      "changed_by": "Murat Kesim & Sevkiyat",
+      "notes": "Kumaş kesim masasına alındı, 10.0 metre rulo kontrolü yapıldı.",
+      "created_at": "2026-09-01T14:32:50.410Z"
+    },
+    {
+      "id": "hist-3",
+      "order_id": "ord-bkd-001",
+      "old_status": "Hazirlaniyor",
+      "new_status": "Cikti_Alindi",
+      "changed_by": "Murat Kesim & Sevkiyat",
+      "notes": "Sipariş ve kesim fişi A4 yazdırıldı.",
+      "created_at": "2026-09-01T21:44:50.410Z"
+    },
+    {
+      "id": "hist-4",
+      "order_id": "ord-bkd-001",
+      "old_status": "Cikti_Alindi",
+      "new_status": "Kargoya_Verildi",
+      "changed_by": "DHL Kargo (MNG Kargo) Entegrasyonu",
+      "notes": "Takip No: YK-98234710293 ile kuryeye teslim edildi.",
+      "created_at": "2026-09-02T08:32:50.410Z"
+    },
+    {
+      "id": "hist-5",
+      "order_id": "ord-bkd-002",
+      "old_status": null,
+      "new_status": "Siparis_Alindi",
+      "changed_by": "Sistem (PayTR Webhook)",
+      "notes": "Ödeme PayTR üzerinden 1.642,50 TL tahsil edildi.",
+      "created_at": "2026-09-02T20:32:50.410Z"
+    },
+    {
+      "id": "hist-6",
+      "order_id": "ord-bkd-002",
+      "old_status": "Siparis_Alindi",
+      "new_status": "Hazirlaniyor",
+      "changed_by": "Murat Kesim & Sevkiyat",
+      "notes": "5.0 metre Krem Buklet kesim programına eklendi.",
+      "created_at": "2026-09-03T00:32:50.410Z"
+    }
+  ],
+  "payments": [
+    {
+      "id": "pay-1",
+      "order_id": "ord-bkd-001",
+      "provider": "paytr",
+      "merchant_oid": "BKD-2026-000101",
+      "transaction_id": "PAYTR-TX-99882211",
+      "amount": 2655,
+      "status": "success",
+      "installment_count": 1,
+      "raw_response": "{\"status\":\"success\",\"total_amount\":265500,\"hash\":\"verified_ok\"}",
+      "created_at": "2026-09-03T02:32:50.410Z"
+    },
+    {
+      "id": "pay-2",
+      "order_id": "ord-bkd-002",
+      "provider": "paytr",
+      "merchant_oid": "BKD-2026-000102",
+      "transaction_id": "PAYTR-TX-99882212",
+      "amount": 1642.5,
+      "status": "success",
+      "installment_count": 1,
+      "raw_response": "{\"status\":\"success\",\"total_amount\":164250,\"hash\":\"verified_ok\"}",
+      "created_at": "2026-09-03T02:32:50.410Z"
+    }
+  ],
+  "shipping_logs": [
+    {
+      "id": "ship-1",
+      "order_id": "ord-bkd-001",
+      "carrier": "DHL Kargo (MNG Kargo)",
+      "request_payload": "{\"order\":\"BKD-2026-000101\"}",
+      "response_payload": "{\"trackingNumber\":\"YK-98234710293\"}",
+      "status": "success",
+      "tracking_number": "YK-98234710293",
+      "created_at": "2026-09-03T02:32:50.410Z"
+    }
+  ],
+  "invoice_logs": [
+    {
+      "id": "inv-1",
+      "order_id": "ord-bkd-001",
+      "provider": "ParkBulut",
+      "request_payload": "{\"orderNumber\":\"BKD-2026-000101\"}",
+      "response_payload": "{\"invoiceNumber\":\"EAF2026000000412\",\"status\":\"created\"}",
+      "invoice_uuid": "uuid-412",
+      "invoice_number": "EAF2026000000412",
+      "status": "created",
+      "created_at": "2026-09-03T02:32:50.410Z"
+    }
+  ],
+  "reviews": [
+    {
+      "id": "rev-1788736378056-726z",
+      "product_id": "prod-1788733673308",
+      "user_id": null,
+      "customer_name": "Demet aksoy",
+      "rating": 5,
+      "comment": "2 gün içerisinde geldi. sorunsuz bir sipariş deneyimi oldu. bundan sonra tek adresimiz burası",
+      "images": [
+        "/uploads/kumas-1788736375391-oduncubursa.webp"
+      ],
+      "is_verified_purchase": 1,
+      "is_approved": 1,
+      "created_at": "2026-09-06T23:12:58.056Z",
+      "updated_at": "2026-09-06T23:13:24.483Z"
+    },
+    {
+      "id": "rev-1",
+      "product_id": "prod-1788733673308",
+      "customer_name": "Ahmet Yılmaz",
+      "rating": 5,
+      "comment": "Gömlek dikimi için 3 metre oduncu kumaş aldık. Kumaşın tuşesi ve yumuşaklığı mükemmel, sıcacık tutuyor.",
+      "is_verified_purchase": 1,
+      "is_approved": 1,
+      "created_at": "2026-09-05T10:00:00.000Z"
+    },
+    {
+      "id": "rev-2",
+      "product_id": "prod-1788640963805",
+      "customer_name": "Merve Dündar",
+      "rating": 5,
+      "comment": "Elbise diktim, dokusu gerçekten harika ve dökümü çok asil duruyor. 0.5m adımla tam istediğimiz ölçüde alabilmek büyük kolaylık.",
+      "is_verified_purchase": 1,
+      "is_approved": 1,
+      "created_at": "2026-09-05T12:30:00.000Z"
+    },
+    {
+      "id": "rev-3",
+      "product_id": "prod-1788573566255",
+      "customer_name": "Murat",
+      "rating": 5,
+      "comment": "Müslin kumaş mükemmel geldi. %100 pamuk çift kat dokusu bebek giyim ve yazlık kıyafetler için çok yumuşak.",
+      "is_verified_purchase": 1,
+      "is_approved": 1,
+      "created_at": "2026-09-05T15:00:00.000Z"
+    },
+    {
+      "id": "rev-4",
+      "product_id": "prod-1788641774597",
+      "customer_name": "Zeynep K.",
+      "rating": 5,
+      "comment": "Taş rengi ayrobin kumaş tam istediğim ton. Kırışmaz ve ütü istemeyen yapısıyla dikimi de kullanımı da çok rahat.",
+      "is_verified_purchase": 1,
+      "is_approved": 1,
+      "created_at": "2026-09-06T09:00:00.000Z"
+    },
+    {
+      "id": "rev-5",
+      "product_id": "prod-1",
+      "customer_name": "Elif Kaya",
+      "rating": 5,
+      "comment": "Medine ipeği krep kalitesi kusursuz. İç göstermiyor ve dökümü çok kaliteli duruyor. Bursa kalitesi fark yaratıyor.",
+      "is_verified_purchase": 1,
+      "is_approved": 1,
+      "created_at": "2026-09-06T14:20:00.000Z"
+    },
+    {
+      "id": "rev-6",
+      "product_id": "prod-1788647431978",
+      "customer_name": "Selim B.",
+      "rating": 5,
+      "comment": "Doğal keten viskon kumaşın tuşesi harika. Hızlı kargo ve temiz kesim için Bursa Kumaş Dünyası ekibine teşekkür ederim.",
+      "is_verified_purchase": 1,
+      "is_approved": 1,
+      "created_at": "2026-09-06T18:00:00.000Z"
+    }
+  ],
+  "wishlists": [],
+  "homepage_sections": [
+    {
+      "id": "sec-hero",
+      "section_key": "hero_slider",
+      "title": "Bursa Kumaş Dünyası Ana Vitrin",
+      "subtitle": "Doğrudan Dokuma Tezgahından Kapınıza",
+      "section_type": "hero",
+      "display_order": 1,
+      "is_active": 1,
+      "config_json": null,
+      "created_at": "2026-09-03T02:32:50.410Z"
+    },
+    {
+      "id": "sec-features",
+      "section_key": "advantages_bar",
+      "title": "Neden Bursa Kumaş Dünyası?",
+      "subtitle": "Türkiye Geneli Hızlı Teslimat & Metre Kesim Garantisi",
+      "section_type": "advantages",
+      "display_order": 2,
+      "is_active": 1,
+      "config_json": null,
+      "created_at": "2026-09-03T02:32:50.410Z"
+    },
+    {
+      "id": "sec-cats",
+      "section_key": "category_grid",
+      "title": "Popüler Kumaş Kategorileri",
+      "subtitle": "Döşemelik, Perdelik, Giyimlik ve Ev Tekstili",
+      "section_type": "categories",
+      "display_order": 3,
+      "is_active": 1,
+      "config_json": null,
+      "created_at": "2026-09-03T02:32:50.410Z"
+    },
+    {
+      "id": "sec-vitrin",
+      "section_key": "featured_fabrics",
+      "title": "Haftanın Öne Çıkan Kumaşları",
+      "subtitle": "Mimarların ve Evini Yenileyenlerin Favori Seçimleri",
+      "section_type": "featured_products",
+      "display_order": 4,
+      "is_active": 1,
+      "config_json": null,
+      "created_at": "2026-09-03T02:32:50.410Z"
+    },
+    {
+      "id": "sec-best",
+      "section_key": "bestseller_fabrics",
+      "title": "Çok Satan Kumaşlarımız",
+      "subtitle": "Müşterilerimizin En Yüksek Puan Verdiği Dokumalar",
+      "section_type": "bestsellers",
+      "display_order": 5,
+      "is_active": 1,
+      "config_json": null,
+      "created_at": "2026-09-03T02:32:50.410Z"
+    },
+    {
+      "id": "sec-reviews",
+      "section_key": "customer_testimonials",
+      "title": "Gerçek Müşteri Yorumları",
+      "subtitle": "Binlerce Mutlu Kumaş Severin Deneyimleri",
+      "section_type": "reviews",
+      "display_order": 6,
+      "is_active": 1,
+      "config_json": null,
+      "created_at": "2026-09-03T02:32:50.410Z"
+    },
+    {
+      "id": "sec-blog",
+      "section_key": "latest_articles",
+      "title": "Kumaş Rehberi & Blog",
+      "subtitle": "Kumaş seçimi, metre hesabı ve bakım önerileri",
+      "section_type": "blog",
+      "display_order": 7,
+      "is_active": 1,
+      "config_json": null,
+      "created_at": "2026-09-03T02:32:50.410Z"
+    }
+  ],
+  "homepage_banners": [
+    {
+      "id": "ban-1",
+      "title": "İlham Veren Kumaşlar: Viskon, Krep ve Ayrobin Koleksiyonu",
+      "subtitle": "Gömlek, ceket ve şık kışlık tasarımlarınız için tok ve yumuşak dokulu oduncu kumaşlar uygun parça fiyatlarıyla sizi bekliyor.",
+      "image_url": "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=1600&q=85",
+      "mobile_image_url": "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=800&q=80",
+      "link_url": "/kategori/tum-kumaslar",
+      "button_text": "Ürünleri İnceleyin",
+      "display_order": 1,
+      "is_active": 1,
+      "created_at": "2026-09-03T02:32:50.410Z"
+    }
+  ],
+  "blog_posts": [
+    {
+      "id": "blog-1",
+      "title": "Koltuk Döşemelik Kumaş Seçerken Dikkat Edilmesi Gereken 7 Altın Kural",
+      "slug": "koltuk-dosemelik-kumas-secerken-dikkat-edilmesi-gereken-7-altin-kural",
+      "summary": "Eviniz için en doğru döşemelik kumaşı seçmek; dayanıklılık, leke tutmazlık, evcil hayvan uyumu ve doku dengesi gerektirir. İşte uzman rehberi.",
+      "content": "## Koltuk Döşemelik Kumaş Seçim Rehberi\n\nEvinizin en çok kullanılan mobilyası olan koltukların kumaşını yenilerken dikkat etmeniz gereken en önemli kriterler şunlardır:\n\n### 1. Martindale Aşınma Dayanımı\nDöşemelik kumaşlarda sürtünme testi (Martindale) en az 30.000 rubs olmalıdır. Yoğun kullanılan oturma odaları için 50.000+ Martindale kadife ve şönil kumaşları tercih etmelisiniz.\n\n### 2. Su İticilik ve Leke Tutmaz Nano Apre\nSıvı döküldüğünde içine çekmeyen, yüzeyde boncuklaşan kumaşlar özellikle çocuklu ve evcil hayvanlı aileler için vazgeçilmezdir.\n\n### 3. Pet-Friendly (Evcil Hayvan Dostu) Sık Dokuma\nKedili ve köpekli evlerde tırnak takılmasını engelleyen tulum kadife ve sık dokuma nubuk kumaşlar önerilir.\n\n### 4. Renk ve Işık Uyumu\nGüneş alan salonlarda solmaya karşı UV dirençli kumaşlar seçilmeli, küçük mekanlarda açık bej ve vizon tonları tercih edilmelidir.\n\nBursa Kumaş Dünyası olarak tüm döşemelik kumaşlarımızı metre bazında 0.5m adımlarla doğrudan üreticiden kapınıza ulaştırıyoruz.",
+      "cover_image": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1200&q=80",
+      "author": "Bursa Kumaş Dünyası Tekstil Mimarı",
+      "category": "Döşemelik Rehberi",
+      "tags": "Döşemelik Kumaş, Kadife, Koltuk Kaplama, Leke Tutmaz",
+      "meta_title": "Koltuk Döşemelik Kumaş Seçimi 7 Kural - Bursa Kumaş Dünyası",
+      "meta_description": "Koltuk kaplama kumaşı seçerken nelere dikkat edilmeli? Martindale testi, su iticilik, evcil hayvan uyumu ve kumaş metre hesabı.",
+      "is_published": 1,
+      "published_at": "2026-09-03T02:32:50.410Z",
+      "created_at": "2026-09-03T02:32:50.410Z"
+    },
+    {
+      "id": "blog-2",
+      "title": "Fon Perde Metre Hesabı Nasıl Yapılır? Adım Adım Ölçü Alma Rehberi",
+      "slug": "fon-perde-metre-hesabi-nasil-yapilir",
+      "summary": "Pencereleriniz için fon perde diktirirken ne kadar kumaşa ihtiyacınız olduğunu 280 cm çift en ve pile sıklığına göre nasıl hesaplayacağınızı öğrenin.",
+      "content": "## Fon Perde Metre Hesabı Nasıl Yapılır?\n\nFon perde dikiminde en kritik konu, kumaşın eni ve istenen pile oranıdır:\n\n### Çift En (280 cm) Kumaş Avantajı\nEğer tavan yüksekliğiniz 260 - 270 cm arasındaysa, 280 cm enindeki kumaş tek parça olarak boydan kullanılır. Böylece sadece pencere genişliğiniz kadar kumaş metresi almanız yeterli olur!\n\n### Pile Oranlarına Göre Hesaplama:\n- **1/2 Seyrek Pile**: Pencere eni x 2 metre kumaş\n- **1/2.5 Normal Pile**: Pencere eni x 2.5 metre kumaş\n- **1/3 Sık (Kanun) Pile**: Pencere eni x 3 metre kumaş\n\nÖrnek: 1 metrelik tek kanat fon için 1/2.5 pilede tam 2.5 metre kumaş almanız gerekmektedir.",
+      "cover_image": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80",
+      "author": "Perde & Dekorasyon Uzmanı",
+      "category": "Perdelik Rehberi",
+      "tags": "Fon Perde, Metre Hesabı, 280 cm Çift En, Perdelik Kumaş",
+      "meta_title": "Fon Perde Kumaş Metre Hesabı Nasıl Yapılır? - Bursa Kumaş Dünyası",
+      "meta_description": "Fon perde için kaç metre kumaş gider? 280 cm çift en avantajı, pile oranları ve doğru pencere ölçüsü alma formülü.",
+      "is_published": 1,
+      "published_at": "2026-09-03T02:32:50.410Z",
+      "created_at": "2026-09-03T02:32:50.410Z"
+    }
+  ],
+  "audit_logs": [
+    {
+      "id": "audit-1788745875000-nrmk",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "BATCH_PRICE_UPDATE",
+      "details": "Toplu Fiyat Güncelleme yapıldı: İşlem \"price_increase_percent\", Kategori: \"Tüm Kategoriler\", Güncellenen Kumaş: 13, Güncellenen Varyasyon: 28",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-07T01:51:15.000Z"
+    },
+    {
+      "id": "audit-1788735719482-414o",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "CATEGORY_DELETE",
+      "details": "Kategori ve bağlı menü öğesi silindi: ID cat-tensel-modal",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-06T23:01:59.482Z"
+    },
+    {
+      "id": "audit-1788734408350-wuht",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "MENU_DELETE",
+      "details": "Menü öğesi ve bağlı alt menüleri silindi: ID menu-1788734388599",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-06T22:40:08.350Z"
+    },
+    {
+      "id": "audit-1788734182958-67dp",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "MENU_DELETE",
+      "details": "Menü öğesi ve bağlı alt menüleri silindi: ID menu-1788734172489",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-06T22:36:22.958Z"
+    },
+    {
+      "id": "audit-1788733981982-6pvt",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "MENU_DELETE",
+      "details": "Menü öğesi ve bağlı alt menüleri silindi: ID menu-1788733940890",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-06T22:33:01.982Z"
+    },
+    {
+      "id": "audit-1788661996247-zedm",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "ORDER_UPDATE",
+      "details": "Sipariş #BKD-2026-000111 güncellendi: {\"print_status\":\"Yazdırıldı\"}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-06T02:33:16.247Z"
+    },
+    {
+      "id": "audit-1788647169918-rdbb",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "ORDER_UPDATE",
+      "details": "Sipariş #BKD-2026-000110 güncellendi: {\"print_status\":\"Yazdırıldı\"}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-05T22:26:09.918Z"
+    },
+    {
+      "id": "audit-1788640440138-ee0u",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "CATEGORY_DELETE",
+      "details": "Kategori ve bağlı menü öğesi silindi: ID cat-masa",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-05T20:34:00.138Z"
+    },
+    {
+      "id": "audit-1788640437713-4snj",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "CATEGORY_DELETE",
+      "details": "Kategori ve bağlı menü öğesi silindi: ID cat-giyimlik",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-05T20:33:57.713Z"
+    },
+    {
+      "id": "audit-1788640435482-bzsd",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "CATEGORY_DELETE",
+      "details": "Kategori ve bağlı menü öğesi silindi: ID cat-perdelik",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-05T20:33:55.482Z"
+    },
+    {
+      "id": "audit-1788640433044-iofq",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "CATEGORY_DELETE",
+      "details": "Kategori ve bağlı menü öğesi silindi: ID cat-sonil",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-05T20:33:53.044Z"
+    },
+    {
+      "id": "audit-1788640280053-7f9e",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "ORDER_DELETE",
+      "details": "Sipariş silindi: #BK-OTHER-99 (undefined)",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-05T20:31:20.053Z"
+    },
+    {
+      "id": "audit-1788640277475-ncdr",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "ORDER_DELETE",
+      "details": "Sipariş silindi: #BK-OTHER-99 (undefined)",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-05T20:31:17.475Z"
+    },
+    {
+      "id": "audit-1788640274701-rrcj",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "ORDER_DELETE",
+      "details": "Sipariş silindi: #BK-OTHER-99 (undefined)",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-05T20:31:14.701Z"
+    },
+    {
+      "id": "audit-1788618819528-6a8t",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "ORDER_UPDATE",
+      "details": "Sipariş #BKD-2026-000101 güncellendi: {\"print_status\":\"Yazdırıldı\"}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-05T14:33:39.528Z"
+    },
+    {
+      "id": "audit-1788618809317-8heu",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "ORDER_UPDATE",
+      "details": "Sipariş #BKD-2026-000101 güncellendi: {\"print_status\":\"Yazdırıldı\"}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-05T14:33:29.317Z"
+    },
+    {
+      "id": "audit-1788618772821-fnqb",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "ORDER_DELETE",
+      "details": "Sipariş silindi: #BK-OTHER-99 (undefined)",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-05T14:32:52.821Z"
+    },
+    {
+      "id": "audit-1788618769233-t47c",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "ORDER_DELETE",
+      "details": "Sipariş silindi: #BK-OTHER-99 (undefined)",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-05T14:32:49.233Z"
+    },
+    {
+      "id": "audit-1788568461493-ehci",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "CATEGORY_DELETE",
+      "details": "Kategori ve bağlı menü öğesi silindi: ID cat-kadife",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-05T00:34:21.493Z"
+    },
+    {
+      "id": "audit-1788568142516-4pvb",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "MENU_DELETE",
+      "details": "Menü öğesi ve bağlı alt menüleri silindi: ID menu-5",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-05T00:29:02.516Z"
+    },
+    {
+      "id": "audit-1788568139455-qcgy",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "MENU_DELETE",
+      "details": "Menü öğesi ve bağlı alt menüleri silindi: ID menu-3",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-05T00:28:59.455Z"
+    },
+    {
+      "id": "audit-1788568137218-c8mg",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "MENU_DELETE",
+      "details": "Menü öğesi ve bağlı alt menüleri silindi: ID menu-2",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-05T00:28:57.218Z"
+    },
+    {
+      "id": "audit-1788568134907-6zu5",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "MENU_DELETE",
+      "details": "Menü öğesi ve bağlı alt menüleri silindi: ID menu-1",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-05T00:28:54.907Z"
+    },
+    {
+      "id": "audit-1788567314595-rqtt",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "CATEGORY_DELETE",
+      "details": "Kategori ve bağlı menü öğesi silindi: ID cat-fon",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-05T00:15:14.595Z"
+    },
+    {
+      "id": "audit-1788567309160-ofxx",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "MENU_DELETE",
+      "details": "Menü öğesi silindi: ID menu-4",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-05T00:15:09.160Z"
+    },
+    {
+      "id": "audit-1788567055096-4lbe",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "CATEGORY_DELETE",
+      "details": "Kategori silindi: ID cat-blackout",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-05T00:10:55.096Z"
+    },
+    {
+      "id": "audit-1788567048743-2i5d",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "MENU_DELETE",
+      "details": "Menü öğesi silindi: ID menu-6",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-05T00:10:48.743Z"
+    },
+    {
+      "id": "audit-1788566124218-xeka",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "BULK_PRINT_ORDERS",
+      "details": "2 adet sipariş toplu olarak yazdırıldı ve 'Yazdırıldı' olarak işaretlendi.",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-04T23:55:24.218Z"
+    },
+    {
+      "id": "audit-1788566124206-g8vi",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "BULK_PRINT_ORDERS",
+      "details": "2 adet sipariş toplu olarak yazdırıldı ve 'Yazdırıldı' olarak işaretlendi.",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-04T23:55:24.206Z"
+    },
+    {
+      "id": "audit-1788565981870-v7jf",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "ORDER_UPDATE",
+      "details": "Sipariş #BKD-2026-000101 güncellendi: {\"print_status\":\"Yazdırıldı\"}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-04T23:53:01.870Z"
+    },
+    {
+      "id": "audit-1",
+      "admin_id": "admin-1",
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "SYSTEM_INIT",
+      "details": "Sistem ilk kurulum ve kumaş katalogları başarıyla yüklendi.",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-03T02:32:50.410Z"
+    }
+  ],
+  "email_logs": [
+    {
+      "id": "em-1788742393867-q295",
+      "recipient_email": "ahmet.yilmaz@example.com",
+      "subject": "Bursa Kumaş Dünyası – Siparişiniz Alındı (#BKD-2026-000113)",
+      "template_type": "ORDER_CONFIRMATION",
+      "status": "sent",
+      "error_message": null,
+      "created_at": "2026-09-07T00:53:13.867Z"
+    },
+    {
+      "id": "em-1788662049636-e55l",
+      "recipient_email": "ahmet.yilmaz@example.com",
+      "subject": "Bursa Kumaş Dünyası – Siparişiniz Alındı (#BKD-2026-000112)",
+      "template_type": "ORDER_CONFIRMATION",
+      "status": "sent",
+      "error_message": null,
+      "created_at": "2026-09-06T02:34:09.636Z"
+    },
+    {
+      "id": "em-1788660560854-06a8",
+      "recipient_email": "ahmet.yilmaz@example.com",
+      "subject": "Bursa Kumaş Dünyası – Siparişiniz Alındı (#BKD-2026-000111)",
+      "template_type": "ORDER_CONFIRMATION",
+      "status": "sent",
+      "error_message": null,
+      "created_at": "2026-09-06T02:09:20.854Z"
+    },
+    {
+      "id": "em-1788646922221-p1au",
+      "recipient_email": "ahmet.yilmaz@example.com",
+      "subject": "Bursa Kumaş Dünyası – Siparişiniz Alındı (#BKD-2026-000110)",
+      "template_type": "ORDER_CONFIRMATION",
+      "status": "sent",
+      "error_message": null,
+      "created_at": "2026-09-05T22:22:02.221Z"
+    },
+    {
+      "id": "em-1788620976617-s9sr",
+      "recipient_email": "kapida@example.com",
+      "subject": "Bursa Kumaş Dünyası – Siparişiniz Alındı (#BKD-2026-000112)",
+      "template_type": "ORDER_CONFIRMATION",
+      "status": "sent",
+      "error_message": null,
+      "created_at": "2026-09-05T15:09:36.617Z"
+    },
+    {
+      "id": "em-1788620976597-id6u",
+      "recipient_email": "havale@example.com",
+      "subject": "Bursa Kumaş Dünyası – Siparişiniz Alındı (#BKD-2026-000111)",
+      "template_type": "ORDER_CONFIRMATION",
+      "status": "sent",
+      "error_message": null,
+      "created_at": "2026-09-05T15:09:36.597Z"
+    },
+    {
+      "id": "em-1",
+      "recipient_email": "ahmet.yilmaz@example.com",
+      "subject": "Bursa Kumaş Dünyası – Siparişiniz Kargoya Verildi (#BKD-2026-000101)",
+      "template_type": "ORDER_SHIPPED",
+      "status": "sent",
+      "error_message": null,
+      "created_at": "2026-09-03T02:32:50.410Z"
+    },
+    {
+      "id": "email-1788576118375-verify",
+      "to": "test.musteri.1788576116839@bursakumasdunyasi.com",
+      "subject": "Bursa Kumaş Dünyası - E-Posta Adresinizi Doğrulayın",
+      "template": "email_verification",
+      "verification_link": "/auth/dogrula?token=202f53e79eccbbe0e4670092c2a25bebfe24feef7675f56055b77f1a9b67d7c1",
+      "status": "sent",
+      "created_at": "2026-09-05T02:41:58.329Z"
+    },
+    {
+      "id": "email-1788576145113-verify",
+      "to": "test.musteri.1788576144711@bursakumasdunyasi.com",
+      "subject": "Bursa Kumaş Dünyası - E-Posta Adresinizi Doğrulayın",
+      "template": "email_verification",
+      "verification_link": "/auth/dogrula?token=ba06b08d1da2f023af40151c80334c6075596772991f1607e6483d9af29a5977",
+      "status": "sent",
+      "created_at": "2026-09-05T02:42:25.105Z"
+    },
+    {
+      "id": "email-1788619401442-verify",
+      "to": "test.musteri.1788619398356@bursakumasdunyasi.com",
+      "subject": "Bursa Kumaş Dünyası - E-Posta Adresinizi Doğrulayın",
+      "template": "email_verification",
+      "verification_link": "/auth/dogrula?token=12ed614b68544a6517a875f356a8cc4ca698275a6b6b592db15cd52b2e38ed63",
+      "status": "sent",
+      "created_at": "2026-09-05T14:43:21.421Z"
+    },
+    {
+      "id": "email-1788620330324-verify",
+      "to": "test.musteri.1788620328629@bursakumasdunyasi.com",
+      "subject": "Bursa Kumaş Dünyası - E-Posta Adresinizi Doğrulayın",
+      "template": "email_verification",
+      "verification_link": "/auth/dogrula?token=e29f0c19d77c0b40593461766bbba0b3e3e68cc72638ffca94eaba44beaacdcf",
+      "status": "sent",
+      "created_at": "2026-09-05T14:58:50.287Z"
+    },
+    {
+      "id": "email-1788620370048-verify",
+      "to": "test.musteri.1788620369805@bursakumasdunyasi.com",
+      "subject": "Bursa Kumaş Dünyası - E-Posta Adresinizi Doğrulayın",
+      "template": "email_verification",
+      "verification_link": "/auth/dogrula?token=4f1fab3639f267c26f120c1a79c2b179f6f1cc6b714ac7b70dd3e23b0fc7046d",
+      "status": "sent",
+      "created_at": "2026-09-05T14:59:30.040Z"
+    }
+  ],
+  "sms_logs": [
+    {
+      "id": "sms-1",
+      "phone_number": "0532 111 22 33",
+      "message_content": "Bursa Kumaş Dünyası: #BKD-2026-000101 nolu kumaş siparişiniz Yurtiçi Kargo (YK-98234710293) ile kargoya verilmiştir.",
+      "provider": "Netgsm",
+      "status": "sent",
+      "created_at": "2026-09-03T02:32:50.410Z"
+    }
+  ],
+  "navigation_menus": [
+    {
+      "id": "menu-7",
+      "title": "Kumaş Rehberi & Blog",
+      "url": "/blog",
+      "type": "header",
+      "display_order": 9,
+      "is_active": 1,
+      "is_highlight": 1,
+      "parent_id": null,
+      "category_id": null,
+      "badge_text": "",
+      "target": "_self"
+    },
+    {
+      "id": "menu-cat-cat-dosemelik",
+      "category_id": "cat-dosemelik",
+      "title": "Viskon Kumaşlar",
+      "url": "/kategori/viskon-kumaslar",
+      "type": "header",
+      "display_order": 1,
+      "is_active": 1,
+      "is_highlight": 0
+    },
+    {
+      "id": "menu-cat-cat-1788567019651",
+      "category_id": "cat-1788567019651",
+      "title": "Krep Kumaşlar",
+      "url": "/kategori/krep-kumaslar",
+      "type": "header",
+      "display_order": 7,
+      "is_active": 1,
+      "is_highlight": 0,
+      "parent_id": null,
+      "badge_text": "",
+      "target": "_self"
+    },
+    {
+      "id": "menu-cat-cat-1788568453137",
+      "category_id": "cat-1788568453137",
+      "title": "Müslin Kumaşlar",
+      "url": "/kategori/muslin-kumaslar",
+      "type": "header",
+      "display_order": 3,
+      "is_active": 1,
+      "is_highlight": 0
+    },
+    {
+      "id": "menu-cat-cat-1788640540218",
+      "category_id": "cat-1788640540218",
+      "title": "Ayrobin Kumaşlar",
+      "url": "/kategori/ayrobin-kumaslar",
+      "type": "header",
+      "display_order": 4,
+      "is_active": 1,
+      "is_highlight": 0
+    },
+    {
+      "id": "menu-cat-cat-1788641005656",
+      "category_id": "cat-1788641005656",
+      "title": "Keten Kumaşlar",
+      "url": "/kategori/keten-kumaslar",
+      "type": "header",
+      "display_order": 5,
+      "is_active": 1,
+      "is_highlight": 0
+    },
+    {
+      "id": "menu-cat-cat-1788730578853",
+      "category_id": "cat-1788730578853",
+      "title": "Oduncu Kumaşlar",
+      "url": "/kategori/oduncu-kumaslar",
+      "type": "header",
+      "display_order": 6,
+      "is_active": 1,
+      "is_highlight": 0
+    },
+    {
+      "id": "menu-cat-cat-1788733802644",
+      "category_id": "cat-1788733802644",
+      "title": "Diğer Kategoriler",
+      "url": "/kategori/diger-kategoriler",
+      "type": "header",
+      "display_order": 7,
+      "is_active": 1,
+      "is_highlight": 0
+    }
+  ],
+  "product_badges": [
+    {
+      "id": "badge-cok-satan",
+      "title": "Çok Satan",
+      "slug": "cok-satan",
+      "bg_color": "#f59e0b",
+      "text_color": "#0f172a",
+      "icon_name": "Star",
+      "position": "image_top_left",
+      "display_order": 1,
+      "is_active": 1,
+      "created_at": "2026-09-05T01:14:55.989Z"
+    },
+    {
+      "id": "badge-yeni-sezon",
+      "title": "Yeni Sezon",
+      "slug": "yeni-sezon",
+      "bg_color": "#2563eb",
+      "text_color": "#ffffff",
+      "icon_name": "Sparkles",
+      "position": "image_top_left",
+      "display_order": 2,
+      "is_active": 1,
+      "created_at": "2026-09-05T01:14:55.989Z"
+    },
+    {
+      "id": "badge-pamuk",
+      "title": "%100 Doğal Pamuk",
+      "slug": "dogal-pamuk",
+      "bg_color": "#16a34a",
+      "text_color": "#ffffff",
+      "icon_name": "ShieldCheck",
+      "position": "image_top_left",
+      "display_order": 4,
+      "is_active": 1,
+      "created_at": "2026-09-05T01:14:55.989Z"
+    },
+    {
+      "id": "badge-bursa-dokumasi",
+      "title": "Bursa Dokuması",
+      "slug": "bursa-dokumasi",
+      "bg_color": "#1e1b4b",
+      "text_color": "#facc15",
+      "icon_name": "Award",
+      "position": "image_top_left",
+      "display_order": 5,
+      "is_active": 1,
+      "created_at": "2026-09-05T01:14:55.989Z"
+    },
+    {
+      "id": "badge-cift-en",
+      "title": "280 cm Çift En",
+      "slug": "280-cm-cift-en",
+      "bg_color": "#7c3aed",
+      "text_color": "#ffffff",
+      "icon_name": "Scissors",
+      "position": "image_top_left",
+      "display_order": 6,
+      "is_active": 1,
+      "created_at": "2026-09-05T01:14:55.989Z"
+    },
+    {
+      "id": "badge-firsat",
+      "title": "Fırsat Ürünü",
+      "slug": "firsat-urunu",
+      "bg_color": "#dc2626",
+      "text_color": "#ffffff",
+      "icon_name": "Flame",
+      "position": "image_top_left",
+      "display_order": 7,
+      "is_active": 1,
+      "created_at": "2026-09-05T01:14:55.989Z"
+    },
+    {
+      "id": "badge-1788639000571",
+      "title": "Büyük İndirim",
+      "slug": "buyuk-i-ndirim",
+      "bg_color": "#aceb24",
+      "text_color": "#110d0d",
+      "icon_name": "Flame",
+      "position": "image_top_left",
+      "display_order": 8,
+      "is_active": 1,
+      "created_at": "2026-09-05T20:10:00.571Z"
+    },
+    {
+      "id": "badge-1788647419380",
+      "title": "Süper İndirim",
+      "slug": "super-i-ndirim",
+      "bg_color": "#9a2380",
+      "text_color": "#ffffff",
+      "icon_name": "CheckCircle2",
+      "position": "image_top_left",
+      "display_order": 1,
+      "is_active": 1,
+      "created_at": "2026-09-05T22:30:19.380Z"
+    }
+  ],
+  "stock_history": [
+    {
+      "id": "stk-1788573566255",
+      "product_id": "prod-1788573566255",
+      "change_meter": 100,
+      "new_stock": 100,
+      "reason": "Yeni Ürün Girişi",
+      "created_at": "2026-09-05T01:59:26.255Z"
+    },
+    {
+      "id": "stk-1788640963805",
+      "product_id": "prod-1788640963805",
+      "change_meter": 100,
+      "new_stock": 100,
+      "reason": "Yeni Ürün Girişi",
+      "created_at": "2026-09-05T20:42:43.805Z"
+    },
+    {
+      "id": "stk-1788641774598",
+      "product_id": "prod-1788641774597",
+      "change_meter": 100,
+      "new_stock": 100,
+      "reason": "Yeni Ürün Girişi",
+      "created_at": "2026-09-05T20:56:14.598Z"
+    },
+    {
+      "id": "stk-1788647431979",
+      "product_id": "prod-1788647431978",
+      "change_meter": 150,
+      "new_stock": 150,
+      "reason": "Yeni Ürün Girişi",
+      "created_at": "2026-09-05T22:30:31.979Z"
+    },
+    {
+      "id": "stk-1788733673311",
+      "product_id": "prod-1788733673308",
+      "change_meter": 100,
+      "new_stock": 100,
+      "reason": "Yeni Ürün Girişi",
+      "created_at": "2026-09-06T22:27:53.311Z"
+    },
+    {
+      "id": "stk-1788736941004",
+      "product_id": "prod-1788736941003",
+      "change_meter": 100,
+      "new_stock": 100,
+      "reason": "Yeni Ürün Girişi",
+      "created_at": "2026-09-06T23:22:21.004Z"
+    },
+    {
+      "id": "stk-1788742393858-ahgw",
+      "product_id": "prod-1788571179157",
+      "order_id": "ord-1788742393850",
+      "old_stock": 146,
+      "change_meter": -15,
+      "new_stock": 131,
+      "reason": "Sipariş Satışı #BKD-2026-000113",
+      "created_at": "2026-09-07T00:53:13.858Z"
+    }
+  ],
+  "user_sessions": [
+    {
+      "id": "ses-1788576118329-wymx",
+      "user_id": "usr-1788576118328-b46r",
+      "session_token_hash": "c7cd02dba8fb3b169795d7bf49721b9c11adfd614f684534ca8e28781545b429",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "device_name": "Masaüstü Tarayıcı",
+      "last_active_at": "2026-09-05T02:42:11.040Z",
+      "expires_at": "2026-10-05T02:41:58.375Z",
+      "is_active": 0,
+      "created_at": "2026-09-05T02:41:58.329Z"
+    },
+    {
+      "id": "ses-1788576120718-r7fi",
+      "user_id": "usr-1788576118328-b46r",
+      "session_token_hash": "f27a527b9f5c93d874cc65e98416c52b5187db9a514561435e6890a634dc946d",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "device_name": "Masaüstü Tarayıcı",
+      "last_active_at": "2026-09-05T02:42:00.718Z",
+      "expires_at": "2026-09-06T02:42:00.719Z",
+      "is_active": 0,
+      "created_at": "2026-09-05T02:42:00.718Z"
+    },
+    {
+      "id": "ses-1788576145105-zfol",
+      "user_id": "usr-1788576145105-rikz",
+      "session_token_hash": "ba65e6019c7422b74278e77b375443031b7273325c4891e154a926fa7c8a9be4",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "device_name": "Masaüstü Tarayıcı",
+      "last_active_at": "2026-09-05T02:42:27.196Z",
+      "expires_at": "2026-10-05T02:42:25.113Z",
+      "is_active": 0,
+      "created_at": "2026-09-05T02:42:25.105Z"
+    },
+    {
+      "id": "ses-1788576145760-vf23",
+      "user_id": "usr-1788576145105-rikz",
+      "session_token_hash": "c3dead687b41400bf0aa9f7f83731a2874129e3d5e58272bd3000a92f2eb38cf",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "device_name": "Masaüstü Tarayıcı",
+      "last_active_at": "2026-09-05T02:42:25.760Z",
+      "expires_at": "2026-09-06T02:42:25.760Z",
+      "is_active": 0,
+      "created_at": "2026-09-05T02:42:25.760Z"
+    },
+    {
+      "id": "ses-1788619401421-6zth",
+      "user_id": "usr-1788619401421-1xau",
+      "session_token_hash": "7181bce29807d23e430c55e7019ec91a355c49f96ab819f1986c6f85dd1ac917",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "device_name": "Masaüstü Tarayıcı",
+      "last_active_at": "2026-09-05T14:43:27.576Z",
+      "expires_at": "2026-10-05T14:43:21.442Z",
+      "is_active": 0,
+      "created_at": "2026-09-05T14:43:21.421Z"
+    },
+    {
+      "id": "ses-1788619402421-rnjk",
+      "user_id": "usr-1788619401421-1xau",
+      "session_token_hash": "ac3b34b2a8a5410909fccdf2f45b4f93c61e749f33df3c7bea34de7beaee3afb",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "device_name": "Masaüstü Tarayıcı",
+      "last_active_at": "2026-09-05T14:43:22.421Z",
+      "expires_at": "2026-09-06T14:43:22.421Z",
+      "is_active": 0,
+      "created_at": "2026-09-05T14:43:22.421Z"
+    },
+    {
+      "id": "ses-1788620330287-rkd5",
+      "user_id": "usr-1788620330287-2tly",
+      "session_token_hash": "b56c6c8b7aea773b565a27f3cfb98b59518b549380132c7d818280f1d761c2f4",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "device_name": "Masaüstü Tarayıcı",
+      "last_active_at": "2026-09-05T14:59:04.915Z",
+      "expires_at": "2026-10-05T14:58:50.324Z",
+      "is_active": 1,
+      "created_at": "2026-09-05T14:58:50.287Z"
+    },
+    {
+      "id": "ses-1788620331740-2b2l",
+      "user_id": "usr-1788620330287-2tly",
+      "session_token_hash": "393613270a36794cf1a5e67a137660c372afa56e66a845e98327ce95f3ef8409",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "device_name": "Masaüstü Tarayıcı",
+      "last_active_at": "2026-09-05T14:58:51.740Z",
+      "expires_at": "2026-09-06T14:58:51.740Z",
+      "is_active": 1,
+      "created_at": "2026-09-05T14:58:51.740Z"
+    },
+    {
+      "id": "ses-1788620370040-io3x",
+      "user_id": "usr-1788620370040-cfpc",
+      "session_token_hash": "55ea2a6658c5dfada6fa321b238f9afe08df8b471424d9d7d0362465d11c103a",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "device_name": "Masaüstü Tarayıcı",
+      "last_active_at": "2026-09-05T14:59:32.602Z",
+      "expires_at": "2026-10-05T14:59:30.048Z",
+      "is_active": 0,
+      "created_at": "2026-09-05T14:59:30.040Z"
+    },
+    {
+      "id": "ses-1788620370314-x4ly",
+      "user_id": "usr-1788620370040-cfpc",
+      "session_token_hash": "e903e38cf2382b61510103cfe9196f907da13d01b9519c68526a7fcda8d7c671",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "device_name": "Masaüstü Tarayıcı",
+      "last_active_at": "2026-09-05T14:59:30.314Z",
+      "expires_at": "2026-09-06T14:59:30.314Z",
+      "is_active": 0,
+      "created_at": "2026-09-05T14:59:30.314Z"
+    }
+  ],
+  "user_notifications": [
+    {
+      "id": "notif-1788576118375-welcome",
+      "user_id": "usr-1788576118328-b46r",
+      "title": "Bursa Kumaş Dünyası’na Hoş Geldiniz!",
+      "message": "Hesabınız başarıyla oluşturuldu. İlk alışverişiniz için fırsat kumaşlarımızı inceleyebilirsiniz.",
+      "type": "system",
+      "action_url": "/hesabim",
+      "is_read": 1,
+      "created_at": "2026-09-05T02:41:58.329Z"
+    },
+    {
+      "id": "notif-1788576118946-email-verified",
+      "user_id": "usr-1788576118328-b46r",
+      "title": "E-Posta Adresiniz Doğrulandı",
+      "message": "Hesabınız başarıyla doğrulandı. Güvenli alışverişler dileriz.",
+      "type": "system",
+      "action_url": "/hesabim",
+      "is_read": 1,
+      "created_at": "2026-09-05T02:41:58.946Z"
+    },
+    {
+      "id": "notif-1788576145113-welcome",
+      "user_id": "usr-1788576145105-rikz",
+      "title": "Bursa Kumaş Dünyası’na Hoş Geldiniz!",
+      "message": "Hesabınız başarıyla oluşturuldu. İlk alışverişiniz için fırsat kumaşlarımızı inceleyebilirsiniz.",
+      "type": "system",
+      "action_url": "/hesabim",
+      "is_read": 1,
+      "created_at": "2026-09-05T02:42:25.105Z"
+    },
+    {
+      "id": "notif-1788576145307-email-verified",
+      "user_id": "usr-1788576145105-rikz",
+      "title": "E-Posta Adresiniz Doğrulandı",
+      "message": "Hesabınız başarıyla doğrulandı. Güvenli alışverişler dileriz.",
+      "type": "system",
+      "action_url": "/hesabim",
+      "is_read": 1,
+      "created_at": "2026-09-05T02:42:25.307Z"
+    },
+    {
+      "id": "notif-1788619401442-welcome",
+      "user_id": "usr-1788619401421-1xau",
+      "title": "Bursa Kumaş Dünyası’na Hoş Geldiniz!",
+      "message": "Hesabınız başarıyla oluşturuldu. İlk alışverişiniz için fırsat kumaşlarımızı inceleyebilirsiniz.",
+      "type": "system",
+      "action_url": "/hesabim",
+      "is_read": 1,
+      "created_at": "2026-09-05T14:43:21.421Z"
+    },
+    {
+      "id": "notif-1788619401783-email-verified",
+      "user_id": "usr-1788619401421-1xau",
+      "title": "E-Posta Adresiniz Doğrulandı",
+      "message": "Hesabınız başarıyla doğrulandı. Güvenli alışverişler dileriz.",
+      "type": "system",
+      "action_url": "/hesabim",
+      "is_read": 1,
+      "created_at": "2026-09-05T14:43:21.783Z"
+    },
+    {
+      "id": "notif-1788620330324-welcome",
+      "user_id": "usr-1788620330287-2tly",
+      "title": "Bursa Kumaş Dünyası’na Hoş Geldiniz!",
+      "message": "Hesabınız başarıyla oluşturuldu. İlk alışverişiniz için fırsat kumaşlarımızı inceleyebilirsiniz.",
+      "type": "system",
+      "action_url": "/hesabim",
+      "is_read": 1,
+      "created_at": "2026-09-05T14:58:50.287Z"
+    },
+    {
+      "id": "notif-1788620330811-email-verified",
+      "user_id": "usr-1788620330287-2tly",
+      "title": "E-Posta Adresiniz Doğrulandı",
+      "message": "Hesabınız başarıyla doğrulandı. Güvenli alışverişler dileriz.",
+      "type": "system",
+      "action_url": "/hesabim",
+      "is_read": 1,
+      "created_at": "2026-09-05T14:58:50.811Z"
+    },
+    {
+      "id": "notif-1788620370048-welcome",
+      "user_id": "usr-1788620370040-cfpc",
+      "title": "Bursa Kumaş Dünyası’na Hoş Geldiniz!",
+      "message": "Hesabınız başarıyla oluşturuldu. İlk alışverişiniz için fırsat kumaşlarımızı inceleyebilirsiniz.",
+      "type": "system",
+      "action_url": "/hesabim",
+      "is_read": 1,
+      "created_at": "2026-09-05T14:59:30.040Z"
+    },
+    {
+      "id": "notif-1788620370144-email-verified",
+      "user_id": "usr-1788620370040-cfpc",
+      "title": "E-Posta Adresiniz Doğrulandı",
+      "message": "Hesabınız başarıyla doğrulandı. Güvenli alışverişler dileriz.",
+      "type": "system",
+      "action_url": "/hesabim",
+      "is_read": 1,
+      "created_at": "2026-09-05T14:59:30.144Z"
+    }
+  ],
+  "security_logs": [
+    {
+      "id": "sec-1788620372622-4z01",
+      "user_id": "usr-1788620370040-cfpc",
+      "action": "account_deleted",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T14:59:32.622Z"
+    },
+    {
+      "id": "sec-1788620370625-2otc",
+      "user_id": "usr-1788620370040-cfpc",
+      "action": "address_created",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T14:59:30.625Z"
+    },
+    {
+      "id": "sec-1788620370581-spcw",
+      "user_id": "usr-1788620370040-cfpc",
+      "action": "address_created",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T14:59:30.581Z"
+    },
+    {
+      "id": "sec-1788620370476-dftk",
+      "user_id": "usr-1788620370040-cfpc",
+      "action": "profile_updated",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T14:59:30.476Z"
+    },
+    {
+      "id": "sec-1788620370323-0auz",
+      "user_id": "usr-1788620370040-cfpc",
+      "action": "login",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T14:59:30.323Z"
+    },
+    {
+      "id": "sec-1788620370240-qeid",
+      "user_id": null,
+      "action": "login_failed",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "failed",
+      "metadata": {
+        "email": "test.musteri.1788620369805@bursakumasdunyasi.com"
+      },
+      "created_at": "2026-09-05T14:59:30.240Z"
+    },
+    {
+      "id": "sec-1788620370149-0i5d",
+      "user_id": "usr-1788620370040-cfpc",
+      "action": "email_verified",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T14:59:30.149Z"
+    },
+    {
+      "id": "sec-1788620370054-8e5v",
+      "user_id": "usr-1788620370040-cfpc",
+      "action": "register",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {
+        "email": "test.musteri.1788620369805@bursakumasdunyasi.com"
+      },
+      "created_at": "2026-09-05T14:59:30.054Z"
+    },
+    {
+      "id": "sec-1788620334009-359n",
+      "user_id": "usr-1788620330287-2tly",
+      "action": "address_created",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T14:58:54.009Z"
+    },
+    {
+      "id": "sec-1788620333888-zf7c",
+      "user_id": "usr-1788620330287-2tly",
+      "action": "address_created",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T14:58:53.888Z"
+    },
+    {
+      "id": "sec-1788620332764-epss",
+      "user_id": "usr-1788620330287-2tly",
+      "action": "profile_updated",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T14:58:52.764Z"
+    },
+    {
+      "id": "sec-1788620331745-3czy",
+      "user_id": "usr-1788620330287-2tly",
+      "action": "login",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T14:58:51.745Z"
+    },
+    {
+      "id": "sec-1788620331463-u5fb",
+      "user_id": null,
+      "action": "login_failed",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "failed",
+      "metadata": {
+        "email": "test.musteri.1788620328629@bursakumasdunyasi.com"
+      },
+      "created_at": "2026-09-05T14:58:51.463Z"
+    },
+    {
+      "id": "sec-1788620330816-9qpa",
+      "user_id": "usr-1788620330287-2tly",
+      "action": "email_verified",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T14:58:50.816Z"
+    },
+    {
+      "id": "sec-1788620330330-bod9",
+      "user_id": "usr-1788620330287-2tly",
+      "action": "register",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {
+        "email": "test.musteri.1788620328629@bursakumasdunyasi.com"
+      },
+      "created_at": "2026-09-05T14:58:50.330Z"
+    },
+    {
+      "id": "sec-1788619407599-0ych",
+      "user_id": "usr-1788619401421-1xau",
+      "action": "account_deleted",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T14:43:27.599Z"
+    },
+    {
+      "id": "sec-1788619403549-651x",
+      "user_id": "usr-1788619401421-1xau",
+      "action": "address_created",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T14:43:23.549Z"
+    },
+    {
+      "id": "sec-1788619403486-yvk3",
+      "user_id": "usr-1788619401421-1xau",
+      "action": "address_created",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T14:43:23.486Z"
+    },
+    {
+      "id": "sec-1788619403069-hvl5",
+      "user_id": "usr-1788619401421-1xau",
+      "action": "profile_updated",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T14:43:23.069Z"
+    },
+    {
+      "id": "sec-1788619402428-2knh",
+      "user_id": "usr-1788619401421-1xau",
+      "action": "login",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T14:43:22.428Z"
+    },
+    {
+      "id": "sec-1788619402349-u0k2",
+      "user_id": null,
+      "action": "login_failed",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "failed",
+      "metadata": {
+        "email": "test.musteri.1788619398356@bursakumasdunyasi.com"
+      },
+      "created_at": "2026-09-05T14:43:22.349Z"
+    },
+    {
+      "id": "sec-1788619401788-rh6f",
+      "user_id": "usr-1788619401421-1xau",
+      "action": "email_verified",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T14:43:21.788Z"
+    },
+    {
+      "id": "sec-1788619401448-tvrl",
+      "user_id": "usr-1788619401421-1xau",
+      "action": "register",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {
+        "email": "test.musteri.1788619398356@bursakumasdunyasi.com"
+      },
+      "created_at": "2026-09-05T14:43:21.448Z"
+    },
+    {
+      "id": "sec-1788576147231-lh0u",
+      "user_id": "usr-1788576145105-rikz",
+      "action": "account_deleted",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T02:42:27.231Z"
+    },
+    {
+      "id": "sec-1788576146125-hzb4",
+      "user_id": "usr-1788576145105-rikz",
+      "action": "address_created",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T02:42:26.125Z"
+    },
+    {
+      "id": "sec-1788576146035-qzzy",
+      "user_id": "usr-1788576145105-rikz",
+      "action": "address_created",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T02:42:26.037Z"
+    },
+    {
+      "id": "sec-1788576145942-830i",
+      "user_id": "usr-1788576145105-rikz",
+      "action": "profile_updated",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T02:42:25.942Z"
+    },
+    {
+      "id": "sec-1788576145766-k9bh",
+      "user_id": "usr-1788576145105-rikz",
+      "action": "login",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T02:42:25.766Z"
+    },
+    {
+      "id": "sec-1788576145464-tl0y",
+      "user_id": null,
+      "action": "login_failed",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "failed",
+      "metadata": {
+        "email": "test.musteri.1788576144711@bursakumasdunyasi.com"
+      },
+      "created_at": "2026-09-05T02:42:25.464Z"
+    },
+    {
+      "id": "sec-1788576145314-qpup",
+      "user_id": "usr-1788576145105-rikz",
+      "action": "email_verified",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T02:42:25.314Z"
+    },
+    {
+      "id": "sec-1788576145122-tsoq",
+      "user_id": "usr-1788576145105-rikz",
+      "action": "register",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {
+        "email": "test.musteri.1788576144711@bursakumasdunyasi.com"
+      },
+      "created_at": "2026-09-05T02:42:25.122Z"
+    },
+    {
+      "id": "sec-1788576131064-0645",
+      "user_id": "usr-1788576118328-b46r",
+      "action": "account_deleted",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T02:42:11.064Z"
+    },
+    {
+      "id": "sec-1788576122545-i1k4",
+      "user_id": "usr-1788576118328-b46r",
+      "action": "address_created",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T02:42:02.545Z"
+    },
+    {
+      "id": "sec-1788576122447-z3k4",
+      "user_id": "usr-1788576118328-b46r",
+      "action": "address_created",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T02:42:02.447Z"
+    },
+    {
+      "id": "sec-1788576121798-jae5",
+      "user_id": "usr-1788576118328-b46r",
+      "action": "profile_updated",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T02:42:01.798Z"
+    },
+    {
+      "id": "sec-1788576120730-d9re",
+      "user_id": "usr-1788576118328-b46r",
+      "action": "login",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T02:42:00.730Z"
+    },
+    {
+      "id": "sec-1788576120451-wzrg",
+      "user_id": null,
+      "action": "login_failed",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "failed",
+      "metadata": {
+        "email": "test.musteri.1788576116839@bursakumasdunyasi.com"
+      },
+      "created_at": "2026-09-05T02:42:00.451Z"
+    },
+    {
+      "id": "sec-1788576118950-zurt",
+      "user_id": "usr-1788576118328-b46r",
+      "action": "email_verified",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {},
+      "created_at": "2026-09-05T02:41:58.950Z"
+    },
+    {
+      "id": "sec-1788576118390-ju5t",
+      "user_id": "usr-1788576118328-b46r",
+      "action": "register",
+      "ip_address": "::1",
+      "user_agent": "node",
+      "status": "success",
+      "metadata": {
+        "email": "test.musteri.1788576116839@bursakumasdunyasi.com"
+      },
+      "created_at": "2026-09-05T02:41:58.390Z"
+    }
+  ],
+  "shipping_settings": {
+    "free_shipping_threshold": 3000,
+    "shipping_cost": 130,
+    "carrier_name": "DHL Kargo (MNG Kargo)",
+    "announcement_text": "1.000 TL Üzeri Ücretsiz Kargo",
+    "is_active": 1,
+    "updated_at": "2026-09-05T22:35:49.799Z"
+  },
+  "payment_settings": {
+    "paytr": {
+      "is_active": 1,
+      "title": "Kredi / Banka Kartı (PayTR)",
+      "description": "Tüm banka ve kredi kartları ile 256-Bit SSL güvenliğinde tek çekim veya taksitle ödeme yapabilirsiniz.",
+      "merchant_id": "123456",
+      "merchant_key": "test_merchant_key_2026",
+      "merchant_salt": "test_merchant_salt_2026",
+      "test_mode": 1,
+      "max_installment": 12
+    },
+    "bank_transfer": {
+      "is_active": 1,
+      "title": "Havale / EFT İle Ödeme",
+      "description": "Banka hesaplarımıza Havale/EFT yaparak anında indirimli ödeme yapabilirsiniz.",
+      "discount_percentage": 2,
+      "accounts": [
+        {
+          "id": "bank-1",
+          "bank_name": "Garanti BBVA",
+          "account_holder": "Bursa Kumaş Dünyası Tekstil Tic. Ltd. Şti.",
+          "iban": "TR12 0006 2000 0001 2345 6789 01",
+          "branch_code": "0123",
+          "account_number": "1234567",
+          "is_active": 1
+        },
+        {
+          "id": "bank-3",
+          "bank_name": "İş Bankası",
+          "account_holder": "Bursa Kumaş Dünyası Tekstil Tic. Ltd. Şti.",
+          "iban": "TR56 0006 4000 0003 4567 8901 03",
+          "branch_code": "0789",
+          "account_number": "9876543",
+          "is_active": 1
+        }
+      ]
+    },
+    "cash_on_delivery": {
+      "is_active": 1,
+      "title": "Kapıda Nakit Ödeme",
+      "description": "Siparişiniz kargo görevlisi tarafından teslim edilirken nakit olarak ödeme yapabilirsiniz.",
+      "additional_fee": 100
+    },
+    "card_on_delivery": {
+      "is_active": 1,
+      "title": "Kapıda Kredi Kartı Tek Çekim",
+      "description": "Sipariş teslimatı esnasında kargo görevlisinin POS cihazından kredi kartı ile tek çekim ödeme yapabilirsiniz.",
+      "additional_fee": 120
+    }
+  },
+  "showcase_settings": {
+    "title": "Öne Çıkan Kumaşlarımız",
+    "subtitle": "",
+    "badge_suffix": "Kumaş",
+    "show_model_count": 1,
+    "show_all_tab": 1,
+    "all_tab_title": "Tümü",
+    "max_items": 30,
+    "is_active": 1
+  },
+  "price_history": [
+    {
+      "id": "prc-1788641849020",
+      "product_id": "prod-1788641774597",
+      "old_price": 0,
+      "new_price": 75,
+      "changed_by": "admin@bursakumasdunyasi.com",
+      "created_at": "2026-09-05T20:57:29.020Z"
+    }
+  ],
+  "stories": [
+    {
+      "id": "story-1",
+      "title": "Yeni Sezon",
+      "cover_image": "/uploads/kumas-1788645300519-ithalviskonarmoni.webp",
+      "order_index": 1,
+      "is_active": 1,
+      "slides": [
+        {
+          "id": "slide-1-1",
+          "image_url": "/uploads/kumas-1788645300519-ithalviskonarmoni.webp",
+          "title": "2026 Viskon & Krep Koleksiyonu",
+          "subtitle": "Dökümlü ve yumuşak tuşeli yeni sezon kumaşlar.",
+          "button_text": "Viskon Kumaşları İncele",
+          "button_link": "/kategori/viskon-kumaslar",
+          "duration": 5
+        }
+      ]
+    },
+    {
+      "id": "story-2",
+      "title": "Oduncu Kumaş",
+      "cover_image": "/uploads/kumas-1788730575928-oduncubursa.webp",
+      "order_index": 2,
+      "is_active": 1,
+      "slides": [
+        {
+          "id": "slide-2-1",
+          "image_url": "/uploads/kumas-1788730575928-oduncubursa.webp",
+          "title": "%100 Pamuk Ekose Oduncu Kumaş",
+          "subtitle": "Gömlek ve ceketleriniz için sıcacık doku.",
+          "button_text": "Oduncu Kumaşları Gör",
+          "button_link": "/kategori/oduncu-kumaslar",
+          "duration": 5
+        }
+      ]
+    },
+    {
+      "id": "story-3",
+      "title": "Yerli Ayrobin",
+      "cover_image": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=600&q=80",
+      "order_index": 3,
+      "is_active": 1,
+      "slides": [
+        {
+          "id": "slide-3-1",
+          "image_url": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1000&q=85",
+          "title": "Ütü İstemeyen Ayrobin Kumaşlar",
+          "subtitle": "Dökümlü ve kırışmaz yapısıyla gün boyu rahatlık.",
+          "button_text": "Ayrobin Kumaşları İncele",
+          "button_link": "/kategori/ayrobin-kumaslar",
+          "duration": 5
+        }
+      ]
+    },
+    {
+      "id": "story-4",
+      "title": "0.5m Kesim",
+      "cover_image": "https://images.unsplash.com/photo-1604014237800-1c9102c219da?auto=format&fit=crop&w=600&q=80",
+      "order_index": 4,
+      "is_active": 1,
+      "slides": [
+        {
+          "id": "slide-4-1",
+          "image_url": "https://images.unsplash.com/photo-1604014237800-1c9102c219da?auto=format&fit=crop&w=1000&q=85",
+          "title": "Hassas 0.5 Metre Kesim Sistemi",
+          "subtitle": "İsraf etmeden tam ihtiyacınız olan ölçüde kumaş siparişi verin.",
+          "button_text": "Tüm Kumaşları Keşfet",
+          "button_link": "/kategori/tum-kumaslar",
+          "duration": 5
+        }
+      ]
+    }
+  ]
+}

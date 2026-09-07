@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 96" fill="none">
+  <defs>
+    <!-- Emblem Gradients -->
+    <linearGradient id="bkNavy" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E3A8A"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+    <linearGradient id="bkGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBBF24"/>
+      <stop offset="50%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+    <linearGradient id="bkShine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="subtleShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0F172A" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- EMBLEM ICON (Woven Fabric & Threads Geometry) -->
+  <g transform="translate(8, 8)" filter="url(#subtleShadow)">
+    <!-- Rounded Background Shield -->
+    <rect width="80" height="80" rx="20" fill="url(#bkNavy)"/>
+    <rect width="80" height="80" rx="20" fill="url(#bkShine)"/>
+    <rect x="0.75" y="0.75" width="78.5" height="78.5" rx="19.25" stroke="#3B82F6" stroke-opacity="0.3" stroke-width="1.5"/>
+
+    <!-- Stylized Weaving Fabric Ribbons / Monogram BK -->
+    <!-- Left Ribbon Fold (B vertical/loop) -->
+    <path d="M24 20 C24 18, 28 16, 34 16 C42 16, 48 20, 48 27 C48 32, 43 36, 37 38 C45 40, 50 45, 50 53 C50 61, 43 65, 34 65 C27 65, 24 62, 24 60 Z" fill="#2563EB" opacity="0.35"/>
+    
+    <!-- Outer Weave Ribbon -->
+    <path d="M26 23 C26 21 29 19 35 19 C42 19 47 23 47 29 C47 34 42 38 36 39.5 L36 41.5 C43 43 49 47 49 54 C49 61 43 64 35 64 C29 64 26 62 26 60 L26 23 Z" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Inner Thread Accents -->
+    <line x1="33" y1="29" x2="40" y2="29" stroke="#93C5FD" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="33" y1="52" x2="42" y2="52" stroke="#93C5FD" stroke-width="2.5" stroke-linecap="round"/>
+
+    <!-- Golden Warp & Weft Thread Weave (Kumaş Dokuma İpi & Makas Zarafeti) -->
+    <path d="M40 24 L56 48 M56 48 L42 62 M42 38 L58 62" stroke="url(#bkGold)" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Golden Central Spool/Sparkle Point -->
+    <circle cx="56" cy="48" r="4.5" fill="url(#bkGold)"/>
+    <circle cx="56" cy="48" r="2" fill="#FFFFFF"/>
+  </g>
+
+  <!-- LOGO TYPOGRAPHY -->
+  <g transform="translate(104, 0)">
+    <!-- Primary Title: BURSA KUMAŞ DÜNYASI -->
+    <text x="0" y="47" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-weight="900" font-size="29" fill="#0F172A" letter-spacing="-0.03em">
+      BURSA KUMAŞ DÜNYASI
+    </text>
+
+    <!-- Subtitle / Tagline -->
+    <text x="1" y="68" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-weight="700" font-size="11.5" fill="#D97706" letter-spacing="0.18em">
+      KUMAŞIN HESAPLI ADRESİ
+    </text>
+
+    <!-- Small Luxury Accent Line -->
+    <rect x="1" y="76" width="46" height="2.5" rx="1.25" fill="url(#bkGold)"/>
+  </g>
+</svg>

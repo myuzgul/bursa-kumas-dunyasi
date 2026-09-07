@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="none">
+  <defs>
+    <linearGradient id="favNavy" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E3A8A"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+    <linearGradient id="favGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBBF24"/>
+      <stop offset="50%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+    <linearGradient id="favShine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded Background Shield -->
+  <rect x="4" y="4" width="88" height="88" rx="22" fill="url(#favNavy)"/>
+  <rect x="4" y="4" width="88" height="88" rx="22" fill="url(#favShine)"/>
+  <rect x="5" y="5" width="86" height="86" rx="21" stroke="#3B82F6" stroke-opacity="0.4" stroke-width="2"/>
+
+  <!-- Left Ribbon Fold (B) -->
+  <path d="M30 24 C30 22, 35 20, 42 20 C51 20, 58 24, 58 32 C58 38, 52 42, 45 44 C54 47, 60 52, 60 61 C60 70, 52 75, 42 75 C34 75, 30 71, 30 69 Z" fill="#2563EB" opacity="0.4"/>
+  
+  <!-- Outer Weave Ribbon -->
+  <path d="M32 27 C32 25, 36 23, 43 23 C51 23, 57 27, 57 34 C57 40, 51 44, 44 46 L44 48 C52 50, 59 55, 59 63 C59 71, 52 74, 43 74 C36 74, 32 72, 32 69 L32 27 Z" fill="none" stroke="#FFFFFF" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Inner Thread Accents -->
+  <line x1="40" y1="34" x2="48" y2="34" stroke="#93C5FD" stroke-width="3" stroke-linecap="round"/>
+  <line x1="40" y1="61" x2="51" y2="61" stroke="#93C5FD" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Golden Warp & Weft Thread Weave -->
+  <path d="M48 29 L67 58 M67 58 L51 74 M51 45 L70 74" stroke="url(#favGold)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Golden Sparkle Point -->
+  <circle cx="67" cy="58" r="5.5" fill="url(#favGold)"/>
+  <circle cx="67" cy="58" r="2.5" fill="#FFFFFF"/>
+</svg>
