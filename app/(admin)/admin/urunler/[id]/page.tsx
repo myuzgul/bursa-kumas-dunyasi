@@ -254,6 +254,10 @@ export default function AdminEditProductPage() {
     const basePrice = parseFloat(formData.base_price) || 0;
     const discountPrice = formData.discount_price ? parseFloat(formData.discount_price) : basePrice;
 
+    const hasParentStock = formData.stock_meter && formData.stock_meter.trim() !== '';
+    const defaultVarStock = hasParentStock ? parseFloat(formData.stock_meter) : null;
+    const defaultVarTrack = hasParentStock ? 1 : 0;
+
     const newVariants = combinations.map((combo, idx) => {
       const title = Object.values(combo).join(' - ');
       const skuSuffix = Object.values(combo)
@@ -274,7 +278,8 @@ export default function AdminEditProductPage() {
         barcode: '',
         price: basePrice,
         discount_price: discountPrice,
-        stock_meter: parseFloat(formData.stock_meter) || 50,
+        stock_meter: defaultVarStock,
+        track_stock: defaultVarTrack,
         image_url: images.length > 0 ? images[0] : '',
         is_active: 1,
       };
@@ -860,9 +865,14 @@ export default function AdminEditProductPage() {
                                   <input
                                     type="number"
                                     step="0.5"
-                                    value={v.stock_meter}
-                                    onChange={(e) => updateVariantRow(idx, 'stock_meter', parseFloat(e.target.value) || 0)}
-                                    className="w-20 bg-slate-50 border border-slate-300 rounded px-1.5 py-1 text-xs font-black text-emerald-800"
+                                    placeholder="Sınırsız"
+                                    value={v.stock_meter !== null && v.stock_meter !== undefined ? v.stock_meter : ''}
+                                    onChange={(e) => {
+                                      const val = e.target.value.trim();
+                                      updateVariantRow(idx, 'stock_meter', val === '' ? null : parseFloat(val));
+                                      updateVariantRow(idx, 'track_stock', val === '' ? 0 : 1);
+                                    }}
+                                    className="w-24 bg-slate-50 border border-slate-300 rounded px-2 py-1 text-xs font-black text-emerald-800 placeholder:text-slate-400 placeholder:font-normal"
                                   />
                                 </td>
                                 <td className="p-3 text-center">

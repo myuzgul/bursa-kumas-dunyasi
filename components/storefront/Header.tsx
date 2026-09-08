@@ -153,7 +153,7 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-xs w-full max-w-full">
+    <header className="sticky top-0 z-40 bg-white border-b border-slate-200 lg:border-b-0 shadow-xs w-full max-w-full">
       {/* 1. TOP ANNOUNCEMENT BAR */}
       <div className="bg-slate-900 text-slate-200 text-xs py-1.5 sm:py-2 px-3 sm:px-4 border-b border-slate-800 w-full overflow-hidden">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1.5 sm:gap-2 text-center sm:text-left">
@@ -502,17 +502,6 @@ export const Header: React.FC = () => {
               );
             })}
           </div>
-
-          {/* Right Side Help / Blog link */}
-          <div className="flex items-center">
-            <Link
-              href="/blog"
-              className="py-3.5 px-3 text-slate-300 hover:text-amber-300 transition flex items-center gap-1.5 text-xs font-bold"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-              <span>Kumaş Rehberi & Blog</span>
-            </Link>
-          </div>
         </div>
       </nav>
 
@@ -607,13 +596,6 @@ export const Header: React.FC = () => {
               })}
 
               <div className="pt-3 space-y-2 border-t border-slate-100">
-                <Link
-                  href="/blog"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="p-2 text-amber-600 block font-bold"
-                >
-                  ✨ Kumaş Rehberi & Blog
-                </Link>
                 <Link
                   href="/siparis-takip"
                   onClick={() => setMobileMenuOpen(false)}

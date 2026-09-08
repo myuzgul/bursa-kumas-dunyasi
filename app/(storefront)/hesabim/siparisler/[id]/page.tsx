@@ -122,19 +122,24 @@ export default function OrderDetailPage() {
     );
   }
 
-  // Determine Timeline Step Index
+  // Determine Timeline Step Index (3 Steps)
   const statusStr = (order.status || '').toLowerCase();
+  const printStr = (order.print_status || '').toLowerCase();
   let currentStep = 1;
-  if (statusStr.includes('hazir') || statusStr.includes('processing')) currentStep = 2;
-  else if (statusStr.includes('kargo') || statusStr.includes('shipped')) currentStep = 3;
-  else if (statusStr.includes('teslim') || statusStr.includes('completed') || statusStr.includes('delivered')) currentStep = 4;
-  else if (statusStr.includes('iptal') || statusStr.includes('cancelled')) currentStep = -1;
+  if (statusStr.includes('iptal') || statusStr.includes('cancelled')) {
+    currentStep = -1;
+  } else if (order.tracking_number || statusStr.includes('kargo') || statusStr.includes('shipped') || statusStr.includes('teslim') || statusStr.includes('completed')) {
+    currentStep = 3;
+  } else if (printStr.includes('yazdır') || printStr.includes('printed') || statusStr.includes('hazir') || statusStr.includes('kesim') || statusStr.includes('cikti') || statusStr.includes('processing')) {
+    currentStep = 2;
+  } else {
+    currentStep = 1;
+  }
 
   const timelineSteps = [
-    { step: 1, title: 'Sipariş Alındı', desc: 'Ödeme onaylandı & kesim kuyruğuna alındı', icon: Package },
-    { step: 2, title: 'Kesim & Hazırlık', desc: '0.5m hassas lazer metre kesimi yapılıyor', icon: Scissors },
-    { step: 3, title: 'Kargoya Verildi', desc: 'DHL Kargo (MNG Kargo) güvencesiyle yola çıktı', icon: Truck },
-    { step: 4, title: 'Teslim Edildi', desc: 'Adresinize güvenle teslim edildi', icon: CheckCircle2 },
+    { step: 1, title: 'Siparişiniz Alındı', desc: 'Ödeme onaylandı & sipariş sisteme düştü', icon: Package },
+    { step: 2, title: 'Siparişiniz Kesimde', desc: 'Sipariş fişiniz yazdırıldı, kumaşınız kesiliyor', icon: Scissors },
+    { step: 3, title: 'Kargoya Verildi', desc: 'Paketiniz DHL Kargo güvencesiyle yola çıktı', icon: Truck },
   ];
 
   return (
@@ -226,7 +231,7 @@ export default function OrderDetailPage() {
             <h3 className="text-xs font-bold text-slate-700 mb-6 uppercase tracking-wider">
               Sipariş & Kesim Takip Durumu
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 relative">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 relative">
               {timelineSteps.map((s, idx) => {
                 const Icon = s.icon;
                 const isPassed = currentStep >= s.step;

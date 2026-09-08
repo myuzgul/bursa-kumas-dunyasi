@@ -690,7 +690,7 @@
       "min_order_meter": 1,
       "meter_step": 0.5,
       "max_order_meter": 50,
-      "stock_meter": 100,
+      "stock_meter": 99,
       "has_variants": 1,
       "main_image_url": "/uploads/kumas-1788736931691-2CAD21A3-6F97-49FB-AED3-C379C03BA022-1.webp",
       "images": [
@@ -1520,7 +1520,7 @@
       },
       "price": 93.5,
       "discount_price": 77,
-      "stock_meter": 100,
+      "stock_meter": 99,
       "image_url": "/uploads/kumas-1788736931691-2CAD21A3-6F97-49FB-AED3-C379C03BA022-1.webp",
       "color_code": "#000000",
       "is_active": 1,
@@ -1601,6 +1601,59 @@
   "coupon_usages": [],
   "cart_discount_rules": [],
   "orders": [
+    {
+      "id": "ord-1788818167765",
+      "order_number": "BKD-2026-000114",
+      "user_id": null,
+      "is_guest": 1,
+      "customer_name": "Ahmet Yılmaz",
+      "customer_email": "ahmet.yilmaz@example.com",
+      "customer_phone": "0532 111 22 33",
+      "shipping_address": {
+        "fullName": "Ahmet Yılmaz",
+        "phone": "0532 111 22 33",
+        "city": "Bursa",
+        "district": "Nilüfer",
+        "addressLine": "İhsaniye Mah. Barbaros Cad. No:14 D:6",
+        "postalCode": "16130",
+        "isCorporate": false,
+        "companyName": "",
+        "taxNumber": "",
+        "taxOffice": ""
+      },
+      "billing_address": {
+        "fullName": "Ahmet Yılmaz",
+        "phone": "0532 111 22 33",
+        "city": "Bursa",
+        "district": "Nilüfer",
+        "addressLine": "İhsaniye Mah. Barbaros Cad. No:14 D:6",
+        "postalCode": "16130",
+        "isCorporate": false,
+        "companyName": "",
+        "taxNumber": "",
+        "taxOffice": ""
+      },
+      "subtotal": 77,
+      "discount_total": 0,
+      "payment_discount": 1.54,
+      "payment_fee": 0,
+      "coupon_code": null,
+      "shipping_total": 130,
+      "tax_total": 6.86,
+      "grand_total": 205.46,
+      "status": "Siparis_Alindi",
+      "payment_status": "pending",
+      "payment_method": "bank_transfer",
+      "order_notes": "Lütfen kumaşı tek parça halinde kesiniz.",
+      "carrier_name": "DHL Kargo (MNG Kargo)",
+      "tracking_number": "",
+      "tracking_url": "",
+      "invoice_status": "pending",
+      "invoice_number": "",
+      "created_at": "2026-09-07T21:56:07.765Z",
+      "updated_at": "2026-09-07T21:56:07.765Z",
+      "print_status": "Yazdırıldı"
+    },
     {
       "id": "ord-1788742393850",
       "order_number": "BKD-2026-000113",
@@ -2253,9 +2306,31 @@
       "unit_price": 159.9,
       "total_price": 319.8,
       "order_id": "ord-1788742393850"
+    },
+    {
+      "id": "item-1788818167758-okrj",
+      "product_id": "prod-1788736941003",
+      "variant_id": "var-temp-6",
+      "product_name": "İthal Cosmos Krep",
+      "variant_title": "6) BORDO",
+      "product_sku": "BKD1213-6)",
+      "product_image": "/uploads/kumas-1788736931691-2CAD21A3-6F97-49FB-AED3-C379C03BA022-1.webp",
+      "meter_quantity": 1,
+      "unit_price": 77,
+      "total_price": 77,
+      "order_id": "ord-1788818167765"
     }
   ],
   "order_status_history": [
+    {
+      "id": "hist-1788818167765",
+      "order_id": "ord-1788818167765",
+      "old_status": null,
+      "new_status": "Siparis_Alindi",
+      "changed_by": "Sistem (Otomatik)",
+      "notes": "Sipariş oluşturuldu. Toplam: 205.46 TL",
+      "created_at": "2026-09-07T21:56:07.765Z"
+    },
     {
       "id": "hist-1788742393859",
       "order_id": "ord-1788742393850",
@@ -2641,6 +2716,24 @@
   ],
   "audit_logs": [
     {
+      "id": "audit-1788818959705-n99j",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "ORDER_UPDATE",
+      "details": "Sipariş #BKD-2026-000114 güncellendi: {\"print_status\":\"Yazdırıldı\"}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-07T22:09:19.705Z"
+    },
+    {
+      "id": "audit-1788818945911-waqv",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "ORDER_UPDATE",
+      "details": "Sipariş #BKD-2026-000114 güncellendi: {\"print_status\":\"Yazdırıldı\"}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-07T22:09:05.911Z"
+    },
+    {
       "id": "audit-1788745875000-nrmk",
       "admin_id": null,
       "admin_email": "admin@bursakumasdunyasi.com",
@@ -2921,6 +3014,15 @@
     }
   ],
   "email_logs": [
+    {
+      "id": "em-1788818167773-xi6a",
+      "recipient_email": "ahmet.yilmaz@example.com",
+      "subject": "Bursa Kumaş Dünyası – Siparişiniz Alındı (#BKD-2026-000114)",
+      "template_type": "ORDER_CONFIRMATION",
+      "status": "sent",
+      "error_message": null,
+      "created_at": "2026-09-07T21:56:07.773Z"
+    },
     {
       "id": "em-1788742393867-q295",
       "recipient_email": "ahmet.yilmaz@example.com",
@@ -3284,6 +3386,16 @@
       "new_stock": 131,
       "reason": "Sipariş Satışı #BKD-2026-000113",
       "created_at": "2026-09-07T00:53:13.858Z"
+    },
+    {
+      "id": "stk-1788818167765-i7c0",
+      "product_id": "prod-1788736941003",
+      "order_id": "ord-1788818167765",
+      "old_stock": 100,
+      "change_meter": -1,
+      "new_stock": 99,
+      "reason": "Sipariş Satışı #BKD-2026-000114",
+      "created_at": "2026-09-07T21:56:07.765Z"
     }
   ],
   "user_sessions": [
@@ -3928,7 +4040,17 @@
     "carrier_name": "DHL Kargo (MNG Kargo)",
     "announcement_text": "1.000 TL Üzeri Ücretsiz Kargo",
     "is_active": 1,
-    "updated_at": "2026-09-05T22:35:49.799Z"
+    "updated_at": "2026-09-07T22:12:10.754Z",
+    "dhl_integration_active": 1,
+    "dhl_test_mode": 1,
+    "dhl_customer_code": "",
+    "dhl_api_key": "",
+    "dhl_api_secret": "",
+    "dhl_branch_code": "",
+    "dhl_sender_name": "Bursa Kumaş Dünyası",
+    "dhl_sender_phone": "0 (542) 393 98 16",
+    "dhl_sender_address": "Kazım Karabekir Mah. Yıldırım / BURSA",
+    "dhl_auto_generate_label": 1
   },
   "payment_settings": {
     "paytr": {

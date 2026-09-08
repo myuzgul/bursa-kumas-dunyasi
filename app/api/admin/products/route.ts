@@ -184,6 +184,12 @@ export async function POST(req: Request) {
     if (hasVariants && Array.isArray(body.variants) && body.variants.length > 0) {
       body.variants.forEach((v: any, index: number) => {
         const variantId = v.id || `var-${productId}-${index + 1}`;
+        const rawVarStock = v.stock_meter !== undefined && v.stock_meter !== null && String(v.stock_meter).trim() !== ''
+          ? parseFloat(v.stock_meter)
+          : null;
+        const trackVarStock = rawVarStock !== null && !isNaN(rawVarStock) ? 1 : 0;
+        const varStockMeter = trackVarStock === 1 ? rawVarStock : null;
+
         db.product_variants.push({
           id: variantId,
           product_id: productId,
@@ -195,7 +201,8 @@ export async function POST(req: Request) {
           attributes: v.attributes || {},
           price: parseFloat(v.price) || basePrice,
           discount_price: v.discount_price ? parseFloat(v.discount_price) : discountPrice || parseFloat(v.price) || basePrice,
-          stock_meter: parseFloat(v.stock_meter) || 0,
+          track_stock: trackVarStock,
+          stock_meter: varStockMeter,
           image_url: v.image_url || mainImageUrl,
           color_code: v.color_code || '#000000',
           is_active: v.is_active !== undefined ? Number(v.is_active) : 1,
@@ -317,6 +324,12 @@ export async function PUT(req: Request) {
 
       // Re-insert new/updated variants
       body.variants.forEach((v: any, index: number) => {
+        const rawVarStock = v.stock_meter !== undefined && v.stock_meter !== null && String(v.stock_meter).trim() !== ''
+          ? parseFloat(v.stock_meter)
+          : null;
+        const trackVarStock = rawVarStock !== null && !isNaN(rawVarStock) ? 1 : 0;
+        const varStockMeter = trackVarStock === 1 ? rawVarStock : null;
+
         db.product_variants.push({
           id: v.id || `var-${body.id}-${index + 1}`,
           product_id: body.id,
@@ -328,7 +341,8 @@ export async function PUT(req: Request) {
           attributes: v.attributes || {},
           price: parseFloat(v.price) || newBasePrice,
           discount_price: v.discount_price ? parseFloat(v.discount_price) : parseFloat(v.price) || newBasePrice,
-          stock_meter: parseFloat(v.stock_meter) || 0,
+          track_stock: trackVarStock,
+          stock_meter: varStockMeter,
           image_url: v.image_url || mainImageUrl,
           color_code: v.color_code || '#000000',
           is_active: v.is_active !== undefined ? Number(v.is_active) : 1,

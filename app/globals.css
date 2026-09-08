@@ -35,18 +35,76 @@ body {
   scrollbar-width: none;  /* Firefox */
 }
 
-/* Print specific styles for "Sipariş Çıktısı / Kesim Fişi" */
+/* Print specific styles for "Sipariş Çıktısı / Kesim Fişi / DHL Kargo Etiketi" */
 @media print {
+  @page {
+    size: A4 portrait;
+    margin: 8mm 8mm 8mm 8mm;
+  }
+
+  html,
   body {
     background-color: #ffffff !important;
+    background: #ffffff !important;
     color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
   }
-  header, nav, footer, .no-print {
+
+  /* Completely remove sidebar, navbar, header, buttons from print */
+  aside,
+  header,
+  nav,
+  footer,
+  .no-print,
+  button:not(.print-include) {
     display: none !important;
   }
+
+  /* Reset layout flex containers so left sidebar offset is 0 */
+  main,
+  div {
+    overflow: visible !important;
+  }
+
+  div.min-h-screen {
+    min-height: auto !important;
+    display: block !important;
+    background: #ffffff !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
   .print-only {
     display: block !important;
   }
+
+  .print-order-page {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 0 0 0 !important;
+    padding: 12px 16px !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    box-sizing: border-box !important;
+  }
+
+  .print-order-page:last-child {
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+
   .print-container {
     width: 100% !important;
     margin: 0 !important;

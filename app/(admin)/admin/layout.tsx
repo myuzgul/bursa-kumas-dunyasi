@@ -51,15 +51,6 @@ export default function AdminLayout({
               <span>Ana Sayfa Vitrini</span>
             </Link>
 
-            {/* H - Hikayeler (Stories) */}
-            <Link
-              href="/admin/hikayeler"
-              className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-900 hover:text-white transition text-slate-300"
-            >
-              <Sparkles className="w-4 h-4 text-pink-400" />
-              <span>Hikayeler (Stories)</span>
-            </Link>
-
             {/* K - Kargo & Teslimat Ayarları */}
             <Link
               href="/admin/kargo-ayarlari"

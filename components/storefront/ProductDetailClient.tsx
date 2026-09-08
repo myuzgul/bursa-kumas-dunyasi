@@ -91,12 +91,15 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({
   const hasDiscount = originalPrice > unitPrice;
   const discountPercent = hasDiscount ? Math.round(((originalPrice - unitPrice) / originalPrice) * 100) : 0;
   
-  // Stock determination: optional tracking or tracked limit
-  const isStockTracked = (selectedVariant?.track_stock ?? product.track_stock) === 1 ||
-    ((selectedVariant?.stock_meter ?? product.stock_meter) !== null &&
-     (selectedVariant?.stock_meter ?? product.stock_meter) !== undefined &&
-     (selectedVariant?.track_stock ?? product.track_stock) !== 0);
-  const currentStock = isStockTracked ? Number(selectedVariant?.stock_meter ?? product.stock_meter ?? 0) : null;
+  // Stock determination: optional tracking or tracked limit (Variant-level or Product-level)
+  const isVariantSelected = Boolean(selectedVariant);
+  const isStockTracked = isVariantSelected
+    ? (selectedVariant.track_stock === 1 || (selectedVariant.stock_meter !== null && selectedVariant.stock_meter !== undefined && selectedVariant.track_stock !== 0))
+    : (product.track_stock === 1 || (product.stock_meter !== null && product.stock_meter !== undefined && product.track_stock !== 0));
+  
+  const currentStock = isStockTracked
+    ? Number((isVariantSelected ? selectedVariant.stock_meter : product.stock_meter) ?? 0)
+    : null;
   const isOutOfStock = isStockTracked && (currentStock === null || currentStock <= 0);
 
   // Active gallery images: guarantee at least 1 image
@@ -341,6 +344,10 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({
               <div className="flex flex-wrap gap-2">
                 {variants.map((v) => {
                   const isSelected = selectedVariant?.id === v.id;
+                  const vIsTracked = v.track_stock === 1 || (v.stock_meter !== null && v.stock_meter !== undefined && v.track_stock !== 0);
+                  const vStock = vIsTracked ? Number(v.stock_meter ?? 0) : null;
+                  const vOutOfStock = vIsTracked && (vStock === null || vStock <= 0);
+
                   return (
                     <button
                       key={v.id}
@@ -349,6 +356,8 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({
                       className={`px-3 py-2 rounded-xl text-xs font-semibold border flex items-center gap-2 transition ${
                         isSelected
                           ? 'border-blue-900 bg-blue-50/50 text-blue-950 ring-2 ring-blue-900/20 shadow-xs'
+                          : vOutOfStock
+                          ? 'border-slate-200 bg-slate-50/80 text-slate-400 hover:border-slate-300'
                           : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
                       }`}
                     >
@@ -358,7 +367,12 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({
                           style={{ backgroundColor: v.color_code }}
                         />
                       )}
-                      <span>{v.title}</span>
+                      <span className={vOutOfStock ? 'line-through opacity-75' : ''}>{v.title}</span>
+                      {vOutOfStock && (
+                        <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-red-100 text-red-700 border border-red-200">
+                          Tükendi
+                        </span>
+                      )}
                     </button>
                   );
                 })}
@@ -383,7 +397,9 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({
             <div className="p-3.5 rounded-2xl bg-red-50 border border-red-200 flex items-center gap-2.5 text-xs text-red-800 font-semibold">
               <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
               <div>
-                <div className="font-bold text-red-900">Bu kumaşın stoğu tükenmiştir</div>
+                <div className="font-bold text-red-900">
+                  {selectedVariant ? `"${selectedVariant.title}" varyasyonunun stoğu tükenmiştir` : 'Bu kumaşın stoğu tükenmiştir'}
+                </div>
                 <div className="text-[11px] text-red-700">Yeni parti dokuma ve özel kesim için WhatsApp hattımızdan bilgi alabilirsiniz.</div>
               </div>
             </div>

@@ -16,6 +16,17 @@ export async function POST(req: Request) {
       const order = db.orders?.find((o: any) => o.id === id || o.order_number === id);
       if (order) {
         order.print_status = 'Yazdırıldı';
+        if (!order.status || order.status === 'Siparis_Alindi' || order.status === 'Odeme_Onaylandi') {
+          order.status = 'Hazirlaniyor'; // 2. Adım: Kesimde
+        }
+        if (!order.carrier) {
+          order.carrier = 'DHL Kargo';
+        }
+        if (!order.tracking_number) {
+          const cleanNum = (order.order_number || order.id || '2026').replace(/[^a-zA-Z0-9]/g, '');
+          order.tracking_number = `DHL${cleanNum}TR`;
+          order.tracking_url = `https://www.mngkargo.com.tr/gonderitakip?takipNo=${order.tracking_number}`;
+        }
         updatedCount++;
       }
     }

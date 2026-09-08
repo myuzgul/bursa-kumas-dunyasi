@@ -3,9 +3,7 @@ import Link from 'next/link';
 import { dbRepo } from '@/lib/db/repo';
 import { ProductCard } from '@/components/storefront/ProductCard';
 import { HomepageShowcase } from '@/components/storefront/HomepageShowcase';
-import { StoriesBar } from '@/components/storefront/StoriesBar';
 import { getShowcaseData } from '@/lib/services/showcaseSettings';
-import { getActiveStories } from '@/lib/services/stories';
 import { 
   ArrowRight, ShieldCheck, Award, Sparkles, CheckCircle2, 
   Truck, Star, BookOpen, Layers, Scissors, HeartHandshake
@@ -17,7 +15,6 @@ export const revalidate = 60; // ISR cache revalidation
 export default function HomePage() {
   const db = dbRepo.read();
   const showcaseData = getShowcaseData();
-  const activeStories = getActiveStories();
   const banners = db.homepage_banners?.filter((b: any) => b.is_active === 1) || [];
   const categories = (db.categories?.filter((c: any) => c.is_active === 1 && c.is_featured_home === 1) || [])
     .sort((a: any, b: any) => (a.display_order || 0) - (b.display_order || 0))
@@ -45,12 +42,8 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
       />
 
-      {/* 0. INSTAGRAM STORIES BAR */}
-      <StoriesBar initialStories={activeStories} />
-
-      <div className="space-y-10 mt-3 sm:mt-4">
-        {/* 1. HERO BANNER SECTION */}
-        <section className="relative bg-slate-900 text-white overflow-hidden">
+      {/* 1. HERO BANNER SECTION */}
+      <section className="relative bg-slate-900 text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=1600&q=85"
@@ -88,7 +81,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2. POPULAR CATEGORIES GRID */}
+      <div className="space-y-10 mt-10">
+        {/* 2. POPULAR CATEGORIES GRID */}
       <section className="max-w-7xl mx-auto px-4">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 gap-2">
           <div>

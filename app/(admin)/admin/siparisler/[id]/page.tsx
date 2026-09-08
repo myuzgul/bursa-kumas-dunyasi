@@ -9,6 +9,7 @@ import {
   Receipt, Building2, User, FileText, Send, Check
 } from 'lucide-react';
 import { formatCurrency } from '@/lib/services/meterEngine';
+import { DHLPrintLabel } from '@/components/admin/DHLPrintLabel';
 
 export default function AdminOrderDetailPage() {
   const params = useParams();
@@ -352,33 +353,57 @@ export default function AdminOrderDetailPage() {
       </div>
 
       {/* 4. A4 SIPARIS VE KESIM CIKTISI (PRINTABLE CONTAINER) */}
-      <div className="print-container bg-white p-8 sm:p-12 rounded-3xl border border-slate-300 shadow-lg space-y-6 text-slate-900">
-        {/* Header Strip with Official Watermark Notice */}
-        <div className="border-b-2 border-slate-900 pb-4 flex items-start justify-between">
-          <div>
-            <div className="font-black text-xl tracking-tight text-slate-900">
-              BURSA KUMAŞ DÜNYASI
-            </div>
-            <div className="text-xs text-slate-500 font-medium mt-0.5">
-              Tescilli Kumaş & Döşeme Mağazası • bursakumasdunyasi.com
-            </div>
-            <div className="text-[11px] text-slate-500">
-              Tel: 0 (542) 393 98 16 • Yıldırım / BURSA
-            </div>
-          </div>
+      {(() => {
+        const totalMeters = items.reduce((acc, it) => acc + Number(it.meter_quantity || 0), 0);
+        return (
+          <div className="print-order-page bg-white p-6 sm:p-8 rounded-3xl border border-slate-300 shadow-md space-y-4 text-slate-900">
+            {/* Top Header Grid: Company Info (Left) + Integrated DHL Kargo Label (Right) */}
+            <div className="flex flex-col sm:flex-row items-start justify-between gap-4 pb-4 border-b-2 border-slate-900">
+              {/* Left Side: Store details & Order Reference */}
+              <div className="flex-1 min-w-0 space-y-2">
+                <div className="flex items-center gap-2">
+                  <div className="font-black text-xl tracking-tight text-slate-900">
+                    BURSA KUMAŞ DÜNYASI
+                  </div>
+                  <span className="inline-block bg-slate-900 text-white text-[10px] font-black px-2 py-0.5 rounded tracking-wider uppercase">
+                    SİPARİŞ VE KESİM FİŞİ
+                  </span>
+                </div>
 
-          <div className="text-right">
-            <div className="inline-block bg-slate-900 text-white text-[11px] font-black px-3 py-1 rounded tracking-wider uppercase">
-              FATURA DEĞİLDİR / SİPARİŞ ÇIKTISIDIR
+                <div className="text-[11px] text-slate-600 font-medium">
+                  Tescilli Kumaş & Döşeme Mağazası • bursakumasdunyasi.com
+                </div>
+                <div className="text-[11px] text-slate-500">
+                  Tel: 0 (542) 393 98 16 • Kazım Karabekir Mah. Yıldırım / BURSA
+                </div>
+
+                <div className="pt-2 flex flex-wrap items-center gap-4 text-xs font-mono">
+                  <div className="bg-slate-100 px-3 py-1 rounded-lg border border-slate-300">
+                    <span className="text-slate-500 text-[10px] block font-sans font-bold uppercase">Sipariş No</span>
+                    <strong className="text-blue-950 text-sm font-black">#{order.order_number}</strong>
+                  </div>
+
+                  <div className="bg-slate-100 px-3 py-1 rounded-lg border border-slate-300">
+                    <span className="text-slate-500 text-[10px] block font-sans font-bold uppercase">Sipariş Tarihi</span>
+                    <strong className="text-slate-900">{new Date(order.created_at).toLocaleString('tr-TR')}</strong>
+                  </div>
+
+                  <div className="bg-emerald-50 text-emerald-900 px-3 py-1 rounded-lg border border-emerald-300">
+                    <span className="text-emerald-700 text-[10px] block font-sans font-bold uppercase">Ödeme Durumu</span>
+                    <strong className="font-bold">{order.payment_method || 'Kredi Kartı'} (Ödendi)</strong>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Side: Integrated DHL Kargo Label (Single printout) */}
+              <div className="flex-shrink-0 w-full sm:w-auto">
+                <DHLPrintLabel
+                  order={order}
+                  shippingAddress={shippingAddress}
+                  totalMeters={totalMeters}
+                />
+              </div>
             </div>
-            <div className="text-sm font-black text-blue-900 font-mono mt-1">
-              #{order.order_number}
-            </div>
-            <div className="text-[11px] text-slate-500">
-              Tarih: {new Date(order.created_at).toLocaleString('tr-TR')}
-            </div>
-          </div>
-        </div>
 
         {/* Customer & Shipping & Billing Summary */}
         <div className="grid grid-cols-2 gap-6 text-xs bg-slate-50 p-4 rounded-xl border border-slate-200">
@@ -512,21 +537,23 @@ export default function AdminOrderDetailPage() {
           </div>
         </div>
 
-        {/* Quality Control & Staff Signatures */}
-        <div className="grid grid-cols-2 gap-8 pt-8 border-t border-slate-300 text-xs text-center">
-          <div className="border border-dashed border-slate-300 p-4 rounded-xl space-y-4">
-            <div className="font-bold text-slate-700">Kesim Masası Kontrol & İmza</div>
-            <div className="text-[10px] text-slate-400">Metraj lazerle kontrol edilmiştir.</div>
-            <div className="h-6" />
-          </div>
+          {/* Quality Control & Staff Signatures */}
+          <div className="grid grid-cols-2 gap-8 pt-8 border-t border-slate-300 text-xs text-center">
+            <div className="border border-dashed border-slate-300 p-4 rounded-xl space-y-4">
+              <div className="font-bold text-slate-700">Kesim Masası Kontrol & İmza</div>
+              <div className="text-[10px] text-slate-400">Metraj lazerle kontrol edilmiştir.</div>
+              <div className="h-6" />
+            </div>
 
-          <div className="border border-dashed border-slate-300 p-4 rounded-xl space-y-4">
-            <div className="font-bold text-slate-700">Paketleme & Sevkiyat Kontrol</div>
-            <div className="text-[10px] text-slate-400">DHL Kargo (MNG Kargo) kuryesine teslim edildi.</div>
-            <div className="h-6" />
+            <div className="border border-dashed border-slate-300 p-4 rounded-xl space-y-4">
+              <div className="font-bold text-slate-700">Paketleme & Sevkiyat Kontrol</div>
+              <div className="text-[10px] text-slate-400">DHL Kargo kuryesine teslim edildi.</div>
+              <div className="h-6" />
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  );
+      );
+    })()}
+  </div>
+);
 }

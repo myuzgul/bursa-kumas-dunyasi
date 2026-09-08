@@ -48,7 +48,7 @@ function OrderTrackingContent() {
     }
   }, [initialOrder]);
 
-  const timeline = orderData ? getYurticiTrackingTimeline(orderData.order.status) : [];
+  const timeline = orderData ? getYurticiTrackingTimeline(orderData.order) : [];
 
   return (
     <div className="space-y-8">
@@ -108,38 +108,38 @@ function OrderTrackingContent() {
                   href={orderData.order.tracking_url || 'https://www.mngkargo.com.tr/gonderitakip'}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-xs font-bold rounded-lg transition"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-xs font-bold rounded-xl transition"
                 >
                   <Truck className="w-4 h-4 text-amber-600" />
-                  <span>DHL Kargo (MNG Kargo) Takip: {orderData.order.tracking_number}</span>
+                  <span>DHL Kargo Takip: {orderData.order.tracking_number}</span>
                   <ExternalLink className="w-3.5 h-3.5 ml-1" />
                 </a>
               )}
             </div>
 
-            {/* Timeline steps */}
-            <div className="relative grid grid-cols-1 md:grid-cols-5 gap-4 pt-2">
+            {/* Timeline 3 steps */}
+            <div className="relative grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
               {timeline.map((step, idx) => (
                 <div
                   key={step.key}
-                  className={`flex md:flex-col items-center gap-3 md:text-center p-3 rounded-xl border transition ${
+                  className={`flex md:flex-col items-center gap-3 md:text-center p-4 rounded-2xl border transition ${
                     step.isCompleted
-                      ? 'bg-blue-50/60 border-blue-200 text-blue-950'
+                      ? 'bg-blue-50/70 border-blue-300 text-blue-950 shadow-xs'
                       : 'bg-slate-50/50 border-slate-200 text-slate-400 opacity-60'
                   }`}
                 >
                   <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm shadow-xs flex-shrink-0 ${
+                    className={`w-11 h-11 rounded-full flex items-center justify-center font-bold text-sm shadow-xs flex-shrink-0 ${
                       step.isCompleted
                         ? 'bg-blue-900 text-white'
                         : 'bg-slate-200 text-slate-500'
                     }`}
                   >
-                    {step.isCompleted ? <CheckCircle2 className="w-5 h-5" /> : idx + 1}
+                    {step.isCompleted ? <CheckCircle2 className="w-6 h-6" /> : idx + 1}
                   </div>
                   <div>
-                    <div className="text-xs font-bold">{step.label}</div>
-                    <div className="text-[11px] text-slate-500 mt-0.5 leading-tight">
+                    <div className="text-sm font-bold">{step.label}</div>
+                    <div className="text-xs text-slate-500 mt-1 leading-normal">
                       {step.desc}
                     </div>
                   </div>

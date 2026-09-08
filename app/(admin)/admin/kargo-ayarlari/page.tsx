@@ -19,9 +19,21 @@ import { formatCurrency } from '@/lib/services/meterEngine';
 export default function AdminShippingSettingsPage() {
   const [threshold, setThreshold] = useState<number>(1000);
   const [cost, setCost] = useState<number>(79.90);
-  const [carrierName, setCarrierName] = useState<string>('DHL Kargo (MNG Kargo)');
+  const [carrierName, setCarrierName] = useState<string>('DHL Kargo');
   const [announcementText, setAnnouncementText] = useState<string>('');
   const [isActive, setIsActive] = useState<number>(1);
+
+  // DHL Specific integration fields
+  const [dhlActive, setDhlActive] = useState<number>(1);
+  const [dhlTestMode, setDhlTestMode] = useState<number>(0);
+  const [dhlCustomerCode, setDhlCustomerCode] = useState<string>('');
+  const [dhlApiKey, setDhlApiKey] = useState<string>('');
+  const [dhlApiSecret, setDhlApiSecret] = useState<string>('');
+  const [dhlBranchCode, setDhlBranchCode] = useState<string>('');
+  const [dhlSenderName, setDhlSenderName] = useState<string>('Bursa Kumaş Dünyası');
+  const [dhlSenderPhone, setDhlSenderPhone] = useState<string>('0 (542) 393 98 16');
+  const [dhlSenderAddress, setDhlSenderAddress] = useState<string>('Kazım Karabekir Mah. Yıldırım / BURSA');
+  const [dhlAutoLabel, setDhlAutoLabel] = useState<number>(1);
 
   const [loading, setLoading] = useState<boolean>(true);
   const [saving, setSaving] = useState<boolean>(false);
@@ -36,9 +48,19 @@ export default function AdminShippingSettingsPage() {
         if (data.settings) {
           setThreshold(data.settings.free_shipping_threshold ?? 1000);
           setCost(data.settings.shipping_cost ?? 79.90);
-          setCarrierName(data.settings.carrier_name || 'DHL Kargo (MNG Kargo)');
+          setCarrierName(data.settings.carrier_name || 'DHL Kargo');
           setAnnouncementText(data.settings.announcement_text || '');
           setIsActive(data.settings.is_active ?? 1);
+          setDhlActive(data.settings.dhl_integration_active ?? 1);
+          setDhlTestMode(data.settings.dhl_test_mode ?? 0);
+          setDhlCustomerCode(data.settings.dhl_customer_code || '');
+          setDhlApiKey(data.settings.dhl_api_key || '');
+          setDhlApiSecret(data.settings.dhl_api_secret || '');
+          setDhlBranchCode(data.settings.dhl_branch_code || '');
+          setDhlSenderName(data.settings.dhl_sender_name || 'Bursa Kumaş Dünyası');
+          setDhlSenderPhone(data.settings.dhl_sender_phone || '0 (542) 393 98 16');
+          setDhlSenderAddress(data.settings.dhl_sender_address || 'Kazım Karabekir Mah. Yıldırım / BURSA');
+          setDhlAutoLabel(data.settings.dhl_auto_generate_label ?? 1);
         }
       }
     } catch (e) {
@@ -68,12 +90,22 @@ export default function AdminShippingSettingsPage() {
           carrier_name: carrierName,
           announcement_text: announcementText,
           is_active: isActive,
+          dhl_integration_active: dhlActive,
+          dhl_test_mode: dhlTestMode,
+          dhl_customer_code: dhlCustomerCode,
+          dhl_api_key: dhlApiKey,
+          dhl_api_secret: dhlApiSecret,
+          dhl_branch_code: dhlBranchCode,
+          dhl_sender_name: dhlSenderName,
+          dhl_sender_phone: dhlSenderPhone,
+          dhl_sender_address: dhlSenderAddress,
+          dhl_auto_generate_label: dhlAutoLabel,
         }),
       });
 
       const data = await res.json();
       if (res.ok) {
-        setSuccessMsg('Kargo ve ücretsiz teslimat ayarları başarıyla güncellendi!');
+        setSuccessMsg('Kargo ve DHL entegrasyon ayarları başarıyla kaydedildi!');
         setTimeout(() => setSuccessMsg(''), 4000);
       } else {
         setErrorMsg(data.error || 'Ayarlar kaydedilemedi.');
@@ -222,9 +254,130 @@ export default function AdminShippingSettingsPage() {
                   required
                   value={carrierName}
                   onChange={(e) => setCarrierName(e.target.value)}
-                  placeholder="Örn: DHL Kargo (MNG Kargo)"
+                  placeholder="Örn: DHL Kargo"
                   className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-slate-900 font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600"
                 />
+              </div>
+
+              {/* DHL Kargo (DHL eCommerce) API Entegrasyonu Kartı */}
+              <div className="pt-4 border-t border-slate-200 space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="bg-[#FFCC00] text-[#D40511] font-black px-2 py-0.5 rounded text-xs border border-[#D40511]/30">
+                      DHL
+                    </span>
+                    <h3 className="font-bold text-slate-900 text-sm">
+                      DHL Kargo (eCommerce Turkey) Entegrasyonu
+                    </h3>
+                  </div>
+
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={dhlActive === 1}
+                      onChange={(e) => setDhlActive(e.target.checked ? 1 : 0)}
+                      className="sr-only peer"
+                    />
+                    <div className="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600"></div>
+                  </label>
+                </div>
+
+                <p className="text-[11px] text-slate-500 leading-relaxed">
+                  Canlıya geçtiğinizde DHL / MNG API bilgilerinizi buraya girdiğinizde sipariş çıktılarında sağ üstte otomatik DHL barkod etiketi oluşturulur.
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                      Çalışma Modu
+                    </label>
+                    <select
+                      value={dhlTestMode}
+                      onChange={(e) => setDhlTestMode(Number(e.target.value))}
+                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs font-semibold text-slate-800"
+                    >
+                      <option value={0}>🟢 Canlı (Production) Modu</option>
+                      <option value={1}>🧪 Test (Sandbox) Modu</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                      DHL Cari / Müşteri Kodu (Account No)
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Örn: 10489201"
+                      value={dhlCustomerCode}
+                      onChange={(e) => setDhlCustomerCode(e.target.value)}
+                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs font-mono"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                      DHL API Key / Client ID
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="DHL API Kullanıcı Adı / Client Key"
+                      value={dhlApiKey}
+                      onChange={(e) => setDhlApiKey(e.target.value)}
+                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs font-mono"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                      DHL API Secret / Parola
+                    </label>
+                    <input
+                      type="password"
+                      placeholder="••••••••••••"
+                      value={dhlApiSecret}
+                      onChange={(e) => setDhlApiSecret(e.target.value)}
+                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs font-mono"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                      Gönderici Şube Kodu
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Örn: BURSA_YILDIRIM"
+                      value={dhlBranchCode}
+                      onChange={(e) => setDhlBranchCode(e.target.value)}
+                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs font-mono"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                      Gönderici Firma Adı
+                    </label>
+                    <input
+                      type="text"
+                      value={dhlSenderName}
+                      onChange={(e) => setDhlSenderName(e.target.value)}
+                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 pt-1">
+                  <input
+                    type="checkbox"
+                    id="autoLabel"
+                    checked={dhlAutoLabel === 1}
+                    onChange={(e) => setDhlAutoLabel(e.target.checked ? 1 : 0)}
+                    className="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300"
+                  />
+                  <label htmlFor="autoLabel" className="text-xs text-slate-700 font-semibold cursor-pointer">
+                    Sipariş yazdırıldığında otomatik DHL kargo takip barkodu oluştur
+                  </label>
+                </div>
               </div>
 
               {/* Save Button */}
@@ -235,7 +388,7 @@ export default function AdminShippingSettingsPage() {
                   className="w-full py-3.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-black text-xs rounded-xl shadow-md transition flex items-center justify-center gap-2"
                 >
                   <Save className="w-4 h-4" />
-                  <span>{saving ? 'Kaydediliyor...' : 'Kargo Ayarlarını Kaydet'}</span>
+                  <span>{saving ? 'Kaydediliyor...' : 'Kargo & DHL Ayarlarını Kaydet'}</span>
                 </button>
               </div>
             </div>
