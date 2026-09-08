@@ -11,7 +11,7 @@ interface OrderSuccessPageProps {
 }
 
 export default function OrderSuccessPage({ searchParams }: OrderSuccessPageProps) {
-  const orderNumber = searchParams.order || 'BKD-2026-000101';
+  const orderNumber = searchParams.order || '12354';
   
   const db = dbRepo.read();
   const order = db.orders.find((o: any) => o.order_number === orderNumber);

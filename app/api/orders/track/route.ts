@@ -3,16 +3,19 @@ import { dbRepo } from '@/lib/db/repo';
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const orderNumber = searchParams.get('order')?.trim().toUpperCase();
+  const rawQuery = searchParams.get('order') || '';
+  const cleanQuery = rawQuery.replace(/#/g, '').trim().toUpperCase();
 
-  if (!orderNumber) {
+  if (!cleanQuery) {
     return NextResponse.json({ message: 'Sipariş numarası gereklidir.' }, { status: 400 });
   }
 
   const db = dbRepo.read();
-  const order = db.orders?.find(
-    (o: any) => o.order_number.toUpperCase() === orderNumber
-  );
+  const order = db.orders?.find((o: any) => {
+    const oNum = String(o.order_number || '').trim().toUpperCase();
+    const oId = String(o.id || '').trim().toUpperCase();
+    return oNum === cleanQuery || oId === cleanQuery;
+  });
 
   if (!order) {
     return NextResponse.json({ message: 'Belirtilen numaraya ait sipariş bulunamadı.' }, { status: 404 });

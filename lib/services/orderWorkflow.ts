@@ -38,10 +38,28 @@ export interface CreateOrderParams {
 
 export function generateOrderNumber(): string {
   const db = dbRepo.read();
-  const year = new Date().getFullYear();
-  const count = (db.orders ? db.orders.length : 0) + 101;
-  const seq = count.toString().padStart(6, '0');
-  return `BKD-${year}-${seq}`;
+  const BASE_START_NUMBER = 12354;
+  
+  if (!db.orders || db.orders.length === 0) {
+    return BASE_START_NUMBER.toString();
+  }
+
+  // Find the highest numeric 5-digit order number
+  let maxOrderNum = BASE_START_NUMBER - 1;
+
+  for (const order of db.orders) {
+    if (order.order_number) {
+      const trimmed = String(order.order_number).replace(/[^0-9]/g, '');
+      const num = parseInt(trimmed, 10);
+      if (!isNaN(num) && num >= BASE_START_NUMBER && num < 999999) {
+        if (num > maxOrderNum) {
+          maxOrderNum = num;
+        }
+      }
+    }
+  }
+
+  return (maxOrderNum + 1).toString();
 }
 
 export async function processCheckoutOrder(params: CreateOrderParams) {
