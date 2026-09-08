@@ -352,7 +352,7 @@ export default function CheckoutPage() {
               <span className="w-6 h-6 rounded-full bg-blue-900 text-white text-xs flex items-center justify-center">
                 2
               </span>
-              <span>Teslimat Adresi ({shippingSettings?.carrier_name || 'DHL Kargo (MNG Kargo)'})</span>
+              <span>Teslimat Adresi</span>
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -410,14 +410,14 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          {/* 3. Fatura Seçimi & Park Bulut */}
+          {/* 3. Fatura Seçimi */}
           <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
             <h2 className="text-sm font-bold text-slate-900 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="w-6 h-6 rounded-full bg-blue-900 text-white text-xs flex items-center justify-center">
                   3
                 </span>
-                <span>Fatura Türü (Park Bulut E-Arşiv/E-Fatura)</span>
+                <span>Fatura Türü</span>
               </div>
               <div className="flex items-center gap-3 text-xs">
                 <label className="flex items-center gap-1.5 cursor-pointer font-medium text-slate-700">
