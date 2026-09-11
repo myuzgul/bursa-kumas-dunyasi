@@ -7,6 +7,7 @@ import { MeterSelector } from './MeterSelector';
 import { ProductCard } from './ProductCard';
 import { useCart } from './CartContext';
 import { formatCurrency } from '@/lib/services/meterEngine';
+import { trackStorefrontEvent } from '@/lib/analytics/dataTier';
 import { 
   ShoppingBag, Zap, ShieldCheck, Truck, RotateCcw, 
   MessageSquare, Star, MessageCircle, Scissors, Award, Sparkles,
@@ -107,6 +108,29 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({
     ? images
     : [{ id: 'main', image_url: product.main_image_url || '/placeholder.jpg' }];
 
+  // Track Meta Pixel / CAPI ViewContent on product view
+  useEffect(() => {
+    if (product) {
+      const activeSku = selectedVariant?.sku || product.sku || product.id;
+      const catName = category?.name || 'Döşemelik ve Perdelik Kumaş';
+      trackStorefrontEvent('ViewContent', {
+        content_name: product.name,
+        content_category: catName,
+        content_ids: [String(activeSku)],
+        content_type: 'product',
+        value: unitPrice,
+        currency: 'TRY',
+        contents: [{
+          id: String(activeSku),
+          quantity: 1,
+          item_price: unitPrice,
+          name: product.name,
+          category: catName,
+        }],
+      });
+    }
+  }, [product.id, selectedVariant?.id]);
+
   const handleAddToCart = () => {
     if (isOutOfStock) return;
     if (isStockTracked && currentStock !== null && meter > currentStock) {
@@ -114,16 +138,36 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({
       return;
     }
 
+    const activeSku = selectedVariant?.sku || product.sku || product.id;
+    const catName = category?.name || 'Döşemelik ve Perdelik Kumaş';
+
     addItem({
       productId: product.id,
       variantId: selectedVariant?.id,
       name: product.name,
       variantTitle: selectedVariant?.title,
-      sku: selectedVariant?.sku || product.sku,
+      sku: activeSku,
       image: selectedVariant?.image_url || (images.length > 0 ? images[0].image_url : product.main_image_url),
       unitPrice,
       meterQuantity: meter,
       maxStockMeter: currentStock ?? 1000,
+    });
+
+    // Track Meta Pixel / CAPI AddToCart event
+    trackStorefrontEvent('AddToCart', {
+      content_name: product.name,
+      content_category: catName,
+      content_ids: [String(activeSku)],
+      content_type: 'product',
+      value: Number((unitPrice * meter).toFixed(2)),
+      currency: 'TRY',
+      contents: [{
+        id: String(activeSku),
+        quantity: meter,
+        item_price: unitPrice,
+        name: product.name,
+        category: catName,
+      }],
     });
   };
 

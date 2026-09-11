@@ -14,7 +14,20 @@ export default function OrderSuccessPage({ searchParams }: OrderSuccessPageProps
   const orderNumber = searchParams.order || '12354';
   
   const db = dbRepo.read();
-  const order = db.orders.find((o: any) => o.order_number === orderNumber);
+  const order = db.orders?.find((o: any) => o.order_number === orderNumber || o.id === orderNumber);
+  const rawItems = order ? (db.order_items?.filter((i: any) => i.order_id === order.id) || []) : [];
+  const categories = db.categories || [];
+  const products = db.products || [];
+
+  const items = rawItems.map((it: any) => {
+    const prod = products.find((p: any) => p.id === it.product_id);
+    const cat = prod ? categories.find((c: any) => c.id === prod.category_id) : null;
+    return {
+      ...it,
+      category_name: cat ? cat.name : 'Döşemelik ve Perdelik Kumaş',
+    };
+  });
+
   const paymentSettings = getPaymentSettings();
 
   const paymentMethod = order?.payment_method || 'paytr';
@@ -24,7 +37,7 @@ export default function OrderSuccessPage({ searchParams }: OrderSuccessPageProps
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-16 text-center space-y-6">
-      <OrderSuccessTracker orderNumber={orderNumber} />
+      <OrderSuccessTracker orderNumber={orderNumber} order={order} items={items} />
       
       <div className="w-20 h-20 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto border-4 border-emerald-100 shadow-lg">
         <CheckCircle2 className="w-10 h-10" />

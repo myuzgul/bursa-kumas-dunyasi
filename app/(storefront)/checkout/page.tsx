@@ -9,6 +9,7 @@ import {
   ShieldCheck, Lock, CreditCard, Truck, Landmark, Banknote,
   CheckCircle2, AlertCircle, ShoppingBag, ArrowLeft, Copy, Check, Info
 } from 'lucide-react';
+import { trackStorefrontEvent } from '@/lib/analytics/dataTier';
 
 interface BankAccount {
   id: string;
@@ -140,6 +141,28 @@ export default function CheckoutPage() {
         }
       })
       .catch(() => {});
+  }, []);
+
+  // Track Meta Pixel / CAPI InitiateCheckout event
+  useEffect(() => {
+    if (items.length > 0) {
+      const contentIds = items.map((it: any) => String(it.sku || it.productId || it.id || ''));
+      const contents = items.map((it: any) => ({
+        id: String(it.sku || it.productId || it.id || ''),
+        quantity: Number(it.meter || it.meterQuantity || 1),
+        item_price: Number(it.pricePerMeter || it.unitPrice || 0),
+        name: it.name || 'Kumaş',
+      }));
+
+      trackStorefrontEvent('InitiateCheckout', {
+        content_type: 'product',
+        content_ids: contentIds,
+        contents: contents,
+        num_items: items.length,
+        value: Number(subtotal || 0),
+        currency: 'TRY',
+      });
+    }
   }, []);
 
   // Discount & Fee calculations
