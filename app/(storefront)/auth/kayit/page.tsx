@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Lock, Mail, User, Phone, Eye, EyeOff, ShieldCheck, ArrowRight, LogIn, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '@/components/storefront/UserContext';
 
-export default function RegisterPage() {
+function RegisterForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectUrl = searchParams.get('redirect') || '/hesabim';
@@ -284,5 +284,13 @@ export default function RegisterPage() {
         <span>Kişisel verileriniz 6698 Sayılı KVKK kapsamında en üst düzey güvenlik ile korunur.</span>
       </div>
     </div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={<div className="max-w-lg mx-auto px-4 py-12 text-center text-xs text-slate-400">Yükleniyor...</div>}>
+      <RegisterForm />
+    </Suspense>
   );
 }
