@@ -588,6 +588,21 @@
       "show_in_menu": 1,
       "meta_title": "Fırsat ve İndirimli Kumaşlar - Bursa Kumaş Dünyası",
       "created_at": "2026-09-06T20:00:00.000Z"
+    },
+    {
+      "id": "cat-1788789916613",
+      "parent_id": null,
+      "name": "Modal",
+      "slug": "modal",
+      "description": "",
+      "image_url": "/uploads/kumas-1788789890869-foto11.jpeg",
+      "display_order": 15,
+      "is_active": 1,
+      "is_featured_home": 0,
+      "show_in_menu": 0,
+      "meta_title": "Modal - Bursa Kumaş Dünyası",
+      "meta_description": "",
+      "created_at": "2026-09-07T14:05:16.613Z"
     }
   ],
   "attributes": [
@@ -1082,6 +1097,53 @@
       "category_ids": [
         "cat-giyimlik"
       ]
+    },
+    {
+      "id": "prod-1788788984335",
+      "category_id": "cat-viskon",
+      "category_ids": [
+        "cat-viskon"
+      ],
+      "sku": "UK8787",
+      "barcode": "",
+      "name": "keten ayrobin",
+      "slug": "keten-ayrobin",
+      "short_description": "",
+      "description": "",
+      "technical_specs": {},
+      "attributes": {
+        "Renk": [
+          "kırmızı",
+          "bordo",
+          "siyah"
+        ]
+      },
+      "base_price": 600,
+      "discount_price": 70,
+      "tax_rate": 20,
+      "is_meter_sale": 1,
+      "min_order_meter": 1,
+      "meter_step": 0.5,
+      "max_order_meter": 50,
+      "track_stock": 1,
+      "stock_meter": 900,
+      "has_variants": 1,
+      "main_image_url": "/uploads/kumas-1788789085013-foldet33.jpeg",
+      "images": [
+        "/uploads/kumas-1788789085013-foldet33.jpeg"
+      ],
+      "badge_ids": [],
+      "is_active": 1,
+      "is_archived": 0,
+      "is_featured": 1,
+      "is_bestseller": 0,
+      "is_new": 1,
+      "vitrin_order": 0,
+      "meta_title": "keten ayrobin - Metre Fiyatı | Bursa Kumaş Dünyası",
+      "meta_description": "keten ayrobin en kaliteli dokumasıyla Bursa Kumaş Dünyası'nda.",
+      "canonical_url": "/urun/keten-ayrobin",
+      "created_at": "2026-09-07T13:49:44.335Z",
+      "updated_at": "2026-09-07T13:52:00.377Z"
     }
   ],
   "product_variants": [
@@ -1525,6 +1587,63 @@
       "color_code": "#000000",
       "is_active": 1,
       "created_at": "2026-09-06T23:22:21.004Z"
+    },
+    {
+      "id": "var-1788789055609-1",
+      "product_id": "prod-1788788984335",
+      "sku": "UK8787-KIR",
+      "barcode": "",
+      "title": "kırmızı",
+      "color_name": "",
+      "pattern_name": "",
+      "attributes": {
+        "Renk": "kırmızı"
+      },
+      "price": 600,
+      "discount_price": 70,
+      "stock_meter": 900,
+      "image_url": "/placeholder.jpg",
+      "color_code": "#000000",
+      "is_active": 1,
+      "updated_at": "2026-09-07T13:52:00.377Z"
+    },
+    {
+      "id": "var-1788789055609-2",
+      "product_id": "prod-1788788984335",
+      "sku": "UK8787-BOR",
+      "barcode": "",
+      "title": "bordo",
+      "color_name": "",
+      "pattern_name": "",
+      "attributes": {
+        "Renk": "bordo"
+      },
+      "price": 600,
+      "discount_price": 70,
+      "stock_meter": 900,
+      "image_url": "/placeholder.jpg",
+      "color_code": "#000000",
+      "is_active": 1,
+      "updated_at": "2026-09-07T13:52:00.377Z"
+    },
+    {
+      "id": "var-1788789061875-3",
+      "product_id": "prod-1788788984335",
+      "sku": "UK8787-SIY",
+      "barcode": "",
+      "title": "siyah",
+      "color_name": "",
+      "pattern_name": "",
+      "attributes": {
+        "Renk": "siyah"
+      },
+      "price": 600,
+      "discount_price": 70,
+      "stock_meter": 900,
+      "image_url": "/placeholder.jpg",
+      "color_code": "#000000",
+      "is_active": 1,
+      "updated_at": "2026-09-07T13:52:00.377Z"
     }
   ],
   "product_images": [
@@ -2663,6 +2782,21 @@
       "is_verified_purchase": 1,
       "is_approved": 1,
       "created_at": "2026-09-06T18:00:00.000Z"
+    },
+    {
+      "id": "rev-1788789810196-1oyc",
+      "product_id": "prod-1788736941003",
+      "user_id": null,
+      "customer_name": "deneme",
+      "rating": 5,
+      "comment": "deneme",
+      "images": [
+        "/uploads/kumas-1788789808777-foldet33.jpeg"
+      ],
+      "is_verified_purchase": 1,
+      "is_approved": -1,
+      "created_at": "2026-09-07T14:03:30.196Z",
+      "updated_at": "2026-09-07T14:03:41.188Z"
     }
   ],
   "wishlists": [],
@@ -3117,6 +3251,51 @@
       "details": "Sistem ilk kurulum ve kumaş katalogları başarıyla yüklendi.",
       "ip_address": "127.0.0.1",
       "created_at": "2026-09-03T02:32:50.410Z"
+    },
+    {
+      "id": "audit-1788957428145-snh6",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "ORDER_UPDATE",
+      "details": "Sipariş #BKD-2026-000113 güncellendi: {\"print_status\":\"Yazdırıldı\"}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-09T12:37:08.145Z"
+    },
+    {
+      "id": "audit-1788789397135-0maq",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "BULK_PRINT_ORDERS",
+      "details": "1 adet sipariş toplu olarak yazdırıldı ve 'Yazdırıldı' olarak işaretlendi.",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-07T13:56:37.135Z"
+    },
+    {
+      "id": "audit-1788789397130-u3a8",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "BULK_PRINT_ORDERS",
+      "details": "1 adet sipariş toplu olarak yazdırıldı ve 'Yazdırıldı' olarak işaretlendi.",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-07T13:56:37.130Z"
+    },
+    {
+      "id": "audit-1788788829820-t4kn",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "BULK_PRINT_ORDERS",
+      "details": "1 adet sipariş toplu olarak yazdırıldı ve 'Yazdırıldı' olarak işaretlendi.",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-07T13:47:09.820Z"
+    },
+    {
+      "id": "audit-1788788829818-23lq",
+      "admin_id": null,
+      "admin_email": "admin@bursakumasdunyasi.com",
+      "action": "BULK_PRINT_ORDERS",
+      "details": "1 adet sipariş toplu olarak yazdırıldı ve 'Yazdırıldı' olarak işaretlendi.",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-09-07T13:47:09.818Z"
     }
   ],
   "email_logs": [
@@ -3520,6 +3699,14 @@
       "new_stock": 99,
       "reason": "Sipariş Satışı #BKD-2026-000114",
       "created_at": "2026-09-07T21:56:07.765Z"
+    },
+    {
+      "id": "stk-1788788984335",
+      "product_id": "prod-1788788984335",
+      "change_meter": null,
+      "new_stock": null,
+      "reason": "Yeni Ürün Girişi",
+      "created_at": "2026-09-07T13:49:44.335Z"
     }
   ],
   "user_sessions": [
@@ -4244,6 +4431,14 @@
       "new_price": 75,
       "changed_by": "admin@bursakumasdunyasi.com",
       "created_at": "2026-09-05T20:57:29.020Z"
+    },
+    {
+      "id": "prc-1788789120377",
+      "product_id": "prod-1788788984335",
+      "old_price": 0,
+      "new_price": 600,
+      "changed_by": "admin@bursakumasdunyasi.com",
+      "created_at": "2026-09-07T13:52:00.377Z"
     }
   ],
   "stories": [
