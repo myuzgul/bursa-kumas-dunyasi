@@ -16,7 +16,7 @@ export interface TrackingEventData {
   content_name?: string;
   content_category?: string;
   content_ids?: string[];
-  contents?: Array<{ id: string; quantity: number; item_price?: number; name?: string }>;
+  contents?: Array<{ id: string; quantity: number; item_price?: number; name?: string; category?: string }>;
   content_type?: string;
   value?: number;
   currency?: string;

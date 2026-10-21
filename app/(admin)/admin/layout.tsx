@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { 
   LayoutDashboard, ShoppingCart, Package, BarChart3, 
-  Percent, Sliders, FileText, Bell, ExternalLink, ShieldAlert, Users, Layers, Award, MessageSquare, Truck, CreditCard, Sparkles, Receipt
+  Percent, Sliders, FileText, Bell, ExternalLink, ShieldAlert, Users, Layers, Award, MessageSquare, Truck, CreditCard, Sparkles, Receipt, RefreshCw
 } from 'lucide-react';
 import { BrandLogo } from '@/components/ui/BrandLogo';
 
@@ -175,6 +175,15 @@ export default function AdminLayout({
             >
               <Sliders className="w-4 h-4 text-cyan-400" />
               <span>Toplu Fiyat Güncelleme</span>
+            </Link>
+
+            {/* W - WooCommerce Senkronizasyonu */}
+            <Link
+              href="/admin/woocommerce-sync"
+              className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-900 hover:text-white transition text-purple-300 bg-purple-950/40 border border-purple-800/40"
+            >
+              <RefreshCw className="w-4 h-4 text-purple-400" />
+              <span>WooCommerce İçe Aktar / Yenile</span>
             </Link>
           </nav>
         </div>
