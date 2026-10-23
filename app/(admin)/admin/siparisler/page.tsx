@@ -20,17 +20,20 @@ export default function AdminOrdersManagementPage() {
 
   const fetchOrders = async () => {
     try {
-      const res = await fetch('/api/admin/products'); // DB reader or custom API
-      const data = await res.json();
-      // Let's fetch orders directly from our API
-      const ordersRes = await fetch('/api/admin/orders-list');
+      const ordersRes = await fetch(`/api/admin/orders-list?t=${Date.now()}`, {
+        cache: 'no-store',
+        headers: {
+          Pragma: 'no-cache',
+          'Cache-Control': 'no-cache',
+        },
+      });
       if (ordersRes.ok) {
         const oData = await ordersRes.json();
         setOrders(oData.orders || []);
         setItems(oData.items || []);
       }
     } catch (e) {
-      // Ignore
+      console.error('Fetch orders error:', e);
     } finally {
       setLoading(false);
     }
@@ -97,20 +100,78 @@ export default function AdminOrdersManagementPage() {
     );
   };
 
-  // Action: Delete order
+  // Action: Delete single order
   const handleDeleteOrder = async (order: any) => {
     if (!window.confirm(`"${order.order_number}" numaralı siparişi kalıcı olarak silmek istediğinize emin misiniz?`)) {
       return;
     }
 
+    const targetId = String(order.id);
+    const targetNum = String(order.order_number);
+
+    // Optimistic UI update: instantly remove from state
+    const previousOrders = [...orders];
+    const previousItems = [...items];
+    setOrders((prev) => prev.filter((o) => String(o.id) !== targetId && String(o.order_number) !== targetNum));
+    setSelectedIds((prev) => prev.filter((id) => String(id) !== targetId && String(id) !== targetNum));
+    if (selectedOrder && (String(selectedOrder.id) === targetId || String(selectedOrder.order_number) === targetNum)) {
+      setSelectedOrder(null);
+    }
+
     try {
-      const res = await fetch(`/api/admin/orders/${order.id}`, { method: 'DELETE' });
-      if (res.ok) {
-        fetchOrders();
-        if (selectedOrder?.id === order.id) setSelectedOrder(null);
+      const res = await fetch(`/api/admin/orders/${targetId}`, {
+        method: 'DELETE',
+        headers: { 'Cache-Control': 'no-cache' },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || 'Sipariş silinemedi.');
       }
-    } catch (e) {
-      // Ignore
+      fetchOrders();
+    } catch (e: any) {
+      alert(e.message || 'Silme işlemi başarısız oldu.');
+      // Rollback on failure
+      setOrders(previousOrders);
+      setItems(previousItems);
+    }
+  };
+
+  // Action: Bulk Delete selected orders
+  const handleBulkDelete = async () => {
+    if (selectedIds.length === 0) return;
+    if (
+      !window.confirm(
+        `Seçilen ${selectedIds.length} adet siparişi KALICI olarak silmek istediğinize emin misiniz?\nBu işlem geri alınamaz!`
+      )
+    ) {
+      return;
+    }
+
+    const idsToDelete = [...selectedIds];
+    const idsSet = new Set(idsToDelete.map((id) => String(id)));
+
+    // Optimistic UI update
+    const previousOrders = [...orders];
+    const previousItems = [...items];
+    setOrders((prev) => prev.filter((o) => !idsSet.has(String(o.id)) && !idsSet.has(String(o.order_number))));
+    setSelectedIds([]);
+
+    try {
+      const res = await fetch('/api/admin/orders/bulk-delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' },
+        body: JSON.stringify({ ids: idsToDelete }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || 'Toplu silme başarısız oldu.');
+      }
+      fetchOrders();
+    } catch (e: any) {
+      alert(e.message || 'Toplu silme işlemi sırasında bir hata oluştu.');
+      // Rollback on failure
+      setOrders(previousOrders);
+      setItems(previousItems);
     }
   };
 
@@ -249,7 +310,7 @@ export default function AdminOrdersManagementPage() {
 
         {/* Dynamic Bulk Action Bar */}
         {selectedIds.length > 0 && (
-          <div className="flex items-center gap-2 bg-blue-50 border border-blue-200 px-3 py-1.5 rounded-xl animate-fadeIn">
+          <div className="flex flex-wrap items-center gap-2 bg-blue-50 border border-blue-200 p-2 sm:px-3 sm:py-1.5 rounded-xl animate-fadeIn">
             <span className="text-xs font-bold text-blue-950">
               {selectedIds.length} Sipariş Seçildi:
             </span>
@@ -259,6 +320,13 @@ export default function AdminOrdersManagementPage() {
             >
               <Printer className="w-3.5 h-3.5" />
               <span>Toplu Çıktı Al (A4 Yazdır)</span>
+            </button>
+            <button
+              onClick={handleBulkDelete}
+              className="px-3.5 py-1.5 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded-lg shadow transition flex items-center gap-1.5"
+            >
+              <Trash2 className="w-3.5 h-3.5" />
+              <span>Seçilenleri Sil ({selectedIds.length})</span>
             </button>
           </div>
         )}
@@ -586,6 +654,15 @@ export default function AdminOrdersManagementPage() {
                 >
                   <Printer className="w-3.5 h-3.5" />
                   <span>Yazdır</span>
+                </button>
+
+                <button
+                  onClick={() => handleDeleteOrder(selectedOrder)}
+                  className="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-xl text-xs font-bold flex items-center gap-1.5 transition"
+                  title="Siparişi Kalıcı Olarak Sil"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span>Sil</span>
                 </button>
 
                 <button

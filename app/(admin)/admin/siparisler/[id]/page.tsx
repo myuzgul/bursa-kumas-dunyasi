@@ -6,7 +6,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { 
   Printer, ArrowLeft, Truck, Package, CheckCircle2, 
   Clock, Scissors, ShieldCheck, ExternalLink, AlertCircle, 
-  Receipt, Building2, User, FileText, Send, Check
+  Receipt, Building2, User, FileText, Send, Check, Trash2
 } from 'lucide-react';
 import { formatCurrency } from '@/lib/services/meterEngine';
 import { DHLPrintLabel } from '@/components/admin/DHLPrintLabel';
@@ -84,6 +84,28 @@ export default function AdminOrderDetailPage() {
     } catch (e) {}
 
     window.print();
+  };
+
+  const handleDeleteOrder = async () => {
+    if (!order) return;
+    if (!window.confirm(`"${order.order_number}" numaralı siparişi kalıcı olarak silmek istediğinize emin misiniz?\nBu işlem geri alınamaz!`)) {
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/admin/orders/${order.id}`, {
+        method: 'DELETE',
+        headers: { 'Cache-Control': 'no-cache' },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || 'Sipariş silinemedi.');
+      }
+      alert('Sipariş başarıyla silindi.');
+      router.push('/admin/siparisler');
+    } catch (e: any) {
+      alert(e.message || 'Silme işlemi başarısız oldu.');
+    }
   };
 
   const handleCreateInvoice = async () => {
@@ -173,6 +195,16 @@ export default function AdminOrderDetailPage() {
           >
             <Printer className="w-4 h-4" />
             <span>Sipariş ve Kesim Çıktısı Yazdır (A4)</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={handleDeleteOrder}
+            className="px-4 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-bold text-xs rounded-xl transition flex items-center gap-2"
+            title="Siparişi Kalıcı Olarak Sil"
+          >
+            <Trash2 className="w-4 h-4" />
+            <span>Siparişi Sil</span>
           </button>
         </div>
       </div>
