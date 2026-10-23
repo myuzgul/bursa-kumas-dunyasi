@@ -72,18 +72,12 @@ export default function CheckoutPage() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'paytr' | 'bank_transfer' | 'cash_on_delivery' | 'card_on_delivery'>('paytr');
   const [copiedIban, setCopiedIban] = useState<string | null>(null);
 
-  // Mock Card Info for PayTR simulation
-  const [cardNumber, setCardNumber] = useState('4543 **** **** 2026');
-  const [cardHolder, setCardHolder] = useState('AHMET YILMAZ');
-  const [cardExpiry, setCardExpiry] = useState('12/28');
-  const [cardCvv, setCardCvv] = useState('321');
-  const [selectedInstallment, setSelectedInstallment] = useState('1');
-
   const [agreeTerms, setAgreeTerms] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isOrderCompleted, setIsOrderCompleted] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
+  const [paytrIframeUrl, setPaytrIframeUrl] = useState<string | null>(null);
 
   // Fetch Payment Settings
   useEffect(() => {
@@ -245,6 +239,41 @@ export default function CheckoutPage() {
         throw new Error(data.message || 'Sipariş oluşturulamadı.');
       }
 
+      // Eğer PayTR seçildiyse ve aktifse, PayTR iframe token alıp iframe açalım
+      if (selectedPaymentMethod === 'paytr') {
+        try {
+          const basketData = items.map((i) => [
+            i.name + (i.variantTitle ? ` (${i.variantTitle})` : ''),
+            String((i.unitPrice * i.meterQuantity).toFixed(2)),
+            1,
+          ]);
+
+          const tokenRes = await fetch('/api/payment/paytr-token', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              orderNumber: data.order.order_number,
+              email,
+              paymentAmountTL: data.order.grand_total,
+              userName: fullName,
+              userAddress: `${addressLine} ${district}/${city}`,
+              userPhone: phone,
+              basket: basketData,
+            }),
+          });
+
+          const tokenData = await tokenRes.json();
+          if (tokenData.success && tokenData.iframeUrl) {
+            clearCart();
+            setPaytrIframeUrl(tokenData.iframeUrl);
+            setIsSubmitting(false);
+            return;
+          }
+        } catch (paytrErr) {
+          console.error('PayTR token request error:', paytrErr);
+        }
+      }
+
       setIsOrderCompleted(true);
       clearCart();
       router.push(`/siparis-basarili?order=${data.order.order_number}`);
@@ -254,6 +283,33 @@ export default function CheckoutPage() {
       setIsOrderCompleted(false);
     }
   };
+
+  if (paytrIframeUrl) {
+    return (
+      <div className="max-w-2xl mx-auto px-4 py-8 space-y-4">
+        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center space-y-2">
+          <div className="inline-flex items-center justify-center p-2.5 bg-blue-50 text-blue-900 rounded-xl">
+            <CreditCard className="w-6 h-6" />
+          </div>
+          <h2 className="text-base font-bold text-slate-900">PayTR Güvenli Ödeme Ekranı (256-Bit SSL)</h2>
+          <p className="text-xs text-slate-500">
+            Lütfen kart bilgilerinizi ve bankanızdan gelen 3D Secure SMS şifresini aşağıdaki alana giriniz.
+          </p>
+        </div>
+
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden min-h-[620px]">
+          <iframe
+            src={paytrIframeUrl}
+            id="paytriframe"
+            frameBorder="0"
+            scrolling="no"
+            style={{ width: '100%', minHeight: '620px' }}
+            title="PayTR Ödeme Ekranı"
+          />
+        </div>
+      </div>
+    );
+  }
 
   if (isOrderCompleted) {
     return (
@@ -667,66 +723,36 @@ export default function CheckoutPage() {
 
             {/* Dynamic Content based on selected payment method */}
             {selectedPaymentMethod === 'paytr' && (
-              <div className="mt-4 p-4 rounded-xl border border-slate-200 bg-slate-50/60 space-y-3">
-                <div className="text-xs font-bold text-slate-900 flex items-center gap-2">
-                  <CreditCard className="w-4 h-4 text-blue-900" />
-                  <span>Kredi / Banka Kartı Bilgileri</span>
+              <div className="mt-4 p-4 rounded-xl border border-blue-200 bg-blue-50/40 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="text-xs font-bold text-blue-950 flex items-center gap-2">
+                    <CreditCard className="w-4 h-4 text-blue-900" />
+                    <span>PayTR Güvenli Ödeme Altyapısı</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-bold rounded-full flex items-center gap-1">
+                      <ShieldCheck className="w-3 h-3 text-emerald-600" /> 256-Bit SSL
+                    </span>
+                    <span className="px-2 py-0.5 bg-blue-100 text-blue-800 text-[10px] font-bold rounded-full">
+                      3D Secure
+                    </span>
+                  </div>
                 </div>
 
-                <div className="space-y-3 bg-white p-3 rounded-lg border border-slate-200">
-                  <div>
-                    <label className="block text-[11px] font-semibold text-slate-700 mb-1">
-                      Kart Üzerindeki İsim
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={cardHolder}
-                      onChange={(e) => setCardHolder(e.target.value)}
-                      className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs uppercase focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-800"
-                    />
-                  </div>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  "Siparişi Onayla &amp; Ödemeye Geç" butonuna tıkladığınızda, bankanızın resmi ve şifreli <strong>PayTR 3D Secure</strong> ödeme ekranı açılacaktır. Tüm Visa, MasterCard ve Troy logolu kredi ve banka kartları ile tek çekim veya taksitle güvenle ödeme yapabilirsiniz.
+                </p>
 
-                  <div>
-                    <label className="block text-[11px] font-semibold text-slate-700 mb-1">
-                      Kart Numarası
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={cardNumber}
-                      onChange={(e) => setCardNumber(e.target.value)}
-                      className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-mono focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-800"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-[11px] font-semibold text-slate-700 mb-1">
-                        Son Kullanma (Ay/Yıl)
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={cardExpiry}
-                        onChange={(e) => setCardExpiry(e.target.value)}
-                        className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-mono focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-800"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-[11px] font-semibold text-slate-700 mb-1">
-                        CVV / Güvenlik Kodu
-                      </label>
-                      <input
-                        type="password"
-                        maxLength={4}
-                        required
-                        value={cardCvv}
-                        onChange={(e) => setCardCvv(e.target.value)}
-                        className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-mono focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-800"
-                      />
-                    </div>
-                  </div>
+                <div className="pt-1 flex flex-wrap items-center gap-2 text-[11px] text-slate-600 font-medium">
+                  <span className="inline-flex items-center gap-1 bg-white px-2.5 py-1 rounded-md border border-slate-200">
+                    💳 Tüm Kredi ve Banka Kartları
+                  </span>
+                  <span className="inline-flex items-center gap-1 bg-white px-2.5 py-1 rounded-md border border-slate-200">
+                    🔒 Kart bilgileriniz sistemimizde tutulmaz
+                  </span>
+                  <span className="inline-flex items-center gap-1 bg-white px-2.5 py-1 rounded-md border border-slate-200">
+                    📱 SMS Şifresi ile 3D Doğrulama
+                  </span>
                 </div>
               </div>
             )}

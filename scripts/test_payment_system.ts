@@ -44,7 +44,7 @@ async function runPaymentTests() {
   console.log('✅ Test 4: Kapıda Kredi Kartı Tek Çekim fee (+100 TL) verified.');
 
   // Test 5: PayTR Token Generation & Callback Verification
-  const paytrResult = generatePayTRToken({
+  const paytrResult = await generatePayTRToken({
     orderNumber: 'BKD-2026-TEST01',
     email: 'test@bursakumas.com',
     paymentAmountTL: 450.50,

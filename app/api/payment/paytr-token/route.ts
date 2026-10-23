@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
     const forwardedFor = request.headers.get('x-forwarded-for');
     const userIp = forwardedFor ? forwardedFor.split(',')[0].trim() : '127.0.0.1';
 
-    const result = generatePayTRToken({
+    const result = await generatePayTRToken({
       orderNumber,
       email,
       paymentAmountTL: Number(paymentAmountTL),
