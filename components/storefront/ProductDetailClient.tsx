@@ -353,21 +353,38 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({
               </button>
             </div>
 
-            <div className="flex items-baseline gap-2 mt-0.5">
-              <span className="text-2xl sm:text-3xl font-black text-blue-950">
-                {formatCurrency(unitPrice)}
-              </span>
-              <span className="text-xs font-semibold text-slate-500">/ metre</span>
+            <div className="flex flex-wrap items-center justify-between gap-3 mt-1">
+              <div>
+                {hasDiscount && (
+                  <div className="text-xs text-slate-400 line-through font-semibold">
+                    {formatCurrency(originalPrice)}
+                  </div>
+                )}
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-2xl sm:text-3xl font-black text-[#801030]">
+                    {formatCurrency(unitPrice)}
+                  </span>
+                  <span className="text-xs font-semibold text-slate-500">/ metre</span>
+                </div>
+              </div>
 
               {hasDiscount && (
-                <>
-                  <span className="text-sm text-slate-400 line-through ml-2">
-                    {formatCurrency(originalPrice)}
+                <div className="flex items-center gap-2 bg-[#FFF8F6] border border-[#801030]/25 rounded-2xl px-3 py-1.5 shadow-2xs">
+                  <div className="text-center">
+                    <div className="text-[9.5px] font-medium text-[#801030] leading-tight">
+                      Her metrede
+                    </div>
+                    <div className="text-sm font-black text-[#801030] leading-tight">
+                      {Math.round(originalPrice - unitPrice)} TL
+                    </div>
+                    <div className="text-[9.5px] font-medium text-[#801030] leading-tight">
+                      indirim
+                    </div>
+                  </div>
+                  <span className="bg-[#801030] text-white text-[10px] font-bold px-2 py-1 rounded-lg">
+                    %{discountPercent}
                   </span>
-                  <span className="bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-xs">
-                    %{discountPercent} İNDİRİM
-                  </span>
-                </>
+                </div>
               )}
             </div>
             <div className="text-[11px] text-slate-500">
@@ -902,7 +919,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4 md:gap-6">
             {relatedProducts.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}

@@ -1,39 +1,50 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="none">
+<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="favNavy" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#1E3A8A"/>
-      <stop offset="100%" stop-color="#0F172A"/>
+    <linearGradient id="bgNavy" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B1528" />
+      <stop offset="50%" stop-color="#060B14" />
+      <stop offset="100%" stop-color="#020617" />
     </linearGradient>
-    <linearGradient id="favGold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FBBF24"/>
-      <stop offset="50%" stop-color="#F59E0B"/>
-      <stop offset="100%" stop-color="#D97706"/>
+    <linearGradient id="goldPrimary" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF4D0" />
+      <stop offset="25%" stop-color="#E6C280" />
+      <stop offset="50%" stop-color="#D4AF37" />
+      <stop offset="75%" stop-color="#AA771C" />
+      <stop offset="100%" stop-color="#6E4A0C" />
     </linearGradient>
-    <linearGradient id="favShine" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.3"/>
-      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    <linearGradient id="goldShine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
     </linearGradient>
   </defs>
 
-  <!-- Rounded Background Shield -->
-  <rect x="4" y="4" width="88" height="88" rx="22" fill="url(#favNavy)"/>
-  <rect x="4" y="4" width="88" height="88" rx="22" fill="url(#favShine)"/>
-  <rect x="5" y="5" width="86" height="86" rx="21" stroke="#3B82F6" stroke-opacity="0.4" stroke-width="2"/>
+  <!-- Background Shield -->
+  <rect width="100" height="100" rx="22" fill="url(#bgNavy)" />
+  <rect width="100" height="100" rx="22" fill="url(#goldShine)" />
 
-  <!-- Left Ribbon Fold (B) -->
-  <path d="M30 24 C30 22, 35 20, 42 20 C51 20, 58 24, 58 32 C58 38, 52 42, 45 44 C54 47, 60 52, 60 61 C60 70, 52 75, 42 75 C34 75, 30 71, 30 69 Z" fill="#2563EB" opacity="0.4"/>
-  
-  <!-- Outer Weave Ribbon -->
-  <path d="M32 27 C32 25, 36 23, 43 23 C51 23, 57 27, 57 34 C57 40, 51 44, 44 46 L44 48 C52 50, 59 55, 59 63 C59 71, 52 74, 43 74 C36 74, 32 72, 32 69 L32 27 Z" fill="none" stroke="#FFFFFF" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
-  
-  <!-- Inner Thread Accents -->
-  <line x1="40" y1="34" x2="48" y2="34" stroke="#93C5FD" stroke-width="3" stroke-linecap="round"/>
-  <line x1="40" y1="61" x2="51" y2="61" stroke="#93C5FD" stroke-width="3" stroke-linecap="round"/>
+  <!-- Borders -->
+  <rect x="2" y="2" width="96" height="96" rx="20" stroke="url(#goldPrimary)" stroke-width="1.8" stroke-opacity="0.9" />
+  <rect x="5.5" y="5.5" width="89" height="89" rx="17" stroke="url(#goldPrimary)" stroke-width="0.8" stroke-dasharray="3 2" stroke-opacity="0.5" />
 
-  <!-- Golden Warp & Weft Thread Weave -->
-  <path d="M48 29 L67 58 M67 58 L51 74 M51 45 L70 74" stroke="url(#favGold)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-  
-  <!-- Golden Sparkle Point -->
-  <circle cx="67" cy="58" r="5.5" fill="url(#favGold)"/>
-  <circle cx="67" cy="58" r="2.5" fill="#FFFFFF"/>
+  <!-- Corner Gems -->
+  <circle cx="10" cy="10" r="1.5" fill="url(#goldPrimary)" />
+  <circle cx="90" cy="10" r="1.5" fill="url(#goldPrimary)" />
+  <circle cx="10" cy="90" r="1.5" fill="url(#goldPrimary)" />
+  <circle cx="90" cy="90" r="1.5" fill="url(#goldPrimary)" />
+
+  <!-- Monogram B & K -->
+  <path
+    d="M32 23 H47 C57 23, 64 28, 64 36 C64 42, 59 47, 51 49 C62 52, 68 59, 68 68 C68 77, 59 82, 47 82 H32 Z"
+    fill="none"
+    stroke="url(#goldPrimary)"
+    stroke-width="5"
+    stroke-linejoin="round"
+    stroke-linecap="round"
+  />
+  <path d="M40 33 H46 C51 33, 54 35, 54 39 C54 43, 51 45, 46 45 H40 Z" fill="#0B1528" stroke="url(#goldPrimary)" stroke-width="2.5" />
+  <path d="M40 55 H47 C53 55, 57 58, 57 63 C57 68, 53 71, 47 71 H40 Z" fill="#0B1528" stroke="url(#goldPrimary)" stroke-width="2.5" />
+  <path d="M51 49 L74 24 M51 49 L75 79" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" />
+  <path d="M24 50 Q50 18 76 50 Q50 82 24 50" fill="none" stroke="url(#goldPrimary)" stroke-width="1.2" stroke-opacity="0.4" />
+  <polygon points="76,50 78,46 82,50 78,54" fill="url(#goldPrimary)" />
+  <polygon points="24,50 22,46 18,50 22,54" fill="url(#goldPrimary)" />
 </svg>

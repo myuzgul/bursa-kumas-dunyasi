@@ -113,7 +113,7 @@ export default function CustomerFavoritesPage() {
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4">
           {favorites.map((product) => {
             const currentPrice = product.discount_price || product.base_price;
             const hasStock = (product.stock_meter || 0) > 0;
@@ -121,11 +121,11 @@ export default function CustomerFavoritesPage() {
             return (
               <div
                 key={product.id}
-                className="bg-white rounded-3xl border border-slate-200 p-4 shadow-sm hover:border-slate-300 transition flex flex-col justify-between space-y-3 group"
+                className="bg-white rounded-2xl border border-slate-200 p-2.5 sm:p-4 shadow-sm hover:border-slate-300 transition flex flex-col justify-between space-y-2 sm:space-y-3 group"
               >
-                <div className="space-y-3">
+                <div className="space-y-2 sm:space-y-3">
                   {/* Image & Quick Remove */}
-                  <div className="relative aspect-4/3 rounded-2xl overflow-hidden bg-slate-100 border border-slate-100">
+                  <div className="relative aspect-[3/4] rounded-xl overflow-hidden bg-slate-100 border border-slate-100">
                     <Link href={`/urun/${product.slug}`}>
                       <img
                         src={product.main_image_url || '/placeholder.png'}

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { dbRepo } from '@/lib/db/repo';
 import { ProductCard } from '@/components/storefront/ProductCard';
 import { HomepageShowcase } from '@/components/storefront/HomepageShowcase';
+import { CategoryShowcaseGrid } from '@/components/storefront/CategoryShowcaseGrid';
 import { getShowcaseData } from '@/lib/services/showcaseSettings';
 import { 
   ArrowRight, ShieldCheck, Award, Sparkles, CheckCircle2, 
@@ -81,51 +82,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      <div className="space-y-10 mt-10">
-        {/* 2. POPULAR CATEGORIES GRID */}
-      <section className="max-w-7xl mx-auto px-4">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 gap-2">
-          <div>
-            <div className="text-xs font-bold text-blue-900 uppercase tracking-wider">
-              Kumaş Koleksiyonları
-            </div>
-            <h2 className="text-xl sm:text-2xl font-black text-slate-900">
-              Popüler Kumaş Kategorileri
-            </h2>
-          </div>
-          <Link
-            href="/kategori/tum-kumaslar"
-            className="text-xs font-bold text-blue-900 hover:text-blue-700 flex items-center gap-1 transition"
-          >
-            <span>Tüm Kategorileri Gör</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
-          {categories.map((cat: any) => (
-            <Link
-              key={cat.id}
-              href={`/kategori/${cat.slug}`}
-              className="group bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-md hover:border-slate-300 transition text-center p-3 flex flex-col items-center"
-            >
-              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden bg-slate-100 mb-3 border-2 border-slate-100 group-hover:border-blue-900 group-hover:scale-105 transition duration-300">
-                <img
-                  src={cat.image_url}
-                  alt={cat.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <h3 className="text-xs font-bold text-slate-900 group-hover:text-blue-900 transition line-clamp-1">
-                {cat.name}
-              </h3>
-              <span className="text-[10px] text-slate-500 mt-0.5">
-                Metre Satışı
-              </span>
-            </Link>
-          ))}
-        </div>
-      </section>
+      <div className="space-y-12 mt-10">
+        {/* 2. POPULAR CATEGORIES GRID (SCREENSHOT COMPLIANT) */}
+        <CategoryShowcaseGrid />
 
       {/* 3. FEATURED PRODUCTS SHOWCASE (ÖNE ÇIKAN VİTRİN KUMAŞLARI) */}
       <HomepageShowcase

@@ -399,19 +399,56 @@
   ],
   "categories": [
     {
+      "id": "cat-fisto",
+      "name": "Fisto",
+      "slug": "fisto",
+      "image_url": "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=80",
+      "subtitle": "Gömlek Dik",
+      "is_active": 1,
+      "show_in_menu": 1,
+      "is_featured_home": 1,
+      "display_order": 7,
+      "created_at": "2026-11-09T22:17:12.490Z"
+    },
+    {
+      "id": "cat-dantel",
+      "name": "Dantel",
+      "slug": "dantel",
+      "image_url": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80",
+      "subtitle": "Abiyeni Dik",
+      "is_active": 1,
+      "show_in_menu": 1,
+      "is_featured_home": 1,
+      "display_order": 6,
+      "created_at": "2026-11-09T22:17:12.490Z"
+    },
+    {
+      "id": "cat-tul-perde",
+      "name": "Tül Perde",
+      "slug": "tul-perde",
+      "image_url": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80",
+      "subtitle": "Evini Yenile",
+      "is_active": 1,
+      "show_in_menu": 1,
+      "is_featured_home": 1,
+      "display_order": 5,
+      "created_at": "2026-11-09T22:17:12.450Z"
+    },
+    {
       "id": "cat-viskon",
       "parent_id": null,
-      "name": "Viskon Kumaşlar",
+      "name": "Viskon",
       "slug": "viskon-kumaslar",
       "description": "Nefes alan, yumuşak ve dökümlü viskon kumaş koleksiyonu.",
-      "image_url": "/uploads/kumas-1788645300519-ithalviskonarmoni.webp",
-      "display_order": 1,
+      "image_url": "https://images.unsplash.com/photo-1579656381226-5fc0f0100c3b?auto=format&fit=crop&w=800&q=80",
+      "display_order": 4,
       "is_active": 1,
       "is_featured_home": 1,
       "show_in_menu": 1,
       "meta_title": "Viskon Kumaş Modelleri ve Metre Fiyatları - Bursa Kumaş Dünyası",
       "meta_description": "Düz ve desenli dökümlü viskon kumaşlar en uygun fabrika fiyatlarıyla kapınızda.",
-      "created_at": "2026-09-06T20:00:00.000Z"
+      "created_at": "2026-09-06T20:00:00.000Z",
+      "subtitle": "Dökümlü"
     },
     {
       "id": "cat-viskon-duz",
@@ -550,30 +587,32 @@
     {
       "id": "cat-keten",
       "parent_id": null,
-      "name": "Keten Kumaşlar",
-      "slug": "keten-kumaslar",
+      "name": "Keten",
+      "slug": "keten",
       "description": "Doğal, ferah ve kaliteli saf keten & viskon keten kumaşlar.",
-      "image_url": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=600&q=80",
-      "display_order": 5,
+      "image_url": "https://images.unsplash.com/photo-1540518614846-7ede433c4ef7?auto=format&fit=crop&w=800&q=80",
+      "display_order": 8,
       "is_active": 1,
       "is_featured_home": 1,
       "show_in_menu": 1,
       "meta_title": "Keten Kumaşlar - Bursa Kumaş Dünyası",
-      "created_at": "2026-09-06T20:00:00.000Z"
+      "created_at": "2026-09-06T20:00:00.000Z",
+      "subtitle": "Takımını Dik"
     },
     {
       "id": "cat-muslin",
       "parent_id": null,
-      "name": "Müslin Kumaşlar",
-      "slug": "muslin-kumaslar",
+      "name": "Müslin",
+      "slug": "muslin",
       "description": "%100 Pamuk çift katlı yumuşak bebek ve giyimlik müslin kumaşlar.",
-      "image_url": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=600&q=80",
-      "display_order": 7,
+      "image_url": "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=800&q=80",
+      "display_order": 3,
       "is_active": 1,
       "is_featured_home": 1,
       "show_in_menu": 1,
       "meta_title": "Müslin Kumaşlar - Bursa Kumaş Dünyası",
-      "created_at": "2026-09-06T20:00:00.000Z"
+      "created_at": "2026-09-06T20:00:00.000Z",
+      "subtitle": "Yumuşacık"
     },
     {
       "id": "cat-firsat",
@@ -763,8 +802,8 @@
       "name": "Duck Bezi",
       "slug": "duck-bezi",
       "description": "",
-      "image_url": "/placeholder.jpg",
-      "display_order": 0,
+      "image_url": "https://images.unsplash.com/photo-1604014237800-1c9102c219da?auto=format&fit=crop&w=800&q=80",
+      "display_order": 2,
       "is_active": 1,
       "is_featured_home": 1,
       "show_in_menu": 1,
@@ -772,7 +811,8 @@
       "meta_description": "",
       "created_at": "2026-10-21T21:53:34.559Z",
       "updated_at": "2026-10-21T21:53:34.559Z",
-      "wc_id": 370
+      "wc_id": 370,
+      "subtitle": "Kırlent Dik"
     },
     {
       "id": "cat-77",
@@ -1069,8 +1109,8 @@
       "name": "Nevresimlik",
       "slug": "nevresimlik",
       "description": "",
-      "image_url": "/placeholder.jpg",
-      "display_order": 0,
+      "image_url": "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80",
+      "display_order": 1,
       "is_active": 1,
       "is_featured_home": 1,
       "show_in_menu": 1,
@@ -1078,7 +1118,8 @@
       "meta_description": "",
       "created_at": "2026-10-21T21:53:34.559Z",
       "updated_at": "2026-10-21T21:53:34.559Z",
-      "wc_id": 195
+      "wc_id": 195,
+      "subtitle": "Evini Yenile"
     },
     {
       "id": "cat-164",
