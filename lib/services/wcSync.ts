@@ -207,7 +207,10 @@ export async function runWooCommerceSync(options: SyncOptions = {}, onProgress?:
       const minMeter = minMeta && Number(minMeta.value) > 0 ? Number(minMeta.value) : 1;
       const maxMeter = maxMeta && Number(maxMeta.value) > 0 ? Number(maxMeta.value) : 100;
 
-      const stockMeter = p.stock_quantity !== null && p.stock_quantity !== undefined ? Number(p.stock_quantity) : (existing?.stock_meter ?? 100);
+      const isOutOfStock = p.stock_status === 'outofstock';
+      const stockMeter = isOutOfStock 
+        ? 0 
+        : (p.stock_quantity !== null && p.stock_quantity !== undefined ? Number(p.stock_quantity) : (existing?.stock_meter ?? 100));
 
       const productObj = {
         id: prodId,
@@ -231,6 +234,7 @@ export async function runWooCommerceSync(options: SyncOptions = {}, onProgress?:
         meter_step: meterStep,
         max_order_meter: maxMeter,
         stock_meter: stockMeter,
+        stock_status: p.stock_status || (stockMeter > 0 ? 'instock' : 'outofstock'),
         has_variants: isVariable ? 1 : 0,
         main_image_url: mainImageUrl,
         images: images.length > 0 ? images : [mainImageUrl],

@@ -44,7 +44,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     : 0;
 
   const isStockTracked = (product as any).track_stock === 1 || (product.stock_meter !== null && product.stock_meter !== undefined && (product as any).track_stock !== 0);
-  const isOutOfStock = isStockTracked && Number(product.stock_meter || 0) <= 0;
+  const isOutOfStock = (product as any).stock_status === 'outofstock' || (isStockTracked && Number(product.stock_meter || 0) <= 0);
 
   return (
     <div className={`group bg-white rounded-2xl border overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col justify-between ${

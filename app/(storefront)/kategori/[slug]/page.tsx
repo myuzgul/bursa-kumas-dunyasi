@@ -198,6 +198,11 @@ export default function CategoryPage({ params, searchParams }: CategoryPageProps
 
       const count = (db.products || []).filter((p: any) => {
         if (p.is_active !== 1) return false;
+        // Stok Kontrolü: Stokta olmayan veya 0 metre olan ürünleri filtrede gösterme
+        if (p.stock_status === 'outofstock') return false;
+        if (p.stock_meter !== null && p.stock_meter !== undefined && Number(p.stock_meter) <= 0) return false;
+        if ((p as any).track_stock === 1 && Number(p.stock_meter || 0) <= 0) return false;
+
         const pCatIds: string[] = Array.isArray(p.category_ids) && p.category_ids.length > 0
           ? p.category_ids
           : (p.category_id ? [p.category_id] : []);
@@ -211,6 +216,7 @@ export default function CategoryPage({ params, searchParams }: CategoryPageProps
         productCount: count,
       };
     })
+    .filter((c: any) => (c.productCount || 0) > 0)
     .sort((a: any, b: any) => (b.productCount || 0) - (a.productCount || 0));
 
   const breadcrumbs = [
