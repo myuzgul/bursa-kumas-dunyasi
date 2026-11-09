@@ -13,6 +13,53 @@ interface CategoryPageProps {
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
+const SLUG_ALIASES: Record<string, string[]> = {
+  'viskon-kumaslar': ['ithal-viskon', 'viskon', 'duz-renk-viskon-kumaslar', 'desenli-cicekli-viskon'],
+  'ithal-viskon': ['viskon-kumaslar', 'viskon'],
+  'keten-kumaslar': ['keten'],
+  'keten': ['keten-kumaslar'],
+  'muslin-kumaslar': ['muslin'],
+  'muslin': ['muslin-kumaslar'],
+  'saten-kumaslar': ['saten', 'ipek-saten'],
+  'saten': ['saten-kumaslar'],
+  'tensel-modal-kumaslar': ['tensel', 'modal'],
+  'tensel': ['tensel-modal-kumaslar'],
+  'modal': ['tensel-modal-kumaslar'],
+  'dantel': ['abiyelik'],
+  'abiyelik': ['dantel'],
+  'fisto': ['poplin'],
+  'poplin': ['fisto'],
+  'ekose-oduncu-kumaslar': ['oduncu-kumaslar'],
+  'oduncu-kumaslar': ['ekose-oduncu-kumaslar'],
+  'medine-ipegi-krep': ['krep-kumaslar'],
+  'kumlu-krep-kumaslar': ['krep-kumaslar'],
+  'krep-kumaslar': ['medine-ipegi-krep', 'kumlu-krep-kumaslar'],
+  'yerli-ayrobin-kumaslar': ['ayrobin-kumaslar'],
+  'ithal-luks-ayrobin': ['ayrobin-kumaslar'],
+  'ayrobin-kumaslar': ['yerli-ayrobin-kumaslar', 'ithal-luks-ayrobin'],
+};
+
+const LEGACY_ID_MAP: Record<string, string[]> = {
+  'cat-81': ['cat-krep', 'cat-krep-medine', 'cat-krep-kumlu'],
+  'cat-krep': ['cat-81'],
+  'cat-76': ['cat-viskon', 'cat-viskon-duz', 'cat-viskon-desenli'],
+  'cat-viskon': ['cat-76'],
+  'cat-15': ['cat-ayrobin', 'cat-ayrobin-yerli', 'cat-ayrobin-ithal'],
+  'cat-ayrobin': ['cat-15'],
+  'cat-164': ['cat-oduncu', 'cat-oduncu-ekose'],
+  'cat-oduncu': ['cat-164'],
+  'cat-80': ['cat-keten'],
+  'cat-keten': ['cat-80'],
+  'cat-83': ['cat-muslin'],
+  'cat-muslin': ['cat-83'],
+  'cat-88': ['cat-saten'],
+  'cat-saten': ['cat-88'],
+  'cat-77': ['cat-firsat'],
+  'cat-firsat': ['cat-77'],
+  'cat-195': ['cat-nevresimlik'],
+  'cat-nevresimlik': ['cat-195'],
+};
+
 export default function CategoryPage({ params, searchParams }: CategoryPageProps) {
   const db = dbRepo.read();
   const slug = params.slug;
@@ -28,22 +75,69 @@ export default function CategoryPage({ params, searchParams }: CategoryPageProps
     };
     products = db.products?.filter((p: any) => p.is_active === 1) || [];
   } else {
+    // 1. Try exact slug match
     currentCategory = db.categories?.find((c: any) => c.slug === slug);
+
+    // 2. Try alias match
     if (!currentCategory) {
-      notFound();
+      const aliases = SLUG_ALIASES[slug] || [];
+      for (const al of aliases) {
+        currentCategory = db.categories?.find((c: any) => c.slug === al);
+        if (currentCategory) break;
+      }
     }
+
+    // 3. Try clean keyword match fallback
+    if (!currentCategory) {
+      const cleanKeyword = slug.replace(/-kumaslar?$/i, '').replace(/-/g, ' ').toLowerCase();
+      currentCategory = db.categories?.find((c: any) =>
+        c.name.toLowerCase().includes(cleanKeyword) || cleanKeyword.includes(c.name.toLowerCase())
+      );
+    }
+
+    if (!currentCategory) {
+      // Create synthetic fallback so page never crashes with 404
+      const readableName = slug
+        .split('-')
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(' ');
+      currentCategory = {
+        name: readableName,
+        slug: slug,
+        description: `${readableName} metre bazında en uygun fiyatlarla Bursa Kumaş Dünyası'nda.`,
+      };
+    }
+
     // Get direct products or child category products
     const childCatIds = db.categories
       ?.filter((c: any) => c.parent_id === currentCategory.id)
       .map((c: any) => c.id) || [];
-    const validCatIds = [currentCategory.id, ...childCatIds];
+    const directCatIds = [currentCategory.id, ...childCatIds].filter(Boolean);
+
+    const validCatIds = new Set<string>(directCatIds);
+    for (const cid of directCatIds) {
+      const mapped = LEGACY_ID_MAP[cid];
+      if (mapped) mapped.forEach((m) => validCatIds.add(m));
+    }
+
+    const aliases = SLUG_ALIASES[slug] || [];
+    const validSlugs = new Set<string>([slug, currentCategory.slug, ...aliases].filter(Boolean));
 
     products = db.products?.filter((p: any) => {
       if (p.is_active !== 1) return false;
-      const pCatIds = Array.isArray(p.category_ids) && p.category_ids.length > 0
+      const pCatIds: string[] = Array.isArray(p.category_ids) && p.category_ids.length > 0
         ? p.category_ids
         : (p.category_id ? [p.category_id] : []);
-      return validCatIds.some((id) => pCatIds.includes(id));
+      const pCatSlugs: string[] = Array.isArray(p.category_slugs) ? p.category_slugs : [];
+
+      const idMatch = pCatIds.some((id) => validCatIds.has(id));
+      const slugMatch = pCatSlugs.some((s) => validSlugs.has(s));
+      const textMatch = currentCategory.name && (
+        p.name.toLowerCase().includes(currentCategory.name.toLowerCase()) ||
+        (p.category_name && p.category_name.toLowerCase().includes(currentCategory.name.toLowerCase()))
+      );
+
+      return idMatch || slugMatch || textMatch;
     }) || [];
   }
 
@@ -95,13 +189,20 @@ export default function CategoryPage({ params, searchParams }: CategoryPageProps
       const childIds = (db.categories || [])
         .filter((child: any) => child.parent_id === c.id)
         .map((child: any) => child.id);
-      const catIds = [c.id, ...childIds];
+      const catIdsSet = new Set<string>([c.id, ...childIds]);
+      const mapped = LEGACY_ID_MAP[c.id];
+      if (mapped) mapped.forEach((m) => catIdsSet.add(m));
+
+      const aliases = SLUG_ALIASES[c.slug] || [];
+      const slugSet = new Set<string>([c.slug, ...aliases]);
+
       const count = (db.products || []).filter((p: any) => {
         if (p.is_active !== 1) return false;
-        const pCatIds = Array.isArray(p.category_ids) && p.category_ids.length > 0
+        const pCatIds: string[] = Array.isArray(p.category_ids) && p.category_ids.length > 0
           ? p.category_ids
           : (p.category_id ? [p.category_id] : []);
-        return catIds.some((id) => pCatIds.includes(id));
+        const pCatSlugs: string[] = Array.isArray(p.category_slugs) ? p.category_slugs : [];
+        return pCatIds.some((id: string) => catIdsSet.has(id)) || pCatSlugs.some((s: string) => slugSet.has(s));
       }).length;
       return {
         id: c.id,
@@ -109,7 +210,8 @@ export default function CategoryPage({ params, searchParams }: CategoryPageProps
         slug: c.slug,
         productCount: count,
       };
-    });
+    })
+    .sort((a: any, b: any) => (b.productCount || 0) - (a.productCount || 0));
 
   const breadcrumbs = [
     { name: 'Anasayfa', url: '/' },

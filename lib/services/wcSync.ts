@@ -77,12 +77,35 @@ export async function runWooCommerceSync(options: SyncOptions = {}, onProgress?:
     const catMap = new Map<string, any>();
     existingCats.forEach((c: any) => catMap.set(c.id, c));
 
+    // Priority categories that should show in top menu
+    const MENU_SLUGS = new Set([
+      'ayrobin-kumaslar',
+      'firsat-urunleri',
+      'ithal-viskon',
+      'viskon-kumaslar',
+      'krep-kumaslar',
+      'modal',
+      'poly-viskon',
+      'saten',
+      'tensel',
+      'nevresimlik',
+      'keten',
+      'oduncu-kumaslar',
+      'tul-perde',
+      'muslin',
+      'kaz-ayagi'
+    ]);
+
     for (const wcCat of allWcCategories) {
       const catId = `cat-${wcCat.id}`;
       const parentId = wcCat.parent && wcCat.parent > 0 ? `cat-${wcCat.parent}` : null;
       const imageUrl = wcCat.image?.src || '';
 
       const existing = catMap.get(catId);
+      const shouldShowInMenu = existing?.show_in_menu !== undefined 
+        ? existing.show_in_menu 
+        : (MENU_SLUGS.has(wcCat.slug) ? 1 : 0);
+
       const categoryObj = {
         id: catId,
         parent_id: parentId,
@@ -92,8 +115,8 @@ export async function runWooCommerceSync(options: SyncOptions = {}, onProgress?:
         image_url: imageUrl || existing?.image_url || '/placeholder.jpg',
         display_order: wcCat.menu_order || existing?.display_order || 0,
         is_active: 1,
-        is_featured_home: existing ? (existing.is_featured_home ?? 0) : 1,
-        show_in_menu: existing ? (existing.show_in_menu ?? 1) : 1,
+        is_featured_home: existing ? (existing.is_featured_home ?? 0) : (MENU_SLUGS.has(wcCat.slug) ? 1 : 0),
+        show_in_menu: shouldShowInMenu,
         meta_title: `${wcCat.name} - Bursa Kumaş Dünyası`,
         meta_description: wcCat.description ? wcCat.description.slice(0, 160) : '',
         created_at: existing?.created_at || new Date().toISOString(),
@@ -106,6 +129,7 @@ export async function runWooCommerceSync(options: SyncOptions = {}, onProgress?:
 
     db.categories = Array.from(catMap.values());
     categoriesCount = allWcCategories.length;
+    writeDb(db);
     log(`${categoriesCount} kategori kaydedildi.`);
   }
 
@@ -138,21 +162,33 @@ export async function runWooCommerceSync(options: SyncOptions = {}, onProgress?:
     const varMap = new Map<string, any>();
     existingVariants.forEach((v: any) => varMap.set(v.id, v));
 
+    const variableProducts: any[] = [];
+
     for (let i = 0; i < allWcProducts.length; i++) {
       const p = allWcProducts[i];
       const prodId = `prod-${p.id}`;
       const existing = prodMap.get(prodId);
 
       const catIds = (p.categories || []).map((c: any) => `cat-${c.id}`);
-      const primaryCatId = catIds[0] || (existing?.category_id || 'cat-viskon');
+      const catSlugs = (p.categories || []).map((c: any) => c.slug);
+      const catNames = (p.categories || []).map((c: any) => c.name);
+      const primaryCatId = catIds[0] || (existing?.category_id || 'cat-81');
+      const primaryCatName = catNames[0] || 'Kumaş';
 
-      const basePrice = Number(p.regular_price || p.price || 0);
-      const discountPrice = p.sale_price ? Number(p.sale_price) : null;
+      const regularPrice = Number(p.regular_price || 0);
+      const salePrice = Number(p.sale_price || 0);
+      const rawPrice = Number(p.price || 0);
+      let basePrice = regularPrice > 0 ? regularPrice : rawPrice;
+      let discountPrice = (salePrice > 0 && salePrice < basePrice) ? salePrice : (rawPrice > 0 && rawPrice < basePrice ? rawPrice : null);
+      if (basePrice <= 0 && rawPrice > 0) basePrice = rawPrice;
 
       const images = (p.images || []).map((img: any) => img.src);
       const mainImageUrl = images[0] || existing?.main_image_url || '/placeholder.jpg';
 
       const isVariable = p.type === 'variable' && Array.isArray(p.variations) && p.variations.length > 0;
+      if (isVariable) {
+        variableProducts.push(p);
+      }
 
       const attributesObj: Record<string, string[]> = {};
       if (Array.isArray(p.attributes)) {
@@ -171,12 +207,14 @@ export async function runWooCommerceSync(options: SyncOptions = {}, onProgress?:
       const minMeter = minMeta && Number(minMeta.value) > 0 ? Number(minMeta.value) : 1;
       const maxMeter = maxMeta && Number(maxMeta.value) > 0 ? Number(maxMeta.value) : 100;
 
-      const stockMeter = p.stock_quantity !== null && p.stock_quantity !== undefined ? Number(p.stock_quantity) : (existing?.stock_meter ?? null);
+      const stockMeter = p.stock_quantity !== null && p.stock_quantity !== undefined ? Number(p.stock_quantity) : (existing?.stock_meter ?? 100);
 
       const productObj = {
         id: prodId,
         category_id: primaryCatId,
         category_ids: catIds,
+        category_slugs: catSlugs,
+        category_name: primaryCatName,
         sku: p.sku || `BKD-${p.id}`,
         barcode: '',
         name: p.name || '',
@@ -196,7 +234,7 @@ export async function runWooCommerceSync(options: SyncOptions = {}, onProgress?:
         has_variants: isVariable ? 1 : 0,
         main_image_url: mainImageUrl,
         images: images.length > 0 ? images : [mainImageUrl],
-        badge_ids: existing?.badge_ids || [],
+        badge_ids: existing?.badge_ids || (p.featured ? ['badge-cok-satan'] : []),
         is_active: 1,
         is_archived: 0,
         is_featured: p.featured ? 1 : (existing?.is_featured || 0),
@@ -213,53 +251,64 @@ export async function runWooCommerceSync(options: SyncOptions = {}, onProgress?:
 
       prodMap.set(prodId, productObj);
 
-      if (isVariable) {
-        try {
-          const { data: variationsData } = await fetchWc(`products/${p.id}/variations?per_page=100`, options);
-          if (Array.isArray(variationsData)) {
-            for (const v of variationsData) {
-              const varId = `var-${p.id}-${v.id}`;
-              const varPrice = Number(v.regular_price || v.price || basePrice);
-              const varDiscount = v.sale_price ? Number(v.sale_price) : null;
-              const varStock = v.manage_stock && v.stock_quantity !== null ? Number(v.stock_quantity) : null;
-              const varImage = v.image?.src || mainImageUrl;
-
-              const attrTitle = Array.isArray(v.attributes) && v.attributes.length > 0
-                ? v.attributes.map((a: any) => a.option).join(' / ')
-                : `Varyant #${v.id}`;
-
-              const variantObj = {
-                id: varId,
-                product_id: prodId,
-                sku: v.sku || `${productObj.sku}-${v.id}`,
-                title: attrTitle,
-                price: varPrice,
-                discount_price: varDiscount,
-                stock_meter: varStock,
-                image_url: varImage,
-                is_active: v.status === 'publish' ? 1 : 1,
-                created_at: v.date_created || new Date().toISOString(),
-                wc_id: v.id,
-                wc_parent_id: p.id,
-              };
-
-              varMap.set(varId, variantObj);
-              variationsCount++;
-            }
-          }
-        } catch (err: any) {
-          log(`Uyarı: Ürün #${p.id} varyasyonları çekilemedi: ${err.message}`);
-        }
-      }
-
       if ((i + 1) % 20 === 0 || i + 1 === allWcProducts.length) {
         log(`Ürün işleniyor: ${i + 1} / ${allWcProducts.length}`);
       }
     }
 
+    // Persist all products immediately before variations so data is 100% safe
     db.products = Array.from(prodMap.values());
-    db.product_variants = Array.from(varMap.values());
     productsCount = allWcProducts.length;
+    writeDb(db);
+    log(`${productsCount} ürün temel bilgileri kaydedildi. Varyasyonlar işleniyor (${variableProducts.length} varyasyonlu ürün)...`);
+
+    // Process variations in small batches of 4
+    for (let i = 0; i < variableProducts.length; i += 4) {
+      const batch = variableProducts.slice(i, i + 4);
+      await Promise.all(
+        batch.map(async (vp) => {
+          try {
+            const { data: variationsData } = await fetchWc(`products/${vp.id}/variations?per_page=100`, options);
+            if (Array.isArray(variationsData)) {
+              for (const v of variationsData) {
+                const varId = `var-${vp.id}-${v.id}`;
+                const varPrice = Number(v.regular_price || v.price || vp.regular_price || vp.price || 0);
+                const varDiscount = v.sale_price ? Number(v.sale_price) : null;
+                const varStock = v.manage_stock && v.stock_quantity !== null ? Number(v.stock_quantity) : null;
+                const varImage = v.image?.src || vp.images?.[0]?.src || '/placeholder.jpg';
+
+                const attrTitle = Array.isArray(v.attributes) && v.attributes.length > 0
+                  ? v.attributes.map((a: any) => a.option).join(' / ')
+                  : `Varyant #${v.id}`;
+
+                const variantObj = {
+                  id: varId,
+                  product_id: `prod-${vp.id}`,
+                  sku: v.sku || `BKD-${vp.id}-${v.id}`,
+                  title: attrTitle,
+                  price: varPrice,
+                  discount_price: varDiscount,
+                  stock_meter: varStock,
+                  image_url: varImage,
+                  is_active: 1,
+                  created_at: v.date_created || new Date().toISOString(),
+                  wc_id: v.id,
+                  wc_parent_id: vp.id,
+                };
+
+                varMap.set(varId, variantObj);
+                variationsCount++;
+              }
+            }
+          } catch (err: any) {
+            log(`Uyarı: Ürün #${vp.id} varyasyonları atlandı: ${err.message}`);
+          }
+        })
+      );
+    }
+
+    db.product_variants = Array.from(varMap.values());
+    writeDb(db);
     log(`${productsCount} aktif ürün ve ${variationsCount} varyasyon güncellendi.`);
   }
 
