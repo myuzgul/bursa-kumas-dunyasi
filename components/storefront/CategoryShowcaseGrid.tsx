@@ -72,8 +72,34 @@ export const SHOWCASE_CATEGORIES: CategoryShowcaseItem[] = [
 ];
 
 export const CategoryShowcaseGrid: React.FC = () => {
+  const [categories, setCategories] = useState(SHOWCASE_CATEGORIES);
   const [isPaused, setIsPaused] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
+
+  // Dynamically load category images if updated from Admin Panel
+  useEffect(() => {
+    fetch('/api/admin/categories')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data && Array.isArray(data.categories)) {
+          setCategories((prev) =>
+            prev.map((item) => {
+              const matched = data.categories.find(
+                (c: any) =>
+                  c.slug === item.slug ||
+                  c.id === item.id ||
+                  (item.slug === 'viskon-kumaslar' && (c.slug === 'ithal-viskon' || c.slug === 'viskon'))
+              );
+              if (matched && matched.image_url && matched.image_url !== '/placeholder.jpg') {
+                return { ...item, image: matched.image_url };
+              }
+              return item;
+            })
+          );
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   const scroll = (direction: 'left' | 'right') => {
     if (!sliderRef.current) return;
@@ -139,7 +165,7 @@ export const CategoryShowcaseGrid: React.FC = () => {
           className="flex items-center gap-2.5 sm:gap-3 md:gap-3.5 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2 pt-1 px-0.5"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {SHOWCASE_CATEGORIES.map((cat) => (
+          {categories.map((cat) => (
             <Link
               key={cat.id}
               href={`/kategori/${cat.slug}`}
