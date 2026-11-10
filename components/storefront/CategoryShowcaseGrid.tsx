@@ -17,7 +17,7 @@ export const SHOWCASE_CATEGORIES: CategoryShowcaseItem[] = [
   {
     id: 'cat-nevresimlik',
     name: 'Nevresimlik',
-    subtitle: 'Takımını Dik',
+    subtitle: 'Desen Seç →',
     slug: 'nevresimlik',
     image: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80',
     gradientClass: 'from-[#881337] via-[#9f1239] to-[#be123c]',
@@ -25,7 +25,7 @@ export const SHOWCASE_CATEGORIES: CategoryShowcaseItem[] = [
   {
     id: 'cat-duck-bezi',
     name: 'Duck Bezi',
-    subtitle: 'Masa Örtüsü',
+    subtitle: 'Desen Seç →',
     slug: 'duck-bezi',
     image: 'https://images.unsplash.com/photo-1604014237800-1c9102c219da?auto=format&fit=crop&w=800&q=80',
     gradientClass: 'from-[#064e3b] via-[#047857] to-[#059669]',
@@ -33,7 +33,7 @@ export const SHOWCASE_CATEGORIES: CategoryShowcaseItem[] = [
   {
     id: 'cat-muslin',
     name: 'Müslin',
-    subtitle: 'Bebek Örtüsü',
+    subtitle: 'Desen Seç →',
     slug: 'muslin',
     image: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=800&q=80',
     gradientClass: 'from-[#581c87] via-[#6b21a8] to-[#7e22ce]',
@@ -41,7 +41,7 @@ export const SHOWCASE_CATEGORIES: CategoryShowcaseItem[] = [
   {
     id: 'cat-viskon',
     name: 'Viskon',
-    subtitle: 'Elbiseni Dik',
+    subtitle: 'Desen Seç →',
     slug: 'viskon-kumaslar',
     image: 'https://images.unsplash.com/photo-1579656381226-5fc0f0100c3b?auto=format&fit=crop&w=800&q=80',
     gradientClass: 'from-[#7c2d12] via-[#9a3412] to-[#c2410c]',
@@ -49,7 +49,7 @@ export const SHOWCASE_CATEGORIES: CategoryShowcaseItem[] = [
   {
     id: 'cat-tul-perde',
     name: 'Tül Perde',
-    subtitle: 'Model Seç →',
+    subtitle: 'Zarif Tüller',
     slug: 'tul-perde',
     image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80',
     gradientClass: 'from-[#134e4a] via-[#0f766e] to-[#0d9488]',
@@ -57,7 +57,7 @@ export const SHOWCASE_CATEGORIES: CategoryShowcaseItem[] = [
   {
     id: 'cat-dantel',
     name: 'Dantel',
-    subtitle: 'Model Seç →',
+    subtitle: 'Özel Günlere',
     slug: 'dantel',
     image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80',
     gradientClass: 'from-[#701a75] via-[#86198f] to-[#a21caf]',
@@ -65,7 +65,7 @@ export const SHOWCASE_CATEGORIES: CategoryShowcaseItem[] = [
   {
     id: 'cat-fisto',
     name: 'Fisto',
-    subtitle: 'Model Seç →',
+    subtitle: 'Nakışlı Doku',
     slug: 'fisto',
     image: 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=80',
     gradientClass: 'from-[#1e3a8a] via-[#1d4ed8] to-[#2563eb]',
@@ -73,7 +73,7 @@ export const SHOWCASE_CATEGORIES: CategoryShowcaseItem[] = [
   {
     id: 'cat-keten',
     name: 'Keten',
-    subtitle: 'Renk Seç →',
+    subtitle: 'Sade Şıklık',
     slug: 'keten',
     image: 'https://images.unsplash.com/photo-1540518614846-7ede433c4ef7?auto=format&fit=crop&w=800&q=80',
     gradientClass: 'from-[#713f12] via-[#854d0e] to-[#a16207]',
@@ -167,14 +167,14 @@ export const CategoryShowcaseGrid: React.FC = () => {
               {/* Gradient Darkening for contrast */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/5 pointer-events-none" />
 
-              {/* Colored Bottom Gradient Badge Banner */}
+              {/* Colored Bottom Gradient Badge Banner (Altına Doğru ve Küçük Yazı Tipi) */}
               <div
-                className={`relative z-10 m-1.5 sm:m-2 p-1.5 sm:p-2 rounded-xl bg-gradient-to-r ${cat.gradientClass} text-white shadow-md backdrop-blur-xs flex flex-col items-center justify-center text-center transition-transform duration-300 group-hover:-translate-y-0.5`}
+                className={`relative z-10 m-1 sm:m-1.5 p-1.5 sm:p-2 rounded-xl bg-gradient-to-r ${cat.gradientClass} text-white shadow-md backdrop-blur-xs flex flex-col items-center justify-center text-center transition-transform duration-300 group-hover:-translate-y-0.5`}
               >
-                <h3 className="text-[11px] sm:text-xs md:text-sm font-black tracking-wide leading-tight drop-shadow-sm truncate w-full">
+                <h3 className="text-[10px] sm:text-[11px] md:text-xs font-black tracking-tight leading-tight drop-shadow-sm truncate w-full">
                   {cat.name}
                 </h3>
-                <p className="text-[9px] sm:text-[10px] font-semibold text-white/95 leading-tight mt-0.5 drop-shadow-sm truncate w-full">
+                <p className="text-[8.5px] sm:text-[9.5px] font-medium text-white/95 leading-tight mt-0.5 drop-shadow-sm truncate w-full">
                   {cat.subtitle}
                 </p>
               </div>
