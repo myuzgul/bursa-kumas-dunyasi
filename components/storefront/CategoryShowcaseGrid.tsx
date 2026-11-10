@@ -175,6 +175,12 @@ export const CategoryShowcaseGrid: React.FC = () => {
               <img
                 src={cat.image}
                 alt={cat.name}
+                onError={(e) => {
+                  const defaultItem = SHOWCASE_CATEGORIES.find((d) => d.id === cat.id || d.slug === cat.slug);
+                  if (defaultItem && e.currentTarget.src !== defaultItem.image) {
+                    e.currentTarget.src = defaultItem.image;
+                  }
+                }}
                 className={`absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-out ${
                   isPaused ? '' : 'group-hover:scale-108'
                 }`}
