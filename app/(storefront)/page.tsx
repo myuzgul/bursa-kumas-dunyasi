@@ -17,9 +17,8 @@ export default function HomePage() {
   const db = dbRepo.read();
   const showcaseData = getShowcaseData();
   const banners = db.homepage_banners?.filter((b: any) => b.is_active === 1) || [];
-  const categories = (db.categories?.filter((c: any) => c.is_active === 1 && c.is_featured_home === 1) || [])
-    .sort((a: any, b: any) => (a.display_order || 0) - (b.display_order || 0))
-    .slice(0, 6);
+  const showcaseCategories = (db.categories?.filter((c: any) => c.is_active === 1 && c.is_featured_home === 1) || [])
+    .sort((a: any, b: any) => (a.display_order || 0) - (b.display_order || 0));
   const reviews = (db.reviews?.filter((r: any) => r.is_approved === 1) || [])
     .sort((a: any, b: any) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime())
     .slice(0, 6);
@@ -84,7 +83,7 @@ export default function HomePage() {
 
       <div className="space-y-12 mt-10">
         {/* 2. POPULAR CATEGORIES GRID (SCREENSHOT COMPLIANT) */}
-        <CategoryShowcaseGrid />
+        <CategoryShowcaseGrid initialCategories={showcaseCategories} />
 
       {/* 3. FEATURED PRODUCTS SHOWCASE (ÖNE ÇIKAN VİTRİN KUMAŞLARI) */}
       <HomepageShowcase

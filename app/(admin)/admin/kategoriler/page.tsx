@@ -577,7 +577,7 @@ export default function AdminCategoriesPage() {
                     onChange={(e) => setFormData({ ...formData, is_featured_home: e.target.checked ? 1 : 0 })}
                     className="rounded text-blue-900"
                   />
-                  <span>Vitrinde Göster (Maks 6)</span>
+                  <span>Anasayfa Vitrininde Göster</span>
                 </label>
 
                 <div>

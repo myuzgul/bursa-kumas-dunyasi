@@ -12,90 +12,50 @@ export interface CategoryShowcaseItem {
   gradientClass: string;
 }
 
-export const SHOWCASE_CATEGORIES: CategoryShowcaseItem[] = [
-  {
-    id: 'cat-nevresimlik',
-    name: 'Nevresimlik',
-    slug: 'nevresimlik',
-    image: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80',
-    gradientClass: 'from-[#881337] via-[#9f1239] to-[#be123c]',
-  },
-  {
-    id: 'cat-duck-bezi',
-    name: 'Duck Bezi',
-    slug: 'duck-bezi',
-    image: 'https://images.unsplash.com/photo-1604014237800-1c9102c219da?auto=format&fit=crop&w=800&q=80',
-    gradientClass: 'from-[#064e3b] via-[#047857] to-[#059669]',
-  },
-  {
-    id: 'cat-muslin',
-    name: 'Müslin',
-    slug: 'muslin',
-    image: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=800&q=80',
-    gradientClass: 'from-[#581c87] via-[#6b21a8] to-[#7e22ce]',
-  },
-  {
-    id: 'cat-viskon',
-    name: 'Viskon',
-    slug: 'viskon-kumaslar',
-    image: 'https://images.unsplash.com/photo-1579656381226-5fc0f0100c3b?auto=format&fit=crop&w=800&q=80',
-    gradientClass: 'from-[#7c2d12] via-[#9a3412] to-[#c2410c]',
-  },
-  {
-    id: 'cat-tul-perde',
-    name: 'Tül Perde',
-    slug: 'tul-perde',
-    image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80',
-    gradientClass: 'from-[#134e4a] via-[#0f766e] to-[#0d9488]',
-  },
-  {
-    id: 'cat-dantel',
-    name: 'Dantel',
-    slug: 'dantel',
-    image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80',
-    gradientClass: 'from-[#701a75] via-[#86198f] to-[#a21caf]',
-  },
-  {
-    id: 'cat-fisto',
-    name: 'Fisto',
-    slug: 'fisto',
-    image: 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=80',
-    gradientClass: 'from-[#1e3a8a] via-[#1d4ed8] to-[#2563eb]',
-  },
-  {
-    id: 'cat-keten',
-    name: 'Keten',
-    slug: 'keten',
-    image: 'https://images.unsplash.com/photo-1540518614846-7ede433c4ef7?auto=format&fit=crop&w=800&q=80',
-    gradientClass: 'from-[#713f12] via-[#854d0e] to-[#a16207]',
-  },
+const GRADIENT_PALETTES = [
+  'from-[#881337] via-[#9f1239] to-[#be123c]', // Claret / Rose
+  'from-[#064e3b] via-[#047857] to-[#059669]', // Emerald
+  'from-[#581c87] via-[#6b21a8] to-[#7e22ce]', // Purple
+  'from-[#7c2d12] via-[#9a3412] to-[#c2410c]', // Rust
+  'from-[#134e4a] via-[#0f766e] to-[#0d9488]', // Teal
+  'from-[#701a75] via-[#86198f] to-[#a21caf]', // Magenta
+  'from-[#1e3a8a] via-[#1d4ed8] to-[#2563eb]', // Royal Blue
+  'from-[#713f12] via-[#854d0e] to-[#a16207]', // Amber
+  'from-[#312e81] via-[#3730a3] to-[#4338ca]', // Indigo
+  'from-[#831843] via-[#9d174d] to-[#be185d]', // Pink/Burgundy
 ];
 
-export const CategoryShowcaseGrid: React.FC = () => {
-  const [categories, setCategories] = useState(SHOWCASE_CATEGORIES);
+function mapToCategoryItems(rawList: any[]): CategoryShowcaseItem[] {
+  return rawList
+    .filter((c: any) => c && c.is_active === 1 && c.is_featured_home === 1)
+    .sort((a: any, b: any) => (a.display_order || 0) - (b.display_order || 0))
+    .map((c: any, index: number) => ({
+      id: c.id,
+      name: c.name,
+      slug: c.slug,
+      image: c.image_url && c.image_url !== '/placeholder.jpg' ? c.image_url : '/placeholder.jpg',
+      gradientClass: GRADIENT_PALETTES[index % GRADIENT_PALETTES.length],
+    }));
+}
+
+interface CategoryShowcaseGridProps {
+  initialCategories?: any[];
+}
+
+export const CategoryShowcaseGrid: React.FC<CategoryShowcaseGridProps> = ({ initialCategories = [] }) => {
+  const [categories, setCategories] = useState<CategoryShowcaseItem[]>(() =>
+    mapToCategoryItems(initialCategories)
+  );
   const [isPaused, setIsPaused] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  // Dynamically load category images if updated from Admin Panel
+  // Dynamically load active featured categories from Admin Panel
   useEffect(() => {
-    fetch('/api/admin/categories')
+    fetch('/api/admin/categories', { cache: 'no-store' })
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
         if (data && Array.isArray(data.categories)) {
-          setCategories((prev) =>
-            prev.map((item) => {
-              const matched = data.categories.find(
-                (c: any) =>
-                  c.slug === item.slug ||
-                  c.id === item.id ||
-                  (item.slug === 'viskon-kumaslar' && (c.slug === 'ithal-viskon' || c.slug === 'viskon'))
-              );
-              if (matched && matched.image_url && matched.image_url !== '/placeholder.jpg') {
-                return { ...item, image: matched.image_url };
-              }
-              return item;
-            })
-          );
+          setCategories(mapToCategoryItems(data.categories));
         }
       })
       .catch(() => {});
@@ -107,13 +67,15 @@ export const CategoryShowcaseGrid: React.FC = () => {
     sliderRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
   };
 
-  // Auto-scroll loop
+  // Auto-scroll loop (only if there are multiple items that overflow)
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || categories.length <= 1) return;
 
     const interval = setInterval(() => {
       if (!sliderRef.current) return;
       const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
+      if (scrollWidth <= clientWidth) return;
+
       if (scrollLeft + clientWidth >= scrollWidth - 10) {
         sliderRef.current.scrollTo({ left: 0, behavior: 'smooth' });
       } else {
@@ -122,7 +84,12 @@ export const CategoryShowcaseGrid: React.FC = () => {
     }, 3500);
 
     return () => clearInterval(interval);
-  }, [isPaused]);
+  }, [isPaused, categories.length]);
+
+  // If no categories are marked as featured for the homepage vitrin, hide gracefully
+  if (categories.length === 0) {
+    return null;
+  }
 
   return (
     <section className="max-w-7xl mx-auto px-3 sm:px-4">
@@ -137,25 +104,27 @@ export const CategoryShowcaseGrid: React.FC = () => {
           </h2>
         </div>
 
-        {/* Slider Controls */}
-        <div className="flex items-center gap-1.5 sm:gap-2">
-          <button
-            type="button"
-            onClick={() => scroll('left')}
-            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-slate-200 bg-white shadow-xs hover:bg-slate-50 flex items-center justify-center text-slate-700 hover:text-slate-950 transition cursor-pointer"
-            aria-label="Önceki Kategoriler"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-          <button
-            type="button"
-            onClick={() => scroll('right')}
-            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-slate-200 bg-white shadow-xs hover:bg-slate-50 flex items-center justify-center text-slate-700 hover:text-slate-950 transition cursor-pointer"
-            aria-label="Sonraki Kategoriler"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        </div>
+        {/* Slider Controls (shown if more than 1 category) */}
+        {categories.length > 1 && (
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <button
+              type="button"
+              onClick={() => scroll('left')}
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-slate-200 bg-white shadow-xs hover:bg-slate-50 flex items-center justify-center text-slate-700 hover:text-slate-950 transition cursor-pointer"
+              aria-label="Önceki Kategoriler"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => scroll('right')}
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-slate-200 bg-white shadow-xs hover:bg-slate-50 flex items-center justify-center text-slate-700 hover:text-slate-950 transition cursor-pointer"
+              aria-label="Sonraki Kategoriler"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Horizontal Slider (Single row on both desktop and mobile) */}
@@ -169,16 +138,15 @@ export const CategoryShowcaseGrid: React.FC = () => {
             <Link
               key={cat.id}
               href={`/kategori/${cat.slug}`}
-              className="group relative flex-shrink-0 w-[125px] sm:w-[140px] md:w-[150px] lg:flex-1 snap-start aspect-square rounded-2xl overflow-hidden border border-slate-200/90 bg-slate-100 shadow-xs hover:shadow-xl hover:border-slate-300 transition-all duration-300 flex flex-col justify-end"
+              className="group relative flex-shrink-0 w-[125px] sm:w-[140px] md:w-[150px] snap-start aspect-square rounded-2xl overflow-hidden border border-slate-200/90 bg-slate-100 shadow-xs hover:shadow-xl hover:border-slate-300 transition-all duration-300 flex flex-col justify-end"
             >
               {/* Background High-Res Fabric Stack Photo (Full Visibility) */}
               <img
-                src={cat.image}
+                src={cat.image || '/placeholder.jpg'}
                 alt={cat.name}
                 onError={(e) => {
-                  const defaultItem = SHOWCASE_CATEGORIES.find((d) => d.id === cat.id || d.slug === cat.slug);
-                  if (defaultItem && e.currentTarget.src !== defaultItem.image) {
-                    e.currentTarget.src = defaultItem.image;
+                  if (e.currentTarget.src !== '/placeholder.jpg') {
+                    e.currentTarget.src = '/placeholder.jpg';
                   }
                 }}
                 className={`absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-out ${
@@ -203,7 +171,7 @@ export const CategoryShowcaseGrid: React.FC = () => {
         </div>
       </div>
 
-      {/* Bottom Footer Controls (Screenshot: Hareketi Durdur) */}
+      {/* Bottom Footer Controls */}
       <div className="flex items-center justify-between mt-2 sm:mt-3 text-slate-500">
         <Link
           href="/kategori/tum-kumaslar"
@@ -213,24 +181,26 @@ export const CategoryShowcaseGrid: React.FC = () => {
           <ArrowRight className="w-3.5 h-3.5" />
         </Link>
 
-        <button
-          type="button"
-          onClick={() => setIsPaused(!isPaused)}
-          className="inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-500 hover:text-slate-800 transition py-1 px-2.5 rounded-lg hover:bg-slate-100 cursor-pointer"
-          title="Kategori kartları animasyonunu kontrol et"
-        >
-          {isPaused ? (
-            <>
-              <Play className="w-3 h-3 text-emerald-600 fill-emerald-600" />
-              <span>Akışı Başlat</span>
-            </>
-          ) : (
-            <>
-              <Pause className="w-3 h-3 text-slate-500" />
-              <span>Hareketi Durdur</span>
-            </>
-          )}
-        </button>
+        {categories.length > 1 && (
+          <button
+            type="button"
+            onClick={() => setIsPaused(!isPaused)}
+            className="inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-500 hover:text-slate-800 transition py-1 px-2.5 rounded-lg hover:bg-slate-100 cursor-pointer"
+            title="Kategori kartları animasyonunu kontrol et"
+          >
+            {isPaused ? (
+              <>
+                <Play className="w-3 h-3 text-emerald-600 fill-emerald-600" />
+                <span>Akışı Başlat</span>
+              </>
+            ) : (
+              <>
+                <Pause className="w-3 h-3 text-slate-500" />
+                <span>Hareketi Durdur</span>
+              </>
+            )}
+          </button>
+        )}
       </div>
     </section>
   );
