@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { formatCurrency } from '@/lib/services/meterEngine';
 import { DHLPrintLabel } from '@/components/admin/DHLPrintLabel';
+import { getPaymentMethodLabel } from '@/lib/utils/paymentMethod';
 
 export default function AdminOrderDetailPage() {
   const params = useParams();
@@ -422,7 +423,7 @@ export default function AdminOrderDetailPage() {
 
                   <div className="bg-emerald-50 text-emerald-900 px-3 py-1 rounded-lg border border-emerald-300">
                     <span className="text-emerald-700 text-[10px] block font-sans font-bold uppercase">Ödeme Durumu</span>
-                    <strong className="font-bold">{order.payment_method || 'Kredi Kartı'} (Ödendi)</strong>
+                    <strong className="font-bold">{getPaymentMethodLabel(order.payment_method)} (Ödendi)</strong>
                   </div>
                 </div>
               </div>
