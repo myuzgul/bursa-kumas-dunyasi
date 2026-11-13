@@ -45,7 +45,7 @@ export default function AboutPage() {
         <div className="p-5 bg-blue-50 rounded-2xl border border-blue-100 flex items-center gap-3 mt-6">
           <MapPin className="w-6 h-6 text-blue-900 flex-shrink-0" />
           <div className="text-xs text-blue-950 font-medium">
-            <strong>Merkez & Mağaza:</strong> Anadolu, 2. Kanarya Sk. no:14/A, 16350 Yıldırım/Bursa
+            <strong>Merkez & Mağaza:</strong> Anadolu, 2. Kanarya Sk. No:3/A, 16350 Yıldırım/Bursa
           </div>
         </div>
       </div>

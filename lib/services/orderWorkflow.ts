@@ -1,10 +1,10 @@
 import { dbRepo } from '../db/repo';
-import { calculateDiscounts } from './discountEngine';
+import { computePromotions, recordPromotionUsage, releasePromotionUsage } from './promotions';
+import { computeOrderTotals } from './cartQuote';
+import { resolveAcceptedOutlet, buildOutletOrderLine, commitOutletSale, releaseOutletSale } from './outlet';
 import { sendEmailNotification, sendSmsNotification } from './notifications';
 import { createYurticiShipment } from './shipping';
 import { createParkBulutInvoice } from './invoice';
-import { calculateShippingFee, getShippingSettings } from './shippingSettings';
-import { calculatePaymentAdjustments } from './paymentSettings';
 
 export interface CheckoutCustomerData {
   fullName: string;
@@ -34,6 +34,21 @@ export interface CreateOrderParams {
   couponCode?: string;
   paymentMethod?: string;
   userId?: string;
+  /** Kupon/kampanya müşteri kontrolleri için sunucuda (oturum çerezinden) belirlenen üye kimliği */
+  promoUserId?: string | null;
+  /** Ödeme sayfasında kabul edilen outlet fırsatı */
+  outlet?: { reservationId?: string; sessionId?: string } | null;
+}
+
+function checkoutError(message: string, code: string): Error {
+  const err: any = new Error(message);
+  err.code = code;
+  return err;
+}
+
+export function isCancelledOrderStatus(status: any): boolean {
+  const s = String(status || '');
+  return s.startsWith('Iptal') || s.startsWith('Iade');
 }
 
 export function generateOrderNumber(): string {
@@ -139,24 +154,61 @@ export async function processCheckoutOrder(params: CreateOrderParams) {
     });
   }
 
-  // 2. Server-side discount & payment adjustments recalculation
-  const discounts = calculateDiscounts(calculatedSubtotal, params.couponCode, params.userId);
-  const finalDiscountTotal = discounts.totalDiscount;
-  const shippingCalculation = calculateShippingFee(calculatedSubtotal);
-  const shippingTotal = Number(shippingCalculation.fee.toFixed(2));
-  
-  const paymentMethod = params.paymentMethod || 'paytr';
-  const paymentAdjustments = calculatePaymentAdjustments({
-    subtotal: calculatedSubtotal,
-    couponDiscount: finalDiscountTotal,
-    paymentMethod,
-  });
-  const paymentFee = paymentAdjustments.paymentFee;
-  const paymentDiscount = paymentAdjustments.paymentDiscount;
+  // 2. Outlet fırsatı (ödeme sayfasında kabul edildiyse) – son kontrol
+  let outletOffer: any = null;
+  let outletReservation: any = null;
+  if (params.outlet && params.outlet.reservationId) {
+    const resolved = resolveAcceptedOutlet(db, params.outlet);
+    if (!resolved.offer) {
+      throw checkoutError(
+        resolved.error || 'Outlet fırsatı artık geçerli değil.',
+        'OUTLET_UNAVAILABLE'
+      );
+    }
+    outletOffer = resolved.offer;
+    outletReservation = resolved.reservation;
+    const outletLine = buildOutletOrderLine(db, outletOffer);
+    orderItemsData.push(outletLine);
+    calculatedSubtotal = Number((calculatedSubtotal + outletLine.total_price).toFixed(2));
+  }
 
-  const taxRate = 10;
-  const taxTotal = Number((((calculatedSubtotal - finalDiscountTotal - paymentDiscount) * taxRate) / (100 + taxRate)).toFixed(2));
-  const grandTotal = Number(Math.max(0, calculatedSubtotal - finalDiscountTotal - paymentDiscount + shippingTotal + paymentFee).toFixed(2));
+  // 3. Sunucu tarafında indirim (Sepette İndirim + Kupon) ve ödeme ayarlamaları
+  const promoCustomer = {
+    userId: params.promoUserId || params.userId || null,
+    email: params.customer.email,
+    phone: params.customer.phone,
+  };
+  const promotions = computePromotions(
+    db,
+    orderItemsData.map((oi: any) => ({
+      product_id: oi.product_id,
+      variant_id: oi.variant_id,
+      meter_quantity: oi.meter_quantity,
+      unit_price: oi.unit_price,
+      total_price: oi.total_price,
+      is_outlet: oi.is_outlet ? 1 : 0,
+    })),
+    { couponCode: params.couponCode, customer: promoCustomer }
+  );
+
+  if (params.couponCode && String(params.couponCode).trim() && promotions.couponError) {
+    throw checkoutError(`Kupon uygulanamadı: ${promotions.couponError}`, 'COUPON_INVALID');
+  }
+
+  const finalDiscountTotal = promotions.totalDiscount;
+  const paymentMethod = params.paymentMethod || 'paytr';
+  const totals = computeOrderTotals({
+    subtotal: calculatedSubtotal,
+    totalDiscount: finalDiscountTotal,
+    freeShipping: promotions.freeShipping,
+    paymentMethod,
+    hasItems: orderItemsData.length > 0,
+  });
+  const shippingTotal = totals.shippingTotal;
+  const paymentFee = totals.paymentFee;
+  const paymentDiscount = totals.paymentDiscount;
+  const taxTotal = totals.taxTotal;
+  const grandTotal = totals.grandTotal;
 
   const orderNumber = generateOrderNumber();
   const orderId = `ord-${Date.now()}`;
@@ -188,7 +240,15 @@ export async function processCheckoutOrder(params: CreateOrderParams) {
     discount_total: finalDiscountTotal,
     payment_discount: paymentDiscount,
     payment_fee: paymentFee,
-    coupon_code: discounts.appliedCoupon ? discounts.appliedCoupon.code : null,
+    coupon_code: promotions.coupon ? promotions.coupon.code : null,
+    coupon_id: promotions.coupon ? promotions.coupon.id : null,
+    coupon_discount_total: promotions.couponDiscount,
+    free_shipping_coupon: promotions.freeShipping ? 1 : 0,
+    cart_discount_total: promotions.cartDiscount,
+    cart_discount_rule_id: promotions.cartRule ? promotions.cartRule.id : null,
+    cart_discount_label: promotions.cartRule ? promotions.cartRule.label : null,
+    outlet_offer_id: outletOffer ? outletOffer.id : null,
+    outlet_total: outletOffer ? outletOffer.offer_price : 0,
     shipping_total: shippingTotal,
     tax_total: taxTotal,
     grand_total: grandTotal,
@@ -211,6 +271,9 @@ export async function processCheckoutOrder(params: CreateOrderParams) {
   for (const oi of orderItemsData) {
     oi.order_id = orderId;
     db.order_items.push(oi);
+
+    // Outlet parçaları ayrı stoktur; bağlı ürünün metre stoğundan düşülmez
+    if (oi.is_outlet) continue;
 
     // Deduct stock safely if tracked
     const prod = db.products.find((p: any) => p.id === oi.product_id);
@@ -246,10 +309,12 @@ export async function processCheckoutOrder(params: CreateOrderParams) {
     }
   }
 
-  // Increment coupon usage if used
-  if (discounts.appliedCoupon) {
-    const coup = db.coupons.find((c: any) => c.id === discounts.appliedCoupon.id);
-    if (coup) coup.used_count = (coup.used_count || 0) + 1;
+  // Kupon / kampanya kullanım kayıtları
+  recordPromotionUsage(db, promotions, newOrder, promoCustomer);
+
+  // Outlet parçasını satıldı olarak işaretle
+  if (outletOffer && outletReservation) {
+    commitOutletSale(db, outletOffer, outletReservation, newOrder);
   }
 
   // Add initial status log
@@ -291,6 +356,12 @@ export async function updateOrderStatus(orderId: string, newStatus: string, admi
   const oldStatus = order.status;
   order.status = newStatus;
   order.updated_at = new Date().toISOString();
+
+  // İptal / iade: kupon-kampanya kullanımını ve outlet parçasını serbest bırak
+  if (isCancelledOrderStatus(newStatus) && !isCancelledOrderStatus(oldStatus)) {
+    releasePromotionUsage(db, order);
+    releaseOutletSale(db, order);
+  }
 
   // If status changed to Kargoya_Verildi, create shipping record if not exists
   if (newStatus === 'Kargoya_Verildi' && !order.tracking_number) {

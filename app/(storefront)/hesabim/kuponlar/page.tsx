@@ -95,8 +95,14 @@ export default function CustomerCouponsPage() {
                 <div className="flex items-start justify-between gap-3">
                   <div className="space-y-1">
                     <span className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-1.5">
-                      {coupon.discount_type === 'percent' ? `%${coupon.discount_value}` : `${coupon.discount_value} TL`}
-                      <span className="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-lg">İNDİRİM</span>
+                      {coupon.discount_type === 'free_shipping'
+                        ? 'KARGO'
+                        : coupon.discount_type === 'percent'
+                          ? `%${coupon.discount_value}`
+                          : `${coupon.discount_value} TL`}
+                      <span className="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-lg">
+                        {coupon.discount_type === 'free_shipping' ? 'BEDAVA' : 'İNDİRİM'}
+                      </span>
                     </span>
                     <p className="text-xs font-bold text-slate-700">
                       {coupon.description}

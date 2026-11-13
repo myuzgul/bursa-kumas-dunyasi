@@ -1,44 +1,48 @@
 import { NextResponse } from 'next/server';
-import { dbRepo } from '@/lib/db/repo';
-import { calculateDiscounts } from '@/lib/services/discountEngine';
+import { buildCartQuote } from '@/lib/services/cartQuote';
+import { getAuthenticatedUser } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
+/**
+ * Geriye dönük uyumluluk: { code, items } veya { code, subtotal } kabul eder.
+ * Yeni ekranlar /api/cart/quote kullanır.
+ */
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    const { code, subtotal } = body;
-
-    if (!code || !code.trim()) {
+    const body = await req.json().catch(() => ({}));
+    const code = String(body.code || '').trim();
+    if (!code) {
       return NextResponse.json({ valid: false, message: 'Lütfen bir kupon kodu giriniz.' }, { status: 400 });
     }
-
-    const currentSubtotal = Number(subtotal || 0);
-    const discounts = calculateDiscounts(currentSubtotal, code.trim());
-
-    if (discounts.errorMessage || !discounts.appliedCoupon) {
+    const items = Array.isArray(body.items) ? body.items : [];
+    if (items.length === 0) {
       return NextResponse.json({
         valid: false,
-        message: discounts.errorMessage || 'Geçersiz kupon kodu.',
+        message: 'Kuponu uygulayabilmek için sepetinizde ürün bulunmalıdır.',
       });
     }
 
-    const coupon = discounts.appliedCoupon;
+    const auth = await getAuthenticatedUser(req).catch(() => null);
+    const quote = buildCartQuote({
+      items,
+      couponCode: code,
+      customer: {
+        userId: auth && auth.role === 'customer' ? auth.user?.id : null,
+        email: body.email || auth?.user?.email || null,
+        phone: body.phone || null,
+      },
+    });
+
+    if (!quote.coupon) {
+      return NextResponse.json({ valid: false, message: quote.couponError || 'Geçersiz kupon kodu.' });
+    }
+
     return NextResponse.json({
       valid: true,
-      coupon: {
-        code: coupon.code,
-        title: coupon.title || coupon.code,
-        discount_type: coupon.discount_type,
-        discount_value: coupon.discount_value,
-        discount_amount: discounts.couponDiscount,
-      },
-      discounts,
-      message: `"${coupon.code}" kuponu başarıyla uygulandı! (${
-        coupon.discount_type === 'percent'
-          ? `%${coupon.discount_value} indirim`
-          : `${coupon.discount_value} TL indirim`
-      })`,
+      coupon: { ...quote.coupon, discount_amount: quote.coupon.amount },
+      message: quote.couponMessage,
+      quote,
     });
   } catch (err: any) {
     return NextResponse.json(

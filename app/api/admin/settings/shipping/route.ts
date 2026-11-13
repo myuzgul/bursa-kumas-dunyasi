@@ -59,7 +59,7 @@ export async function PUT(req: NextRequest) {
       dhl_branch_code: dhl_branch_code !== undefined ? String(dhl_branch_code).trim() : (current.dhl_branch_code || ''),
       dhl_sender_name: dhl_sender_name !== undefined ? String(dhl_sender_name).trim() : (current.dhl_sender_name || 'Bursa Kumaş Dünyası'),
       dhl_sender_phone: dhl_sender_phone !== undefined ? String(dhl_sender_phone).trim() : (current.dhl_sender_phone || '0 (542) 393 98 16'),
-      dhl_sender_address: dhl_sender_address !== undefined ? String(dhl_sender_address).trim() : (current.dhl_sender_address || 'Kazım Karabekir Mah. Yıldırım / BURSA'),
+      dhl_sender_address: dhl_sender_address !== undefined ? String(dhl_sender_address).trim() : (current.dhl_sender_address || 'Anadolu, 2. Kanarya Sk. No:3/A, 16350 Yıldırım/Bursa'),
       dhl_auto_generate_label: dhl_auto_generate_label !== undefined ? Number(dhl_auto_generate_label) : (current.dhl_auto_generate_label ?? 1),
       updated_at: new Date().toISOString(),
     };

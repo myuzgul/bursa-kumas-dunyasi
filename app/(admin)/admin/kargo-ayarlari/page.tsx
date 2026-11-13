@@ -32,7 +32,7 @@ export default function AdminShippingSettingsPage() {
   const [dhlBranchCode, setDhlBranchCode] = useState<string>('');
   const [dhlSenderName, setDhlSenderName] = useState<string>('Bursa Kumaş Dünyası');
   const [dhlSenderPhone, setDhlSenderPhone] = useState<string>('0 (542) 393 98 16');
-  const [dhlSenderAddress, setDhlSenderAddress] = useState<string>('Kazım Karabekir Mah. Yıldırım / BURSA');
+  const [dhlSenderAddress, setDhlSenderAddress] = useState<string>('Anadolu, 2. Kanarya Sk. No:3/A, 16350 Yıldırım/Bursa');
   const [dhlAutoLabel, setDhlAutoLabel] = useState<number>(1);
 
   const [loading, setLoading] = useState<boolean>(true);
@@ -59,7 +59,7 @@ export default function AdminShippingSettingsPage() {
           setDhlBranchCode(data.settings.dhl_branch_code || '');
           setDhlSenderName(data.settings.dhl_sender_name || 'Bursa Kumaş Dünyası');
           setDhlSenderPhone(data.settings.dhl_sender_phone || '0 (542) 393 98 16');
-          setDhlSenderAddress(data.settings.dhl_sender_address || 'Kazım Karabekir Mah. Yıldırım / BURSA');
+          setDhlSenderAddress(data.settings.dhl_sender_address || 'Anadolu, 2. Kanarya Sk. No:3/A, 16350 Yıldırım/Bursa');
           setDhlAutoLabel(data.settings.dhl_auto_generate_label ?? 1);
         }
       }

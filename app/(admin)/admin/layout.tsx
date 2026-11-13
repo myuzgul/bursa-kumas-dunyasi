@@ -2,7 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { 
   LayoutDashboard, ShoppingCart, Package, BarChart3, 
-  Percent, Sliders, FileText, Bell, ExternalLink, ShieldAlert, Users, Layers, Award, MessageSquare, Truck, CreditCard, Sparkles, Receipt, RefreshCw
+  Percent, Sliders, FileText, Bell, ExternalLink, ShieldAlert, Users, Layers, Award, MessageSquare, Truck, CreditCard, Sparkles, Receipt, RefreshCw,
+  Ticket, Gift, Scissors
 } from 'lucide-react';
 import { BrandLogo } from '@/components/ui/BrandLogo';
 
@@ -78,13 +79,13 @@ export default function AdminLayout({
               <span>Kumaşlar & Varyasyonlar</span>
             </Link>
 
-            {/* K - Kuponlar & İndirimler */}
+            {/* K - Kupon Kodları */}
             <Link
               href="/admin/kuponlar"
               className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-900 hover:text-white transition text-slate-300"
             >
-              <Percent className="w-4 h-4 text-rose-400" />
-              <span>Kuponlar & İndirimler</span>
+              <Ticket className="w-4 h-4 text-rose-400" />
+              <span>Kupon Kodları</span>
             </Link>
 
             {/* M - Metre Satış Raporları */}
@@ -112,6 +113,15 @@ export default function AdminLayout({
             >
               <MessageSquare className="w-4 h-4 text-emerald-400" />
               <span>Müşteri Yorumları & Onay</span>
+            </Link>
+
+            {/* O - Outlet Fırsatları (Ödeme Sayfası) */}
+            <Link
+              href="/admin/outlet"
+              className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-900 hover:text-white transition text-slate-300"
+            >
+              <Scissors className="w-4 h-4 text-amber-400" />
+              <span>Outlet Fırsatları</span>
             </Link>
 
             {/* Ö - Ödeme Yöntemleri & PayTR */}
@@ -148,6 +158,15 @@ export default function AdminLayout({
             >
               <Award className="w-4 h-4 text-amber-400" />
               <span>Rozet Yönetimi</span>
+            </Link>
+
+            {/* S - Sepette İndirim */}
+            <Link
+              href="/admin/sepette-indirim"
+              className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-900 hover:text-white transition text-slate-300"
+            >
+              <Gift className="w-4 h-4 text-emerald-400" />
+              <span>Sepette İndirim</span>
             </Link>
 
             {/* S - Siparişler & Kesim Fişi */}

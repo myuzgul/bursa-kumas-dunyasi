@@ -7,9 +7,11 @@ import { useCart } from '@/components/storefront/CartContext';
 import { formatCurrency } from '@/lib/services/meterEngine';
 import { 
   ShieldCheck, Lock, CreditCard, Truck, Landmark, Banknote,
-  CheckCircle2, AlertCircle, ShoppingBag, ArrowLeft, Copy, Check, Info
+  CheckCircle2, AlertCircle, ShoppingBag, ArrowLeft, Copy, Check, Info, Tag, Gift, Scissors
 } from 'lucide-react';
 import { trackStorefrontEvent } from '@/lib/analytics/dataTier';
+import { useCartQuote, fetchCartQuote } from '@/components/storefront/useCartQuote';
+import { OutletOfferCard, resetOutletSession, type OutletSelection } from '@/components/storefront/OutletOfferCard';
 
 interface BankAccount {
   id: string;
@@ -52,7 +54,7 @@ interface PublicPaymentSettings {
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { items, subtotal, couponCode, clearCart } = useCart();
+  const { items, subtotal, couponCode, setCouponCode, clearCart } = useCart();
 
   const [fullName, setFullName] = useState('Ahmet Yılmaz');
   const [email, setEmail] = useState('ahmet.yilmaz@example.com');
@@ -76,8 +78,13 @@ export default function CheckoutPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isOrderCompleted, setIsOrderCompleted] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [couponDiscount, setCouponDiscount] = useState<number>(0);
   const [paytrIframeUrl, setPaytrIframeUrl] = useState<string | null>(null);
+
+  // Kupon girişi ve outlet fırsatı
+  const [couponInput, setCouponInput] = useState(couponCode);
+  const [couponFeedback, setCouponFeedback] = useState<{ success: boolean; message: string } | null>(null);
+  const [isApplyingCoupon, setIsApplyingCoupon] = useState(false);
+  const [outletSelection, setOutletSelection] = useState<OutletSelection | null>(null);
 
   // Fetch Payment Settings
   useEffect(() => {
@@ -101,27 +108,57 @@ export default function CheckoutPage() {
       .catch(() => {});
   }, []);
 
-  // Validate coupon dynamically
+  // Tüm tutarlar sunucudan: Sepette İndirim + Kupon + ödeme yöntemi + kargo + outlet
+  const { quote } = useCartQuote(items, {
+    couponCode,
+    paymentMethod: selectedPaymentMethod,
+    email,
+    phone,
+    outlet: outletSelection,
+    debounceMs: 400,
+  });
+
   useEffect(() => {
-    if (couponCode && subtotal > 0) {
-      fetch('/api/coupons/validate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code: couponCode, subtotal }),
-      })
-        .then((res) => (res.ok ? res.json() : null))
-        .then((data) => {
-          if (data && data.valid) {
-            setCouponDiscount(data.coupon.discount_amount || 0);
-          } else {
-            setCouponDiscount(0);
-          }
-        })
-        .catch(() => {});
-    } else {
-      setCouponDiscount(0);
+    setCouponInput(couponCode);
+  }, [couponCode]);
+
+  // Kabul edilen outlet parçası bu arada satıldıysa siparişten çıkar ve müşteriyi bilgilendir
+  useEffect(() => {
+    if (outletSelection && quote && !quote.outlet && quote.outletError) {
+      setOutletSelection(null);
+      setErrorMessage(quote.outletError);
     }
-  }, [couponCode, subtotal]);
+  }, [quote, outletSelection]);
+
+  const handleApplyCoupon = async () => {
+    const code = couponInput.trim().toUpperCase();
+    if (!code) return;
+    setIsApplyingCoupon(true);
+    setCouponFeedback(null);
+    try {
+      const q = await fetchCartQuote(items, {
+        couponCode: code,
+        paymentMethod: selectedPaymentMethod,
+        email,
+        phone,
+        outlet: outletSelection,
+      });
+      if (q && q.coupon) {
+        setCouponCode(code);
+        setCouponFeedback({ success: true, message: q.couponMessage || 'Kupon uygulandı.' });
+      } else {
+        setCouponFeedback({ success: false, message: q?.couponError || 'Kupon uygulanamadı.' });
+      }
+    } finally {
+      setIsApplyingCoupon(false);
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setCouponCode('');
+    setCouponInput('');
+    setCouponFeedback(null);
+  };
 
   const [shippingSettings, setShippingSettings] = useState<{ free_shipping_threshold: number; shipping_cost: number; carrier_name?: string } | null>(null);
 
@@ -164,26 +201,33 @@ export default function CheckoutPage() {
   const standardCost = shippingSettings ? Number(shippingSettings.shipping_cost) : 79.90;
   const isAlwaysFree = freeThreshold === 0;
 
-  const baseDiscount = couponDiscount;
-  const discountedSubtotal = Math.max(0, subtotal - baseDiscount);
-
-  // Dynamic Payment adjustments
-  let havaleDiscount = 0;
-  let paymentFee = 0;
+  // Yerel yedek hesaplama (sunucu yanıtı gelene kadar)
+  let localHavaleDiscount = 0;
+  let localPaymentFee = 0;
 
   if (selectedPaymentMethod === 'bank_transfer' && paymentSettings?.bank_transfer?.is_active) {
     const rate = Number(paymentSettings.bank_transfer.discount_percentage) || 0;
     if (rate > 0) {
-      havaleDiscount = Number(((discountedSubtotal * rate) / 100).toFixed(2));
+      localHavaleDiscount = Number(((subtotal * rate) / 100).toFixed(2));
     }
   } else if (selectedPaymentMethod === 'cash_on_delivery' && paymentSettings?.cash_on_delivery?.is_active) {
-    paymentFee = Number(paymentSettings.cash_on_delivery.additional_fee) || 0;
+    localPaymentFee = Number(paymentSettings.cash_on_delivery.additional_fee) || 0;
   } else if (selectedPaymentMethod === 'card_on_delivery' && paymentSettings?.card_on_delivery?.is_active) {
-    paymentFee = Number(paymentSettings.card_on_delivery.additional_fee) || 0;
+    localPaymentFee = Number(paymentSettings.card_on_delivery.additional_fee) || 0;
   }
+  const localShippingFee = (isAlwaysFree || subtotal >= freeThreshold || items.length === 0) ? 0 : standardCost;
 
-  const shippingFee = (isAlwaysFree || subtotal >= freeThreshold || items.length === 0) ? 0 : standardCost;
-  const grandTotal = Math.max(0, discountedSubtotal - havaleDiscount + shippingFee + paymentFee);
+  const outletLine = quote?.outlet && outletSelection ? quote.outlet : null;
+  const orderSubtotal = quote ? quote.subtotal : subtotal;
+  const cartDiscountAmount = quote?.cartDiscount?.amount || 0;
+  const couponDiscount = quote?.coupon?.amount || 0;
+  const discountedSubtotal = Math.max(0, orderSubtotal - cartDiscountAmount - couponDiscount);
+  const havaleDiscount = quote ? quote.paymentDiscount : localHavaleDiscount;
+  const paymentFee = quote ? quote.paymentFee : localPaymentFee;
+  const shippingFee = quote ? quote.shippingTotal : localShippingFee;
+  const taxAmount = quote ? quote.taxTotal : (Math.max(0, discountedSubtotal - havaleDiscount) * 10) / 110;
+  const grandTotal = quote ? quote.grandTotal : Math.max(0, discountedSubtotal - havaleDiscount + shippingFee + paymentFee);
+  const couponInvalid = !!(couponCode && quote && !quote.coupon && quote.couponError);
 
   const copyIban = (iban: string) => {
     navigator.clipboard.writeText(iban.replace(/\s+/g, ''));
@@ -199,6 +243,11 @@ export default function CheckoutPage() {
     }
     if (items.length === 0) {
       setErrorMessage('Sepetiniz boş.');
+      return;
+    }
+
+    if (couponInvalid) {
+      setErrorMessage(`Kupon uygulanamıyor: ${quote?.couponError}. Lütfen kuponu kaldırıp tekrar deneyin.`);
       return;
     }
 
@@ -231,22 +280,30 @@ export default function CheckoutPage() {
           })),
           couponCode,
           paymentMethod: selectedPaymentMethod,
+          outlet: outletSelection || undefined,
         }),
       });
 
       const data = await res.json();
       if (!res.ok) {
+        if (data.code === 'OUTLET_UNAVAILABLE') {
+          setOutletSelection(null);
+        }
         throw new Error(data.message || 'Sipariş oluşturulamadı.');
       }
+      resetOutletSession();
 
       // Eğer PayTR seçildiyse ve aktifse, PayTR iframe token alıp iframe açalım
       if (selectedPaymentMethod === 'paytr') {
         try {
-          const basketData = items.map((i) => [
+          const basketData: any[] = items.map((i) => [
             i.name + (i.variantTitle ? ` (${i.variantTitle})` : ''),
             String((i.unitPrice * i.meterQuantity).toFixed(2)),
             1,
           ]);
+          if (outletLine) {
+            basketData.push([`OUTLET • ${outletLine.title}`, String(Number(outletLine.offer_price).toFixed(2)), 1]);
+          }
 
           const tokenRes = await fetch('/api/payment/paytr-token', {
             method: 'POST',
@@ -374,6 +431,13 @@ export default function CheckoutPage() {
       <form onSubmit={handleSubmitOrder} className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* LEFT COLUMN: Customer & Address & Payment (7 cols) */}
         <div className="lg:col-span-7 space-y-6">
+          {/* Size Özel Outlet Fırsatı (süreli) */}
+          <OutletOfferCard
+            cartSubtotal={subtotal}
+            enabled={items.length > 0}
+            onChange={setOutletSelection}
+          />
+
           {/* 1. Müşteri & İletişim Bilgileri */}
           <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
             <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
@@ -840,9 +904,9 @@ export default function CheckoutPage() {
         <div className="lg:col-span-5 space-y-4">
           <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4 sticky top-24">
             <h3 className="font-bold text-sm text-slate-900 pb-3 border-b border-slate-100 flex items-center justify-between">
-              <span>Sipariş Özeti ({items.length} Ürün)</span>
+              <span>Sipariş Özeti ({items.length + (outletLine ? 1 : 0)} Ürün)</span>
               <span className="text-xs text-blue-900 font-bold">
-                {items.reduce((acc, i) => acc + i.meterQuantity, 0)} Metre
+                {Math.round((items.reduce((acc, i) => acc + i.meterQuantity, 0) + (outletLine ? Number(outletLine.meter_length) : 0)) * 100) / 100} Metre
               </span>
             </h3>
 
@@ -869,21 +933,132 @@ export default function CheckoutPage() {
                   </div>
                 </div>
               ))}
+              {outletLine && (
+                <div className="py-2.5 flex items-center gap-3">
+                  {outletLine.image_url ? (
+                    <img
+                      src={outletLine.image_url}
+                      alt={outletLine.title}
+                      className="w-12 h-12 rounded-lg object-cover border border-amber-300 flex-shrink-0"
+                      onError={(e) => {
+                        (e.currentTarget as HTMLImageElement).style.visibility = 'hidden';
+                      }}
+                    />
+                  ) : (
+                    <div className="w-12 h-12 rounded-lg border border-amber-300 bg-amber-50 flex items-center justify-center flex-shrink-0">
+                      <Scissors className="w-5 h-5 text-amber-500" />
+                    </div>
+                  )}
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs font-bold text-slate-900 truncate">
+                      <span className="text-[9px] font-black bg-amber-500 text-white px-1 py-0.5 rounded mr-1">OUTLET</span>
+                      {outletLine.title}
+                    </div>
+                    <div className="text-[11px] text-slate-500">
+                      Tek parça • <strong>{outletLine.meter_length}m</strong>
+                    </div>
+                  </div>
+                  <div className="text-xs font-bold text-emerald-700">
+                    {formatCurrency(outletLine.offer_price)}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Kupon Kodu */}
+            <div className="pt-3 border-t border-slate-100 space-y-2">
+              {couponCode ? (
+                <div className={`p-2.5 rounded-xl border flex items-center justify-between text-xs ${couponInvalid ? 'bg-red-50 border-red-200' : 'bg-emerald-50 border-emerald-200'}`}>
+                  <div className="flex items-center gap-2 min-w-0">
+                    {couponInvalid ? (
+                      <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0" />
+                    ) : (
+                      <Tag className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                    )}
+                    <div className="min-w-0">
+                      <span className={`font-bold ${couponInvalid ? 'text-red-800 line-through' : 'text-emerald-900'}`}>{couponCode}</span>
+                      {couponInvalid ? (
+                        <span className="block text-red-700 text-[11px]">{quote?.couponError}</span>
+                      ) : (
+                        <span className="text-emerald-700 text-[11px] ml-1">
+                          {quote?.coupon?.free_shipping ? 'ücretsiz kargo uygulandı' : 'uygulandı'}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleRemoveCoupon}
+                    className="text-[11px] font-bold text-red-600 hover:underline flex-shrink-0"
+                  >
+                    Kaldır ✕
+                  </button>
+                </div>
+              ) : (
+                <div className="flex gap-2">
+                  <div className="relative flex-1">
+                    <Tag className="w-4 h-4 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+                    <input
+                      type="text"
+                      placeholder="Kupon kodunuz varsa giriniz"
+                      value={couponInput}
+                      onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          handleApplyCoupon();
+                        }
+                      }}
+                      className="w-full pl-8 pr-2.5 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs uppercase font-medium focus:bg-white focus:ring-1 focus:ring-blue-800 focus:outline-none"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleApplyCoupon}
+                    disabled={isApplyingCoupon || !couponInput.trim()}
+                    className="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold rounded-lg transition disabled:opacity-50"
+                  >
+                    {isApplyingCoupon ? '...' : 'Uygula'}
+                  </button>
+                </div>
+              )}
+              {couponFeedback && !couponCode && (
+                <div className={`text-[11px] font-medium ${couponFeedback.success ? 'text-emerald-700' : 'text-red-600'}`}>
+                  {couponFeedback.message}
+                </div>
+              )}
+              {quote?.hint && (
+                <div className="p-2.5 bg-amber-50 rounded-xl border border-amber-200 flex items-start gap-2 text-[11px] font-semibold text-amber-900">
+                  <Gift className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                  <span>{quote.hint.message}</span>
+                </div>
+              )}
             </div>
 
             {/* Price Calculations */}
             <div className="space-y-2 pt-3 border-t border-slate-100 text-xs">
               <div className="flex justify-between text-slate-600">
                 <span>Ara Toplam (KDV Dahil)</span>
-                <span className="font-semibold text-slate-900">{formatCurrency(subtotal)}</span>
+                <span className="font-semibold text-slate-900">{formatCurrency(orderSubtotal)}</span>
               </div>
+
+              {cartDiscountAmount > 0 && quote?.cartDiscount && (
+                <div className="flex justify-between text-emerald-700 font-medium">
+                  <span>{quote.cartDiscount.label}</span>
+                  <span>-{formatCurrency(cartDiscountAmount)}</span>
+                </div>
+              )}
 
               {couponDiscount > 0 && (
                 <div className="flex justify-between text-emerald-700 font-medium">
-                  <span>Kupon İndirimi ({couponCode})</span>
+                  <span>Kupon İndirimi ({quote?.coupon?.code || couponCode})</span>
                   <span>-{formatCurrency(couponDiscount)}</span>
                 </div>
               )}
+
+              {quote?.notices?.map((n) => (
+                <div key={n} className="text-[10px] text-slate-500">{n}</div>
+              ))}
 
               {havaleDiscount > 0 && (
                 <div className="flex justify-between text-emerald-700 font-bold bg-emerald-50 px-2 py-1 rounded">
@@ -912,7 +1087,7 @@ export default function CheckoutPage() {
 
               <div className="flex justify-between text-[11px] text-slate-400 pt-1">
                 <span>KDV Tutarı (%10 Dahil)</span>
-                <span>{formatCurrency((Math.max(0, discountedSubtotal - havaleDiscount) * 10) / 110)}</span>
+                <span>{formatCurrency(taxAmount)}</span>
               </div>
 
               <div className="flex justify-between text-base font-extrabold text-slate-900 pt-2 border-t border-slate-200">

@@ -130,11 +130,8 @@ function BulkPrintContent() {
                     </span>
                   </div>
 
-                  <div className="text-[11px] text-slate-600 font-medium">
-                    Tescilli Kumaş & Döşeme Mağazası • bursakumasdunyasi.com
-                  </div>
                   <div className="text-[11px] text-slate-500">
-                    Tel: 0 (542) 393 98 16 • Kazım Karabekir Mah. Yıldırım / BURSA
+                    Tel: 0 (542) 393 98 16 • Anadolu, 2. Kanarya Sk. No:3/A, 16350 Yıldırım/Bursa
                   </div>
 
                   <div className="pt-2 flex flex-wrap items-center gap-4 text-xs font-mono">
@@ -230,7 +227,12 @@ function BulkPrintContent() {
                           />
                         </td>
                         <td className="p-1.5">
-                          <div className="font-bold text-slate-900">{item.product_name}</div>
+                          <div className="font-bold text-slate-900">
+                            {item.is_outlet ? (
+                              <span className="inline-block mr-1 px-1.5 py-0.5 rounded bg-amber-500 text-white text-[9px] font-black align-middle">OUTLET PARÇA</span>
+                            ) : null}
+                            {item.product_name}
+                          </div>
                           {item.variant_title && (
                             <div className="text-[11px] text-slate-600 font-medium">
                               Renk / Desen: <strong>{item.variant_title}</strong>
@@ -264,7 +266,7 @@ function BulkPrintContent() {
                   </div>
                   {order.discount_total > 0 && (
                     <div className="flex justify-between text-emerald-700 text-[11px]">
-                      <span>İndirim:</span>
+                      <span>İndirim{order.coupon_code ? ` (${order.coupon_code})` : ''}:</span>
                       <span>-{formatCurrency(order.discount_total)}</span>
                     </div>
                   )}

@@ -22,7 +22,7 @@ export function getOrganizationSchema() {
     },
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Anadolu, 2. Kanarya Sk. no:14/A',
+      streetAddress: 'Anadolu, 2. Kanarya Sk. No:3/A',
       postalCode: '16350',
       addressLocality: 'Yıldırım',
       addressRegion: 'Bursa',

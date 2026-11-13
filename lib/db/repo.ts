@@ -44,6 +44,9 @@ export interface DatabaseData {
   showcase_settings?: any;
   invoice_settings?: any;
   stories?: any[];
+  outlet_offers?: any[];
+  outlet_reservations?: any[];
+  outlet_settings?: any;
 }
 
 const DB_FILE = path.join(process.cwd(), 'data', 'bursakumas_db.json');
@@ -291,7 +294,7 @@ const initialData: DatabaseData = {
     sender_title: 'Bursa Kumaş Dünyası Tekstil Tic. Ltd. Şti.',
     sender_tax_number: '1234567890',
     sender_tax_office: 'Yıldırım Vergi Dairesi',
-    sender_address: 'İhsaniye Mah. Barbaros Cad. No:14 Nilüfer / Bursa',
+    sender_address: 'Anadolu, 2. Kanarya Sk. No:3/A, 16350 Yıldırım/Bursa',
     sender_email: 'fatura@bursakumasdunyasi.com',
     sender_phone: '05423939816',
     default_vat_rate: 10,

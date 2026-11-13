@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAuthenticatedUser } from '@/lib/auth';
 import { readDb } from '@/lib/db/repo';
+import {
+  normalizeCoupon,
+  getPromoStatus,
+  countCouponUsageForCustomer,
+  normalizeEmail,
+  describeDiscount,
+} from '@/lib/services/promotions';
 
 export async function GET(req: NextRequest) {
   try {
@@ -10,32 +17,32 @@ export async function GET(req: NextRequest) {
     }
 
     const db = readDb();
-    const coupons = db.coupons || [];
-    const usages = db.coupon_usages || [];
+    const email = normalizeEmail(auth.user.email);
+    const customer = { userId: auth.user.id, email: auth.user.email, phone: auth.user.phone };
 
-    const now = new Date().getTime();
+    // Yalnızca "Hesabım'da göster" işaretli kuponlar ve bu müşteriye özel tanımlanmış kuponlar listelenir
+    const visible = (db.coupons || [])
+      .map(normalizeCoupon)
+      .filter((c) => c.is_public === 1 || (c.customer_scope === 'specific' && c.allowed_emails.includes(email)))
+      .filter((c) => c.is_active === 1 || countCouponUsageForCustomer(db, c.id, customer) > 0);
 
-    // Check user's specific usage for each coupon
-    const userCoupons = coupons.map((c: any) => {
-      const userUsageCount = usages.filter(
-        (u: any) => u.coupon_id === c.id && u.user_id === auth.user.id
-      ).length;
-
-      const isExpired = c.expires_at ? new Date(c.expires_at).getTime() < now : false;
-      const isExhausted = c.usage_limit ? userUsageCount >= c.usage_limit : false;
-      const isAvailable = c.is_active === 1 && !isExpired && !isExhausted;
-
+    const userCoupons = visible.map((c) => {
+      const status = getPromoStatus(c);
+      const usedByMe = countCouponUsageForCustomer(db, c.id, customer);
+      const isUsed = c.per_customer_limit ? usedByMe >= c.per_customer_limit : false;
+      const isExpired = status === 'expired' || status === 'exhausted';
       return {
         id: c.id,
         code: c.code,
         discount_type: c.discount_type,
         discount_value: c.discount_value,
-        min_basket_amount: c.min_basket_amount || 0,
-        expires_at: c.expires_at,
-        is_available: isAvailable,
-        is_used: isExhausted,
+        min_basket_amount: c.min_order_amount || 0,
+        starts_at: c.start_at,
+        expires_at: c.end_at,
+        is_available: status === 'active' && !isUsed,
+        is_used: isUsed,
         is_expired: isExpired,
-        description: c.description || (c.discount_type === 'percent' ? `%${c.discount_value} İndirim Kuponu` : `${c.discount_value} TL İndirim Kuponu`),
+        description: c.description || c.title || describeDiscount(c.discount_type, c.discount_value),
       };
     });
 

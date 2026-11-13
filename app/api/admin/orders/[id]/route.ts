@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { dbRepo } from '@/lib/db/repo';
 import { logAuditAction } from '@/lib/services/auditLogger';
+import { isCancelledOrderStatus } from '@/lib/services/orderWorkflow';
+import { releasePromotionUsage } from '@/lib/services/promotions';
+import { releaseOutletSale } from '@/lib/services/outlet';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -46,7 +49,13 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
       db.orders[orderIdx].print_status = body.print_status;
     }
     if (body.status !== undefined) {
+      const previousStatus = db.orders[orderIdx].status;
       db.orders[orderIdx].status = body.status;
+      // İptal / iade: kupon-kampanya kullanımını ve outlet parçasını serbest bırak
+      if (isCancelledOrderStatus(body.status) && !isCancelledOrderStatus(previousStatus)) {
+        releasePromotionUsage(db, db.orders[orderIdx]);
+        releaseOutletSale(db, db.orders[orderIdx]);
+      }
     }
 
     db.orders[orderIdx].updated_at = new Date().toISOString();

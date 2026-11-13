@@ -16,7 +16,7 @@ export interface ShippingSettings {
   dhl_branch_code?: string; // Gönderici Şube Kodu
   dhl_sender_name?: string; // Bursa Kumaş Dünyası
   dhl_sender_phone?: string; // 0 (542) 393 98 16
-  dhl_sender_address?: string; // Kazım Karabekir Mah. Yıldırım / BURSA
+  dhl_sender_address?: string; // Anadolu, 2. Kanarya Sk. No:3/A, 16350 Yıldırım/Bursa
   dhl_auto_generate_label?: number; // 1 = Auto generate on print/order
   
   updated_at?: string;
@@ -36,7 +36,7 @@ export const DEFAULT_SHIPPING_SETTINGS: ShippingSettings = {
   dhl_branch_code: '',
   dhl_sender_name: 'Bursa Kumaş Dünyası',
   dhl_sender_phone: '0 (542) 393 98 16',
-  dhl_sender_address: 'Kazım Karabekir Mah. Yıldırım / BURSA',
+  dhl_sender_address: 'Anadolu, 2. Kanarya Sk. No:3/A, 16350 Yıldırım/Bursa',
   dhl_auto_generate_label: 1,
 };
 

@@ -3,17 +3,20 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { X, Trash2, Plus, Minus, ShoppingBag, ArrowRight, ShieldCheck, Truck, Tag } from 'lucide-react';
+import { X, Trash2, Plus, Minus, ShoppingBag, ArrowRight, ShieldCheck, Truck, Tag, Gift, AlertCircle } from 'lucide-react';
 import { useCart } from './CartContext';
 import { formatCurrency } from '@/lib/services/meterEngine';
+import { useCartQuote, fetchCartQuote } from './useCartQuote';
 
 export const CartDrawer: React.FC = () => {
   const { items, isOpen, closeCart, removeItem, updateMeter, subtotal, totalMeters, couponCode, setCouponCode } = useCart();
   const [couponInput, setCouponInput] = useState(couponCode);
   const [couponStatus, setCouponStatus] = useState<{ message: string; success: boolean } | null>(null);
-  const [dynamicCouponDiscount, setDynamicCouponDiscount] = useState<number>(0);
   const [isApplying, setIsApplying] = useState(false);
   const [shippingSettings, setShippingSettings] = useState<{ free_shipping_threshold: number; shipping_cost: number } | null>(null);
+
+  // Tüm indirim ve toplamlar sunucudan (Sepette İndirim + Kupon tek motor)
+  const { quote } = useCartQuote(items, { couponCode, enabled: isOpen });
 
   // Fetch shipping settings
   useEffect(() => {
@@ -27,39 +30,9 @@ export const CartDrawer: React.FC = () => {
       .catch(() => {});
   }, []);
 
-  // Validate coupon dynamically
-  const validateCoupon = async (code: string) => {
-    if (!code || !code.trim()) {
-      setDynamicCouponDiscount(0);
-      return;
-    }
-    try {
-      const res = await fetch('/api/coupons/validate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code: code.trim(), subtotal }),
-      });
-      const data = await res.json();
-      if (res.ok && data.valid) {
-        setDynamicCouponDiscount(data.coupon.discount_amount || 0);
-        setCouponStatus({ success: true, message: data.message });
-      } else {
-        setDynamicCouponDiscount(0);
-        setCouponStatus({ success: false, message: data.message || 'Geçersiz kupon kodu.' });
-      }
-    } catch (e) {
-      // fallback
-    }
-  };
-
   useEffect(() => {
-    if (couponCode && subtotal > 0) {
-      validateCoupon(couponCode);
-    } else if (!couponCode) {
-      setDynamicCouponDiscount(0);
-      setCouponStatus(null);
-    }
-  }, [couponCode, subtotal]);
+    setCouponInput(couponCode);
+  }, [couponCode]);
 
   if (!isOpen) return null;
 
@@ -67,40 +40,37 @@ export const CartDrawer: React.FC = () => {
   const standardCost = shippingSettings ? Number(shippingSettings.shipping_cost) : 79.90;
   const isAlwaysFree = freeThreshold === 0;
 
-  const remainingForFreeShipping = isAlwaysFree ? 0 : Math.max(0, freeThreshold - subtotal);
-  const freeShippingProgress = isAlwaysFree
+  const couponFreeShipping = !!quote?.coupon?.free_shipping;
+  const remainingForFreeShipping = isAlwaysFree || couponFreeShipping ? 0 : Math.max(0, freeThreshold - subtotal);
+  const freeShippingProgress = isAlwaysFree || couponFreeShipping
     ? 100
     : Math.min(100, freeThreshold > 0 ? (subtotal / freeThreshold) * 100 : 100);
 
-  const couponDiscount = dynamicCouponDiscount;
-  const totalDiscount = couponDiscount;
-  const shippingFee = (isAlwaysFree || subtotal >= freeThreshold || items.length === 0) ? 0 : standardCost;
-  const grandTotal = Math.max(0, subtotal - totalDiscount + shippingFee);
+  const cartDiscount = quote?.cartDiscount?.amount || 0;
+  const couponDiscount = quote?.coupon?.amount || 0;
+  const totalDiscount = cartDiscount + couponDiscount;
+  const localShippingFee = (isAlwaysFree || couponFreeShipping || subtotal >= freeThreshold || items.length === 0) ? 0 : standardCost;
+  const shippingFee = quote ? quote.shippingTotal : localShippingFee;
+  const grandTotal = quote ? quote.grandTotal : Math.max(0, subtotal - totalDiscount + shippingFee);
+  const couponInvalid = !!(couponCode && quote && !quote.coupon && quote.couponError);
 
   const handleApplyCoupon = async (e: React.FormEvent) => {
     e.preventDefault();
     const code = couponInput.trim().toUpperCase();
     if (!code) {
       setCouponCode('');
-      setDynamicCouponDiscount(0);
       setCouponStatus(null);
       return;
     }
 
     setIsApplying(true);
     try {
-      const res = await fetch('/api/coupons/validate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code, subtotal }),
-      });
-      const data = await res.json();
-      if (res.ok && data.valid) {
+      const q = await fetchCartQuote(items, { couponCode: code });
+      if (q && q.coupon) {
         setCouponCode(code);
-        setDynamicCouponDiscount(data.coupon.discount_amount || 0);
-        setCouponStatus({ success: true, message: data.message });
+        setCouponStatus({ success: true, message: q.couponMessage || 'Kupon uygulandı.' });
       } else {
-        setCouponStatus({ success: false, message: data.message || 'Geçersiz kupon kodu.' });
+        setCouponStatus({ success: false, message: q?.couponError || 'Kupon uygulanamadı.' });
       }
     } catch (e) {
       setCouponStatus({ success: false, message: 'Kupon uygulanamadı.' });
@@ -112,7 +82,6 @@ export const CartDrawer: React.FC = () => {
   const handleRemoveCoupon = () => {
     setCouponCode('');
     setCouponInput('');
-    setDynamicCouponDiscount(0);
     setCouponStatus(null);
   };
 
@@ -253,13 +222,29 @@ export const CartDrawer: React.FC = () => {
           {items.length > 0 && (
             <div className="p-4 bg-slate-50 border-t border-slate-200 space-y-3">
               {/* Coupon Form */}
+              {/* Sepette İndirim ilerleme ipucu */}
+              {quote?.hint && (
+                <div className="p-2.5 bg-amber-50 rounded-xl border border-amber-200 flex items-start gap-2 text-[11px] font-semibold text-amber-900">
+                  <Gift className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                  <span>{quote.hint.message}</span>
+                </div>
+              )}
+
               {couponCode ? (
-                <div className="p-2.5 bg-emerald-50 rounded-xl border border-emerald-200 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2">
-                    <Tag className="w-4 h-4 text-emerald-600" />
-                    <div>
-                      <span className="font-bold text-emerald-900">{couponCode}</span>
-                      <span className="text-emerald-700 text-[11px] ml-1">uygulandı</span>
+                <div className={`p-2.5 rounded-xl border flex items-center justify-between text-xs ${couponInvalid ? 'bg-red-50 border-red-200' : 'bg-emerald-50 border-emerald-200'}`}>
+                  <div className="flex items-center gap-2 min-w-0">
+                    {couponInvalid ? (
+                      <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0" />
+                    ) : (
+                      <Tag className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                    )}
+                    <div className="min-w-0">
+                      <span className={`font-bold ${couponInvalid ? 'text-red-800 line-through' : 'text-emerald-900'}`}>{couponCode}</span>
+                      {couponInvalid ? (
+                        <span className="block text-red-700 text-[11px]">{quote?.couponError}</span>
+                      ) : (
+                        <span className="text-emerald-700 text-[11px] ml-1">uygulandı</span>
+                      )}
                     </div>
                   </div>
                   <button
@@ -305,12 +290,23 @@ export const CartDrawer: React.FC = () => {
                   <span className="font-semibold text-slate-900">{formatCurrency(subtotal)}</span>
                 </div>
 
+                {cartDiscount > 0 && quote?.cartDiscount && (
+                  <div className="flex justify-between text-emerald-700 font-medium">
+                    <span>{quote.cartDiscount.label}</span>
+                    <span>-{formatCurrency(cartDiscount)}</span>
+                  </div>
+                )}
+
                 {couponDiscount > 0 && (
                   <div className="flex justify-between text-emerald-700 font-medium">
-                    <span>Kupon İndirimi ({couponCode})</span>
+                    <span>Kupon İndirimi ({quote?.coupon?.code || couponCode})</span>
                     <span>-{formatCurrency(couponDiscount)}</span>
                   </div>
                 )}
+
+                {quote?.notices?.map((n) => (
+                  <div key={n} className="text-[10px] text-slate-500">{n}</div>
+                ))}
 
                 <div className="flex justify-between text-slate-600">
                   <span>Kargo Ücreti</span>
