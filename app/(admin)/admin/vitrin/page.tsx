@@ -152,36 +152,6 @@ export default function AdminVitrinPage() {
     }
   };
 
-  const handleBatchCategoryAction = async (action: 'enable' | 'disable') => {
-    const categoryName = selectedCategory === 'all' 
-      ? 'tüm kategorilerdeki' 
-      : `"${categories.find((c) => c.id === selectedCategory)?.name}" kategorisindeki`;
-
-    const confirmMsg = action === 'enable'
-      ? `${categoryName} tüm ürünler ana sayfa vitrinine eklensin mi?`
-      : `${categoryName} tüm ürünler ana sayfa vitrininden kaldırılsın mı?`;
-
-    if (!confirm(confirmMsg)) return;
-
-    setLoading(true);
-    try {
-      const res = await fetch('/api/admin/products/toggle-showcase', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ batchAction: action, categoryId: selectedCategory }),
-      });
-      const data = await res.json();
-      if (data.success) {
-        setFeedback({ type: 'success', message: data.message });
-        await fetchData();
-      }
-    } catch (err) {
-      alert('Toplu işlem sırasında hata oluştu.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   // Compute counts
   const totalFeaturedCount = products.filter((p) => p.is_featured === 1).length;
 
@@ -241,7 +211,7 @@ export default function AdminVitrinPage() {
             </span>
           </h1>
           <p className="text-xs text-slate-500 mt-1">
-            Ana sayfa vitrininde listelenecek kumaşları, kategori sekmelerini ve sıralamalarını yönetin.
+            Ana sayfa vitrininde listelenecek kumaşları ve sıralamalarını yönetin.
           </p>
         </div>
 
@@ -390,30 +360,13 @@ export default function AdminVitrinPage() {
           <div>
             <h2 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
               <Layers className="w-4 h-4 text-emerald-600" />
-              <span>Kategoriye Göre Vitrin Ürünlerini Yönet</span>
+              <span>Vitrine Ürün Ekle / Çıkar</span>
             </h2>
             <p className="text-[11px] text-slate-500 mt-0.5">
-              Aşağıdaki kategori butonlarına tıklayarak o kategorideki ürünleri listeleyebilir ve vitrine ekleyip çıkarabilirsiniz.
+              Vitrine yalnızca ürün tek tek eklenir. Aşağıdaki kategori butonları sadece listedeki ürünleri bulmanızı kolaylaştıran bir filtredir; ana sayfada kategori sekmesi gösterilmez.
             </p>
           </div>
 
-          {/* Quick Batch Actions */}
-          <div className="flex flex-wrap items-center gap-2">
-            <button
-              type="button"
-              onClick={() => handleBatchCategoryAction('enable')}
-              className="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-xl text-xs font-bold transition"
-            >
-              + Bu Kategorideki Tümünü Vitrine Ekle
-            </button>
-            <button
-              type="button"
-              onClick={() => handleBatchCategoryAction('disable')}
-              className="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200 rounded-xl text-xs font-bold transition"
-            >
-              - Bu Kategorideki Tümünü Vitrinden Çıkar
-            </button>
-          </div>
         </div>
 
         {/* Category Filter Pills (Exact same visual styling as requested) */}

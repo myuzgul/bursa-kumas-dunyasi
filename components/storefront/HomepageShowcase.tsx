@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React from 'react';
 import { ProductCard } from './ProductCard';
-import { Sparkles, Package } from 'lucide-react';
+import { Package } from 'lucide-react';
 
 interface CategoryTab {
   id: string;
@@ -29,21 +29,13 @@ interface HomepageShowcaseProps {
 
 export const HomepageShowcase: React.FC<HomepageShowcaseProps> = ({
   initialProducts,
-  categories,
   settings,
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-
   const totalCount = initialProducts.length;
   const badgeSuffix = settings.badge_suffix || 'Kumaş';
 
-  // Filter products by selected category
-  const filteredProducts = useMemo(() => {
-    if (selectedCategory === 'all') {
-      return initialProducts;
-    }
-    return initialProducts.filter((p) => p.category_id === selectedCategory);
-  }, [initialProducts, selectedCategory]);
+  // Vitrin yalnızca tek tek vitrine eklenen ürünlerden oluşur (kategori sekmesi yok)
+  const filteredProducts = initialProducts;
 
   if (settings.is_active === 0 || totalCount === 0) {
     return null;
@@ -71,50 +63,13 @@ export const HomepageShowcase: React.FC<HomepageShowcaseProps> = ({
             {settings.subtitle}
           </p>
         )}
-
-        {/* 2. CATEGORY FILTER PILLS (Matching screenshot design) */}
-        <div className="flex flex-wrap items-center gap-2 pt-1">
-          {/* "Tümü" Pill Button */}
-          <button
-            type="button"
-            onClick={() => setSelectedCategory('all')}
-            className={`px-4 py-2 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer select-none ${
-              selectedCategory === 'all'
-                ? 'bg-slate-950 text-white shadow-sm ring-2 ring-slate-900/20'
-                : 'bg-white border border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50'
-            }`}
-          >
-            <span>{settings.all_tab_title || 'Tümü'}</span>
-            <span className="ml-1 text-[11px] opacity-80">({totalCount})</span>
-          </button>
-
-          {/* Category Pills */}
-          {categories.map((cat) => {
-            const isSelected = selectedCategory === cat.id;
-            return (
-              <button
-                key={cat.id}
-                type="button"
-                onClick={() => setSelectedCategory(cat.id)}
-                className={`px-4 py-2 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer select-none ${
-                  isSelected
-                    ? 'bg-slate-950 text-white font-bold shadow-sm ring-2 ring-slate-900/20'
-                    : 'bg-white border border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50'
-                }`}
-              >
-                <span>{cat.name}</span>
-                <span className="ml-1 text-[11px] opacity-75">({cat.count})</span>
-              </button>
-            );
-          })}
-        </div>
       </div>
 
       {/* 3. PRODUCT GRID */}
       {filteredProducts.length === 0 ? (
         <div className="p-12 text-center bg-slate-50 rounded-3xl border border-slate-200 text-slate-500 text-xs">
           <Package className="w-8 h-8 mx-auto text-slate-300 mb-2" />
-          <span>Bu kategoride vitrinde gösterilecek ürün bulunamadı.</span>
+          <span>Vitrinde gösterilecek ürün bulunamadı.</span>
         </div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4 md:gap-6 animate-in fade-in duration-300">

@@ -1,33 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { toggleProductShowcase, updateProductShowcaseOrder } from '@/lib/services/showcaseSettings';
-import { dbRepo } from '@/lib/db/repo';
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { productId, isFeatured, orderIndex, categoryId, batchAction } = body;
-
-    const db = dbRepo.read();
-
-    // Handle batch action by category (e.g. enable all in category or disable all in category)
-    if (batchAction && categoryId) {
-      const isFeatureFlag = batchAction === 'enable' ? 1 : 0;
-      let modifiedCount = 0;
-
-      for (const prod of db.products) {
-        if (categoryId === 'all' || prod.category_id === categoryId) {
-          prod.is_featured = isFeatureFlag;
-          prod.updated_at = new Date().toISOString();
-          modifiedCount++;
-        }
-      }
-
-      dbRepo.write(db);
-      return NextResponse.json({
-        success: true,
-        message: `${modifiedCount} ürünün vitrin durumu güncellendi.`,
-      });
-    }
+    const { productId, isFeatured, orderIndex } = body;
 
     // Handle single product order update
     if (productId && orderIndex !== undefined) {
