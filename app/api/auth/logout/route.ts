@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { isSecureRequest } from '@/lib/auth';
 import { readDb, writeDb } from '@/lib/db/repo';
 import { verifyToken, logSecurityEvent } from '@/lib/auth';
 
@@ -29,7 +30,7 @@ export async function POST(req: NextRequest) {
     const response = NextResponse.json({ success: true, message: 'Başarıyla çıkış yapıldı.' });
     response.cookies.set('bkd_token', '', {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: isSecureRequest(req),
       sameSite: 'lax',
       path: '/',
       maxAge: 0,

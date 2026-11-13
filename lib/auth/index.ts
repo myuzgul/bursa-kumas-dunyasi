@@ -87,6 +87,19 @@ export function checkRateLimit(key: string, maxAttempts: number = 5, windowMs: n
   return { allowed: true, remaining: maxAttempts - entry.count };
 }
 
+// 4b. Oturum çerezinin "secure" bayrağı: yalnızca istek gerçekten HTTPS ile geldiyse açılır.
+// Site HTTP (IP adresi) üzerinden çalışırken secure çerezler tarayıcı tarafından kaydedilmez
+// ve giriş yapılamaz. SSL kurulup Nginx "X-Forwarded-Proto https" gönderdiğinde otomatik açılır.
+export function isSecureRequest(req: Request): boolean {
+  try {
+    const forwarded = (req.headers.get('x-forwarded-proto') || '').split(',')[0].trim().toLowerCase();
+    if (forwarded) return forwarded === 'https';
+    return new URL(req.url).protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
 // 5. Get Authenticated User from Request (Cookie or Authorization header)
 export async function getAuthenticatedUser(req: Request): Promise<{ user: any; session: any; role: 'customer' | 'admin' } | null> {
   try {

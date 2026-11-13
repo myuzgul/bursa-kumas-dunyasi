@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { isSecureRequest } from '@/lib/auth';
 import { readDb, writeDb } from '@/lib/db/repo';
 import { 
   verifyPassword, 
@@ -70,7 +71,7 @@ export async function POST(req: NextRequest) {
 
       response.cookies.set('bkd_token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: isSecureRequest(req),
         sameSite: 'lax',
         path: '/',
         maxAge: (remember_me ? 30 : 1) * 24 * 3600,
@@ -146,7 +147,7 @@ export async function POST(req: NextRequest) {
 
       response.cookies.set('bkd_token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: isSecureRequest(req),
         sameSite: 'lax',
         path: '/',
         maxAge: (remember_me ? 30 : 1) * 24 * 3600,

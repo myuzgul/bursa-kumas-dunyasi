@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { isSecureRequest } from '@/lib/auth';
 import { readDb, writeDb } from '@/lib/db/repo';
 import { 
   hashPassword, 
@@ -187,7 +188,7 @@ export async function POST(req: NextRequest) {
 
     response.cookies.set('bkd_token', jwtToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: isSecureRequest(req),
       sameSite: 'lax',
       path: '/',
       maxAge: 30 * 24 * 3600,
